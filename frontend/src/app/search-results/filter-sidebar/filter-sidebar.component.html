@@ -1,0 +1,80 @@
+<div class="sidebar-content">
+  <button (click)="close.emit()" class="close-btn">
+    <i class="fas fa-times"></i>
+  </button>
+  <h3>Filters</h3>
+
+  <!-- Color Filter with Dots -->
+  <div class="filter-section">
+    <h4>Colors</h4>
+    <div class="color-options">
+      <label *ngFor="let color of FilteringColors" class="color-option">
+        <input type="checkbox" 
+               [checked]="selectedColors.includes(color.name)"
+               (change)="toggleColor(color.name)">
+        <span class="color-dot" [ngStyle]="{'background-color': color.name.toLowerCase()}"></span>
+        {{ color.name }} ({{ color.count }})
+      </label>
+    </div>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="filter-section">
+    <h4>Categories</h4>
+    <div class="category-options">
+      <label *ngFor="let category of totalCategories" class="category-option">
+        <input type="checkbox"
+               [checked]="selectedCategories.includes(category.name)"
+               (change)="toggleCategory(category.name)">
+        {{ category.name }} ({{ category.count }})
+      </label>
+    </div>
+  </div>
+
+  <!-- Gender Filter -->
+  <div class="filter-section">
+    <h4>Gender</h4>
+    <div class="gender-options">
+      <label class="gender-option">
+        <input type="checkbox" value="Male" 
+               [checked]="selectedGenders.includes('Male')"
+               (change)="toggleGender('Male')">
+        Male
+      </label>
+      <label class="gender-option">
+        <input type="checkbox" value="Female"
+               [checked]="selectedGenders.includes('Female')"
+               (change)="toggleGender('Female')">
+        Female
+      </label>
+      <label class="gender-option">
+        <input type="checkbox" value="Special"
+               [checked]="selectedGenders.includes('Special')"
+               (change)="toggleGender('Special')">
+        Special
+      </label>
+    </div>
+  </div>
+
+  <!-- Items Per Page Custom Dropdown -->
+  <div class="filter-section">
+    <h4>Items Per Page</h4>
+    <div class="dropdown-container" [class.open]="isItemsPerPageOpen">
+      <div class="dropdown-header" (click)="toggleItemsPerPageDropdown($event)">
+        <span>{{ itemsPerPage || 'Select' }}</span>
+        <i class="arrow" [class.open]="isItemsPerPageOpen"></i>
+      </div>
+      <ul class="dropdown-list" *ngIf="isItemsPerPageOpen">
+        <li *ngFor="let option of productPerPageHolder" class="dropdown-item"
+            (click)="selectItemsPerPage(option)">
+          {{ option }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Reset Button -->
+  <div class="filter-section reset-section">
+    <button class="reset-btn" (click)="resetFilters()">Reset Filters</button>
+  </div>
+</div>

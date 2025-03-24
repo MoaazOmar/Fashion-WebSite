@@ -1,0 +1,747 @@
+
+
+.carousel {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel .list .item {
+    position: absolute;
+    inset: 0 0 0 0;
+}
+
+.carousel .list .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel .list .item .content {
+    position: absolute;
+    top: 14%;
+    width: 1140px;
+    max-width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-right: 30%;
+    box-sizing: border-box;
+    text-shadow: 0 5px 10px #000;
+    color:rgb(250, 49, 49) ;
+}
+
+.carousel .list .item .content .author {
+    letter-spacing: 10px;
+    font-weight: bold;
+}
+
+.carousel .list .item .content .title, 
+.carousel .list .item .content .topic {
+    font-weight: bold;
+    font-size: 5em;
+    line-height: 1.3em;
+}
+
+.carousel .list .item .content .topic {
+    color: #f16f25;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif; /* Added sans-serif fallback */
+}
+.carousel .list .item .content .buttons {
+
+    display: grid;
+    grid-template-columns: repeat(2 , 130px);
+    grid-template-rows: 40px;
+    gap: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.carousel .list .item .content button{
+    background-color: white;
+    letter-spacing: 3px;
+    border: none;
+    font-family: 'Poppins', sans-serif; /* Added sans-serif fallback */
+    font-weight: 500;
+}
+.carousel .list .item .content button:nth-child(2){
+    background: transparent;
+    color: #ffc446;
+    border: 1px solid #eee;
+    font-weight: 1000;
+}
+.carousel .list .item:nth-child(1){
+    z-index: 1;
+}
+.carousel .list .item:nth-child(1)  .author,
+.carousel .list .item:nth-child(1)  .title,
+.carousel .list .item:nth-child(1)  .topic,
+.carousel .list .item:nth-child(1)  .desc,
+.carousel .list .item:nth-child(1)  .buttons {
+    transform: translateY(50px);
+    filter: blur(20px);  
+    opacity: 0; 
+    animation: showContent 0.5s 1s linear forwards 1;
+}
+@keyframes showContent {
+   to {
+    opacity : 1;
+    transform: translateY(0);
+    filter: blur(0);
+   } 
+}
+.carousel .list .item:nth-child(1) .author {
+    animation-delay:1.2s ;
+}
+.carousel .list .item:nth-child(1) .title {
+    animation-delay:1.4s ;
+}
+.carousel .list .item:nth-child(1) .topic {
+    animation-delay:1.6s ;
+}
+
+.carousel .list .item:nth-child(1) .buttons {
+    animation-delay:1.8s ;
+}
+
+
+/********************---------------------Thubmnail--------------------***************************/
+.thumnail{
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    width: max-content;
+    z-index: 100;
+    display: flex;
+    gap: 20px;
+}
+.thumnail .item{
+    width: 150px;
+    height: 220px;
+    flex-shrink: 0;
+    position: relative;
+    
+}
+.thumnail .item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.thumnail .item .content {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    color: #ff5e00;
+}
+.thumnail .item .content .title {
+    font-weight: bold;
+}
+
+/*************************-------------------------for-the-next-img-displaying------------------------***************************/
+.carousel.next .list .item:nth-child(1) img{
+  width: 150px;
+  height: 220px;
+  position: absolute;
+  left: 50%;
+  bottom: 50px;
+  border-radius: 20px;
+  animation: showImage 0.5s  linear  forwards ;
+}
+ @keyframes showImage {
+    to{
+        width:100%;
+        height:100%;
+        left: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+ }
+
+ .carousel.next .thumnail .item:nth-last-child(1){
+    width: 0;
+    overflow: hidden;
+    animation: showThumbnail 0.5s linear 1 forwards;
+ }
+ @keyframes showThumbnail {
+    to {
+        width: 150px;
+    }
+ }
+
+ .carousel.next .thumnail{
+    transform: translateX(150px);
+    animation: transferThumbnail 0.5s linear 1 forwards;
+ }
+ @keyframes transferThumbnail {
+    to {
+        transform:  translateX(0)
+    }
+ }  
+ /********************************************--for-prev-displaying--********************************/
+ .carousel.prev .list .item:nth-child(2){
+    z-index: 2;
+ }
+ .carousel.prev .list .item:nth-child(2) img {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    animation: outImage 0.5s linear 1 forwards;
+ }
+ @keyframes outImage {
+    to {
+        width: 150px;
+        height: 220px;
+        border-radius: 20px;
+        left: 50%;
+        bottom: 20px;
+    }
+ }
+ .carousel.prev .thumnail .item:nth-child(1){
+    width: 0;
+    overflow: hidden;
+    opacity: 0;
+    animation: showThumbnail 0.5s linear 1 forwards;
+ }
+
+.carousel.prev .list .item:nth-child(2) .author,
+.carousel.prev .list .item:nth-child(2) .title,
+.carousel.prev .list .item:nth-child(2) .topic, 
+.carousel.prev .list .item:nth-child(2) .desc,  
+.carousel.prev .list .item:nth-child(2) .buttons{
+    animation: contentOut 1.5s linear 1 forwards;
+} 
+@keyframes contentOut{
+    to{
+        transform: translateY(-150px);
+        filter: blur(20px);
+        opacity: 0;
+    }
+}
+ /********************************************----Time-animation----*********************************/
+ .time{
+    width: 0%;
+    height: 5px;
+    background-color: #ff5e00;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+ }
+ 
+ .carousel.next .time,
+ .carousel.prev .time{
+     animation: runningTime 1s linear 1 forwards;
+ }
+ @keyframes runningTime{
+     from{ width: 100%}
+     to{width: 0}
+ }
+ @media screen and (max-width: 678px) {
+    .carousel .list .item .content{
+        padding-right: 0;
+    }
+    .carousel .list .item .content .title{
+        font-size: 30px;
+    }
+}
+.indicators {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 100;
+}
+
+/********************************************----buttons styles----*********************************/
+ .arrows{
+    position: absolute;
+    top: 80%;
+    right: 52%;
+    width: 300px;
+    max-width: 30%;
+    display: flex;
+    gap: 10px;
+ }
+ .arrows button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:#eb670f;
+    border: none;
+    font-family: monospace;
+    color: white;
+    font-weight: bold;
+    font-size: large;
+    transition: 0.5s;
+    cursor: pointer;
+    z-index: 100;
+ }
+ .arrows button:hover{
+    color:#eb670f ;
+    background-color:white ;
+ }
+ .carousel .prev .arrows button,
+ .carousel .next .arrows button {
+    pointer-events: none;
+ }
+ /* counter */
+ .counter {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    /* transform: translateX(-50%); */
+    width: 50px;
+    height: 50px;
+    z-index: 100; 
+    font-size: 50px; 
+    position:absolute; 
+    top:47.5px;
+    right: -195px;
+}
+
+.counter svg {
+    transform: rotate(-90deg);
+}
+
+.counter circle {
+    stroke-dasharray: 126; /* 2 * π * r (r=20) */
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 8s linear;
+}
+
+.counter .countdown {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: #ff5e00;
+}
+
+/* Style for the <h3> elements containing icons or sparkle emoji */
+.carousel .list .item .content h3 {
+    font-size: 1.5em; /* Adjust size as needed */
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 5px 10px #000;
+    margin-bottom: 10px; /* Add spacing below the heading */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+/* Style for Font Awesome icons inside <h3> */
+.carousel .list .item .content h3 i {
+    font-size: 1.2em; /* Adjust icon size */
+    color: #ff5e00; /* Match the orange theme */
+}
+
+/* Style for the sparkle emoji inside <h3> */
+.carousel .list .item .content h3 span {
+    font-size: 1.2em; /* Adjust emoji size */
+    color: #ff5e00; /* Match the orange theme */
+}
+
+/* Apply the same animation as the rest of the content */
+.carousel .list .item:nth-child(1) .content h3 {
+    transform: translateY(50px);
+    filter: blur(20px);
+    opacity: 0;
+    animation: showContent 0.5s 1s linear forwards;
+}
+
+.carousel .list .item:nth-child(1) .content h3 {
+    animation-delay: 1s; /* Adjust delay to match other elements */
+}
+
+
+
+/* link  */
+.router{ 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 39px;
+    transition: all ease-out;
+}
+.router a {
+    background-color: #ff0052;
+    text-decoration: none;
+    color: white;
+}
+.router a:hover{
+    color: #ff0052;
+    background-color: #ffffff;
+}
+
+
+
+/* product container styling  */
+ 
+  /* Container styling */
+  .product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap:  24px;
+    justify-content: center;
+    align-items: start;
+    width: 90%;
+    margin: 0 auto;
+}
+.product-item:hover{
+    transform: translateY(-10px);
+    box-shadow: 5px 10px 10px rgba(255, 255, 255, 0.4);
+}
+
+/* Individual product styling */
+.product-item {
+    position: relative;
+    height: 470px;
+    background-color: #ffffff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+}
+.product-item.hidden {
+    transform: scale(0);
+    opacity: 0;
+    visibility: hidden;
+    animation: none; /* Disable animations for hidden items */
+    display: none; /* Ensure it’s not visible in the layout */
+}
+
+@keyframes displaying {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+        visibility: visible;
+    }
+}
+.product-item img {
+    width: 100%;
+    height: 330px;
+    object-fit: cover;
+    transition: transform 1s ease-out;
+    transform-origin: bottom;
+}
+
+.product-item:hover img {
+    transform: scale(1.1);
+}
+
+.product-info {
+    padding: 15px;
+    color: black;
+}
+
+.product-info h4 {
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.product-info p {
+    font-weight: 200;
+    color: #000;
+}
+
+.product-rating {
+    display: flex;
+    gap: 5px;
+}
+
+.product-rating li {
+    list-style: none;
+}
+
+.product-rating li .bi-star {
+    font-size: 1.2em;
+    color: var(--primary);
+}
+
+.product-info .cross {
+    text-decoration: line-through;
+}
+
+.product-info .price {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.product-item .hot {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 900;
+    width: 50px;
+    height: 30px;
+    color: white;
+    background: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-item .hot .fa-certificate {
+    color: #ff9800;
+    height: 100%;
+}
+
+.add-to-bag {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    border-radius: 50%;
+    background: var(--primary);
+    color: #ffffff;
+    transition: all 0.5s ease-out;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-to-bag .bi-bag-plus {
+    font-size: 1.6em;
+}
+
+.add-to-bag:hover {
+    background: var(--third);
+    color: var(--primary);
+}
+
+
+.color-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+  }
+
+
+
+  /* selection */
+  /* shopping.component.css */
+.filter-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+  }
+  
+  .custom-select-wrapper {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 300px;
+  }
+  
+  .custom-select {
+    position: relative;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  .custom-select.active {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.1);
+  }
+  
+  .selected-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-color);
+  }
+  
+  .dropdown-icon {
+    color: var(--text-muted);
+    transition: transform 0.3s ease;
+    font-size: 0.9em;
+  }
+  
+  .custom-select.active .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  
+  .options-container {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .option {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+  
+  .option:hover {
+    background-color: rgba(var(--primary-rgb), 0.05);
+  }
+  
+  .option.selected {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .option.selected .category-count {
+    color: rgba(255,255,255,0.8);
+  }
+  
+  .category-name {
+    font-weight: 500;
+  }
+  
+  .category-count {
+    color: var(--text-muted);
+    font-size: 0.9em;
+    margin-left: 12px;
+  }
+  
+  /* Add these CSS variables to your global styles or component CSS */
+  :root {
+    --primary: #ff5e00;
+    --primary-rgb: 255, 94, 0;
+    --text-color: #333;
+    --text-muted: #666;
+    --border-color: #ddd;
+  }
+
+  /* Color Filter Styles */
+.color-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .color-name {
+    margin-right: 8px;
+  }
+  
+  /* Search Filter Styles */
+  .search-filter {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+    max-width: 400px;
+  }
+  
+  .search-filter input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .search-filter button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .search-filter button:hover {
+    background-color: #ff4500;
+  }
+  
+  /* Product Card Improvements */
+  .product-item {
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .product-info {
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  .product-info h4 {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--primary);
+  }
+  
+  form {
+    display: flex;
+    gap: 10px;
+    padding: 0 15px 15px;
+  }
+  
+  input[type="number"] {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary);
+    border-color: var(--primary);
+    padding: 8px 15px;
+  }
+
+
+  .hot {
+    position: absolute;
+    top: 15px;
+    right: -30px;
+    background: #ff5e00;
+    color: white;
+    padding: 0.5rem 2rem;
+    transform: rotate(45deg);
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 3;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  

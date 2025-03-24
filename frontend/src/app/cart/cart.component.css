@@ -1,0 +1,302 @@
+.table-container {
+    overflow-x: auto;
+    margin: 2rem 0;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+  }
+  
+  thead {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  }
+  
+  th {
+    padding: 1.2rem;
+    text-align: left;
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-size: 0.9em;
+    border-bottom: 2px solid #ff6b6b;
+  }
+  
+  td {
+    padding: 1rem;
+    color: #e0e0e0;
+    border-bottom: 1px solid #333;
+  }
+  
+  tr:hover {
+    background-color: rgba(255, 107, 107, 0.05);
+  }
+  
+  tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+  
+  button {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+    border: none;
+    padding: 0.6rem 1.2rem;
+    color: white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  }
+  
+  
+  td:first-child,
+  th:first-child {
+    padding-left: 2rem;
+  }
+  
+  td:last-child,
+  th:last-child {
+    padding-right: 2rem;
+  }
+  
+  td:nth-child(3),
+  td:nth-child(4),
+  td:nth-child(5) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 500;
+    color: #ff8e8e;
+  }
+  
+  .alert {
+    background: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid #ff6b6b;
+  }
+  /* Remove button */
+button:first-child {
+    background: linear-gradient(135deg, #ff4757, #ff6b6b);
+    margin-right: 0.8rem;
+  }
+  
+  /* Update button */
+  button:last-child {
+    background: linear-gradient(135deg, #2ed573, #7bed9f);
+    margin-right: 0;
+  }
+  
+  /* Hover effects */
+  button:first-child:hover {
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  }
+  
+  button:last-child:hover {
+    box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
+  }
+  td input[type="number"] {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    width: 80px;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Remove spinner arrows */
+  td input[type="number"]::-webkit-outer-spin-button,
+  td input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  td input[type="number"]:hover {
+    border-color: #ff6b6b;
+  }
+  
+  td input[type="number"]:focus {
+    outline: none;
+    border-color: #ff8e8e;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+  }
+  
+  /* Custom number controls */
+  td input[type="number"] {
+    position: relative;
+  }
+  
+  td input[type="number"]::after {
+    content: "↕";
+    color: #ff6b6b;
+    position: absolute;
+    right: -5px;
+  }
+
+  /* Empty Cart Styling */
+.empty-cart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+  padding: 2rem;
+  background-color: #fff;
+}
+
+.empty-cart-content {
+  text-align: center;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.empty-cart-image {
+  width: 25vw;
+  /* height: 25vh; */
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+.empty-cart-title {
+  font-size: 2rem;
+  color:ff0052;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.empty-cart-message {
+  color: #6b6b6b;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.continue-shopping-btn {
+  background-color: #ff4d58;
+  color: white;
+  padding: 12px 30px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  display: inline-block;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.continue-shopping-btn:hover {
+  background-color: #ff3945;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+ 
+
+.clear-all-btn {
+  position: absolute;
+  right: 20px;
+  background: linear-gradient(145deg, #ff4757, #ff0000);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 20px rgba(255, 71, 87, 0.3);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  display: inline-flex;
+  align-items: center;
+}
+
+
+.clear-all-btn:hover {
+  background: linear-gradient(145deg, #ff2d3f, #e60000);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 71, 87, 0.5);
+  letter-spacing: 1px;
+}
+
+.clear-all-btn:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 3px 15px rgba(255, 71, 87, 0.2);
+}
+
+.clear-all-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.4),
+              0 6px 25px rgba(255, 71, 87, 0.5);
+}
+/* Proccessed to submit */
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  padding: 1.1rem 2.2rem;
+  font-size: 1.4em;
+  margin-top: 1.5rem;
+  color: #fff;
+  position: relative;
+  display: block;
+  width: fit-content;
+  text-decoration: none;
+  transition: all ease-out 0.4s;
+}
+
+.btn-primary:hover {
+  transform: scale(1.02);
+  letter-spacing: 2px;
+}
+.cart-product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .clear-all-btn {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 15px;
+    width: 90%;
+    max-width: 280px;
+    justify-content: center;
+    padding: 14px 20px;
+    font-size: 0.9rem;
+  }
+  
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .empty-cart-image {
+    width: 150px;
+    height: 150px;
+  }
+
+  .empty-cart-title {
+    font-size: 1.5rem;
+  }
+
+  .empty-cart-message {
+    font-size: 1rem;
+  }
+}
+

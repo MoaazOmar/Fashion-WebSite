@@ -1,0 +1,220 @@
+
+<!--*******************************Female**********************************************-->
+
+<div class="banner" [class.active]="bannerActive" *ngIf="dynamicGender === 'Female'">
+    <!-- Banner Sections -->
+    <div class="banner-section one" [class.active]="selectedSection === 'one'" (click)="selectSection('one')">
+      <img src="girl-1.png" alt="">
+      <div class="content">
+        <h2>Jackets &amp; Hats</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-one', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section two" [class.active]="selectedSection === 'two'" (click)="selectSection('two')">
+      <img src="girl-3.png" alt="">
+      <div class="content">
+        <h2>Shirts &amp; Jackets</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-two', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section three" [class.active]="selectedSection === 'three'" (click)="selectSection('three')">
+      <img src="man-2.png" alt="">
+      <div class="content">
+        <h2>Trousers &amp; Shorts </h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-three', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section four" [class.active]="selectedSection === 'four'" (click)="selectSection('four')">
+      <img src="girl-2.png" alt="">
+      <div class="content">
+        <h2>Other Accessories </h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-four', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  
+    <!-- Banner Content -->
+    <div class="banner-content" *ngIf="bannerActive">
+      <div class="item" [class.active]="activeItem === 'banner-content-one'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Hats & Sunglasses</h1>
+        <p>"Complete your look with our stylish hats and sunglasses designed to add flair to any outfit."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-two'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Shirts & Jackets</h1>
+        <p>"Stay cozy and chic with our collection of trendy shirts and jackets perfect for everyday wear."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-three'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Trousers & Shorts</h1>
+        <p>"Discover our range of comfortable and fashionable trousers and shorts for every occasion."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-four'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Other Accessories</h1>
+        <p>"Enhance your style with our exquisite selection of accessories that complement any ensemble."</p>
+      </div>
+    </div>
+  </div>
+  <!--*******************************************Male****************************************-->  
+  <div class="banner" [class.active]="bannerActive" *ngIf="dynamicGender === 'Male'">
+    <!-- Banner Sections -->
+    <div class="banner-section one" [class.active]="selectedSection === 'one'" (click)="selectSection('one')">
+      <img src="jacket.png" alt="">
+      <div class="content">
+        <h2>Modern Hoodies</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-one', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section two" [class.active]="selectedSection === 'two'" (click)="selectSection('two')">
+      <img src="manpants.png" alt="">
+      <div class="content">
+        <h2>Shirts &amp; Pants</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-two', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section three" [class.active]="selectedSection === 'three'" (click)="selectSection('three')">
+      <img src="football-removebg-preview.png" alt="">
+      <div class="content">
+        <h2>Sportswear</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-three', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section four" [class.active]="selectedSection === 'four'" (click)="selectSection('four')">
+      <img src="suitMan.png" alt="">
+      <div class="content">
+        <h2>Suits</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-four', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  
+    <!-- Banner Content -->
+    <div class="banner-content" *ngIf="bannerActive">
+      <div class="item" [class.active]="activeItem === 'banner-content-one'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Modern Hoodies</h1>
+        <p>"Stay warm and stylish with our premium jackets designed for every occasion."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-two'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Shirts &amp; Pants</h1>
+        <p>"Combine comfort and style with our collection of versatile shirts and pants, perfect for any setting."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-three'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Sportswear</h1>
+        <p>"Gear up for the game with our high-performance football clothes designed for athletes."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-four'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Suits</h1>
+        <p>"Make a statement with our tailored suits perfect for formal events and business meetings."</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!--*******************************************Special****************************************-->  
+  <div class="banner" [class.active]="bannerActive" *ngIf="dynamicGender === 'Special'">
+    <!-- Banner Sections -->
+    <div class="banner-section one" [class.active]="selectedSection === 'one'" (click)="selectSection('one')">
+      <img src="antiqueCloth.png" alt="">
+      <div class="content">
+        <h2>Antique Clothes</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-one', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section two" [class.active]="selectedSection === 'two'" (click)="selectSection('two')">
+      <img src="TrendyCloth.png" alt="">
+      <div class="content">
+        <h2>Trendy Clothes</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-two', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section three" [class.active]="selectedSection === 'three'" (click)="selectSection('three')">
+      <img src="hijabCloth.png" style="left: -10px;" alt="">
+      <div class="content">
+        <h2>Hijab Clothes</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-three', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+    <div class="banner-section four" [class.active]="selectedSection === 'four'" (click)="selectSection('four')">
+      <img src="childCloth.png" alt="">
+      <div class="content">
+        <h2>Children Clothes</h2>
+        <a href="#" class="banner-btn" (click)="activateBanner('banner-content-four', $event)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+    </div>
+  
+    <!-- Banner Content -->
+    <div class="banner-content" *ngIf="bannerActive">
+      <div class="item" [class.active]="activeItem === 'banner-content-one'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Antique Clothes</h1>
+        <p>"Stay warm and stylish with our premium jackets designed for every occasion."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-two'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Trendy Clothes</h1>
+        <p>"Combine comfort and style with our collection of versatile shirts and pants, perfect for any setting."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-three'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Hijab Clothes</h1>
+        <p>"Gear up for the game with our high-performance football clothes designed for athletes."</p>
+      </div>
+      <div class="item" [class.active]="activeItem === 'banner-content-four'">
+        <div class="cancel-display" (click)="closeBanner()">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h1>Children Clothes</h1>
+        <p>"Make a statement with our tailored suits perfect for formal events and business meetings."</p>
+      </div>
+    </div>
+  </div>

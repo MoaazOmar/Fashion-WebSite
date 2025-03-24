@@ -1,0 +1,18 @@
+<div class="dropdown-container" [class.open]="isOpen">
+  <div class="dropdown-header" (click)="toggleDropdown($event)"> 
+    <span>{{ selectedCategory || 'All Categories' }}</span>
+    <i class="arrow" [class.open]="isOpen"></i>
+  </div>
+  <ul class="dropdown-list" *ngIf="isOpen">
+    <li class="dropdown-item" (click)="selectCategory('')">
+      All Categories
+    </li>
+    <li
+      class="dropdown-item"
+      *ngFor="let category of totalCategories"
+      (click)="selectCategory(category.name)"
+    >
+      {{ category.name }} ({{ category.count }})
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,81 @@
+<div class="body">
+  <div class="flex h-screen overflow-hidden">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-content">
+        <div class="logo">
+          <span class="logo-text">LUXE</span>
+          <span class="logo-subtext">Fashion Admin</span>
+        </div>
+        <nav class="nav">
+          <ul class="nav-list">
+            <li>
+              <a routerLink="/admin" routerLinkActive="active" class="sidebar-item">
+                <i class="fas fa-home sidebar-icon"></i>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/admin/add-product" routerLinkActive="active" class="sidebar-item">
+                <i class="fas fa-plus-circle sidebar-icon"></i>
+                <span>Add Product</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/admin/manage-products" routerLinkActive="active" class="sidebar-item">
+                <i class="fas fa-tshirt sidebar-icon"></i>
+                <span>Manage Products</span>
+              </a>
+            </li>
+            <li>
+              <a routerLink="/admin/manage-orders" routerLinkActive="active" class="sidebar-item">
+                <i class="fas fa-shopping-bag sidebar-icon"></i>
+                <span>Manage Orders</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="admin-info">
+          <div class="admin-avatar">AJ</div>
+          <div class="admin-details">
+            <p class="admin-name">Admin Jones</p>
+            <p class="admin-role">Fashion Director</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <div class="main-content">
+      <!-- Top navbar -->
+      <header class="topbar">
+        <div class="topbar-content">
+          <div class="breadcrumb">
+            <span class="breadcrumb-item primary">Admin</span>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-current">{{ currentPage }}</span>
+          </div>
+          <div class="topbar-controls">
+            <div class="search-container">
+              <input type="text" placeholder="Search..." class="search-input">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+            <button class="notification-btn">
+              <i class="fas fa-bell"></i>
+              <span class="notification-badge">3</span>
+            </button>
+            <button class="theme-toggle" (click)="toggleDarkMode()">
+              <i class="fas fa-moon light-icon"></i>
+              <i class="fas fa-sun dark-icon"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Child content -->
+      <main class="content-area">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,614 @@
+/* Container styling */
+.product-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+  justify-content: center;
+  align-items: start;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Product Item styling */
+.product-item {
+  position: relative;
+  height: 470px;
+  background-color: #ffffff;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+  border-radius: 12px;
+  transition: all 0.5s ease-out;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.product-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 5px 10px 10px rgba(255, 255, 255, 0.4);
+}
+
+.product-item img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  transition: transform 1s ease-out;
+  transform-origin: bottom;
+  cursor: pointer;
+
+}
+
+.product-item:hover img {
+  transform: scale(1.1);
+}
+
+.product-info {
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+}
+
+.product-info h4 {
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.product-info p {
+  font-weight: 200;
+}
+
+.cross {
+  text-decoration: line-through;
+  color: red;
+  margin-right: 8px;
+  font-size: 1rem;
+}
+
+.price {
+  color: #ff5e00;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+/* Product Item styling */
+.product-item form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  position: absolute;
+  bottom: 0;
+  /* left: 50%; */
+  width: 100%;
+  padding: 8px;
+  margin-top: 3px;
+}
+
+/* Quantity input styling */
+.product-item form .form-control {
+  width: 60px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  flex-grow:1;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.product-item form .form-control:focus {
+  transform: scale(1.05);
+  border-color: #ff5e00;
+}
+
+/* Cart button styling */
+.product-item form .btn.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  background-color: #ff5e00;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.product-item form .btn.btn-primary:hover {
+  transform: scale(1.05);
+  background-color: #ff4500;
+}
+
+.product-item form .btn.btn-primary:active {
+  transform: scale(0.95);
+}
+
+/* Optional: Bounce animation on the cart icon (if you want a subtle effect each time it renders) */
+@keyframes cartBounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.25);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply the bounce animation to the cart icon inside the button */
+.product-item form .btn.btn-primary i.fa-cart-plus {
+  animation: cartBounce 0.6s ease-in-out;
+}
+
+.btn {
+  background-color: #ff5e00; /* Button color */
+  color: white;
+  border-radius: 8px;
+  padding: 10px 15px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #ff4500; /* Darker color on hover */
+}
+
+/* Additional styling for filters, dropdowns, and pagination */
+/* Dropdowns, select wrappers, and filter labels */
+/* Main filters container */
+/* Align form elements */
+/* Add this to your CSS */
+.form-group {
+  margin: 1.5rem auto;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+#productsPerPage {
+  padding: 0.8rem 1.2rem;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#productsPerPage:hover {
+  background-color: rgba(255, 94, 0, 0.05);
+}
+
+#productsPerPage:focus {
+  outline: none;
+  border-color: #ff5e00;
+  box-shadow: 0 0 0 2px rgba(255, 94, 0, 0.1);
+}
+/* Filters container styling */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.5rem;
+  width: 90%;
+  margin: 0 auto 2rem;
+  padding: 1.5rem 0;
+}
+
+/* Each filter item (Category, Color, Sort, Search) */
+.filters-container > div {
+  flex: 1 1 220px; /* minimum width of 220px */
+  min-width: 200px;
+}
+
+/* Filter label styling */
+.filter-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem; /* Increased font size */
+}
+
+/* Custom select styling */
+.custom-select-wrapper {
+  position: relative;
+  max-width: 300px;
+}
+
+.custom-select {
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.5rem; /* Increased padding */
+  cursor: pointer;
+  background: #fff;
+  transition: border-color 0.3s ease;
+}
+
+.custom-select.active {
+  border-color: #ff5e00;
+  box-shadow: 0 0 0 2px rgba(255, 94, 0, 0.1);
+}
+
+.selected-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333;
+  font-size: 1.1rem; /* Increased font size */
+}
+
+.dropdown-icon {
+  color: #666;
+  font-size: 1.1rem; /* Increased font size */
+  transition: transform 0.3s ease;
+}
+
+.custom-select.active .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+.options-container {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 400px; /* Increased max height */
+  overflow-y: auto;
+}
+
+/* Individual option styling */
+.option {
+  padding: 1rem 1.5rem; /* Increased padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.option:hover {
+  background-color: rgba(255, 94, 0, 0.05);
+}
+
+.option.selected {
+  background-color: #ff5e00;
+  color: #fff;
+}
+.option .color-dot {
+  width: 16px;       /* Increased from 4px */
+  height: 16px;      /* Increased from 4px */
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  border: 1px solid #ddd;
+}
+/* Sort Filter styling */
+.sort-filter {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+}
+
+.sort-filter label {
+  font-size: 1.1rem; /* Increased font size */
+  font-weight: 600;
+  color: #333;
+}
+
+.sort-filter select {
+  padding: 1rem; /* Increased padding */
+  font-size: 1.1rem; /* Increased font size */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  cursor: pointer;
+}
+
+.sort-filter select:hover {
+  background-color: rgba(255, 94, 0, 0.05);
+}
+
+.sort-filter select:focus {
+  border-color: #ff5e00;
+}
+
+/* Search Filter styling */
+.search-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-filter input {
+  flex: 1;
+  padding: 1rem; /* Increased padding */
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.1rem; /* Increased font size */
+}
+
+.search-filter button {
+  padding: 1rem 1.5rem; /* Increased padding */
+  background-color: #ff5e00;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-filter button:hover {
+  background-color: #ff4500;
+}
+
+/* Pagination styling */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 30px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 2px solid #ff5e00;
+  border-radius: 6px;
+  background: transparent;
+  color: #ff5e00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+}
+
+.pagination button:hover:not([disabled]) {
+  background: #ff5e00;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.pagination button[disabled] {
+  background: #ff5e00;
+  color: white;
+  cursor: default;
+  opacity: 0.9;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .filters-container {
+    width: 95%;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .filters-container > div {
+    flex: 1 1 300px;
+  }
+
+  .product-container {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .filters-container {
+    flex-direction: column;
+  }
+
+  .custom-select-wrapper,
+  .sort-filter,
+  .search-filter {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .search-filter input {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-container {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .product-item {
+    height: auto;
+    min-height: 400px;
+  }
+
+  .product-item img {
+    height: 250px;
+  }
+}
+
+/* ---------------- Search Filter ---------------- */
+
+.search-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-filter input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.search-filter button {
+  padding: 10px 16px;
+  background-color: #ff5e00;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-filter button:hover {
+  background-color: #ff4500;
+}
+
+/* ---------------- Responsive Adjustments ---------------- */
+
+/* On very small screens, stack the filters vertically */
+
+
+/* Pagination styling */
+/* .pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 30px 0;
+}
+
+.pagination button {
+  padding: 8px 16px;
+  border: 2px solid #ff5e00;
+  border-radius: 6px;
+  background: transparent;
+  color: #ff5e00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+}
+
+.pagination button:hover:not([disabled]) {
+  background: #ff5e00;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.pagination button[disabled] {
+  background: #ff5e00;
+  color: white;
+  cursor: default;
+  opacity: 0.9;
+} */
+.pagination {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  color: #383838;
+  padding: 10px 40px;
+  border-radius: 6px;
+}
+
+.pagination ul {
+  margin: 20px 30px;
+}
+
+.pagination ul li {
+  display: inline-block;
+  margin: 0 10px;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 45px;
+  cursor: pointer;
+  background-position: 0 -45px;
+  transition: background-position 0.5s;
+}
+
+.pagination ul li.active {
+  color: #fff;
+  background-image: linear-gradient(#ff4568, #ff4568);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+.btn1,
+.btn2 {
+  display: inline-flex;
+  align-items: center;
+  font-size: 22px;
+  font-weight: 500;
+  color: #383838;
+  background: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn1 img {
+  width: 24px;
+  margin-right: 15px;
+}
+
+.btn2 img {
+  width: 24px;
+  margin-left: 15px;
+  transform: rotate(180deg);
+}
+
+/* Update the existing media query */
+@media (max-width: 768px) {
+  .filters-container {
+    gap: 0.75rem; /* Reduced from 1.5rem */
+  }
+
+  .filters-container > div {
+    flex: 1 1 100%;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .custom-select-wrapper,
+  .sort-filter,
+  .search-filter {
+    margin-bottom: 0.5rem;
+  }
+
+  .sort-filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-filter input {
+    width: 100%;
+  }
+}
+
+/* Add this for very small screens */
+@media (max-width: 480px) {
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .filters-container {
+    gap: 0.5rem;
+  }
+}

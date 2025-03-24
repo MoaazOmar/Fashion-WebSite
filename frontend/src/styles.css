@@ -1,0 +1,52 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Days+One&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    font-display: swap;
+    /* This ensures text remains visible during font load */
+}
+
+/* root */
+:root {
+    --primary: #ff0052;
+    --secondary: #3a3a3a;
+    --third: #f2f2f2;
+    --one: #005a68;
+    --two: #b20153;
+    --three: #3a5801;
+    --four: #873200;
+    --text-color: #f0f0f0;
+    --border-color: #333;
+    --lightBlue-color:#ADD8E6;
+    --hover-bg: rgba(230, 76, 101, 0.1);
+    --accent: #e64c65;
+    --light-bg: #f8f9fa;
+    --text-dark: #2d2d2d;
+    --text-light: #ffffff;
+    --dark-bg: #181818;
+    --dark-text: #e5e7eb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2a44;
+    --gray-900: #111827;
+  
+}
+
+/* body */
+body {
+    padding-top: 80px; /* Adjust based on navbar height */
+    min-height: 100vh;
+    background-color: #ff4e4e; /* Dark background */
+    overflow-x: hidden;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

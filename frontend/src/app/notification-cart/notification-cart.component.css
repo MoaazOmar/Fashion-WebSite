@@ -1,0 +1,320 @@
+/**********************************/
+/* NOTIFICATION CONTAINER & BASE  */
+/**********************************/
+.notification-container {
+    position: fixed;
+    top: 16px; /* You said you want it on the left side, so change left:16px if needed */
+    left: 16px;
+    z-index: 100000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .notification {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    color: white;
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    0%   { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  /**********************************/
+  /* BACKGROUND COLORS (Notifications) */
+  /**********************************/
+  /* Success → Blue gradient */
+  .bag-happy-notification {
+    background: linear-gradient(to right, #3b82f6, #2563eb); 
+  }
+  /* Updated → Purple gradient */
+  .updated-notification {
+    background: linear-gradient(to right, #9c27b0, #8e24aa); 
+  }
+  /* Error → Red gradient */
+  .error-notification {
+    background: linear-gradient(to right, #f44336, #e53935); 
+  }
+  
+  /* Default fallback icon (✗) */
+  .simple-icon {
+    width: 32px; 
+    height: 32px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 18px; 
+    font-weight: bold;
+  }
+  
+  /**********************************/
+  /* HAPPY BAG (SUCCESS)            */
+  /**********************************/
+  .bag-happy {
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Handle (front or behind, your choice) */
+  .bag-handle {
+    position: absolute;
+    width: 16px;
+    height: 12px;
+    /* Match the darker blue from the gradient (#2563eb) */
+    border: 3px solid #2563eb;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    top: 5px;
+    right: 0;
+    z-index: 2; 
+  }
+  
+  /* Main bag body (24px tall) */
+  .bag-happy-body {
+    position: absolute;
+    width: 32px;
+    height: 24px;
+    /* Same darker blue for the bag */
+    background-color: #2563eb;
+    border-radius: 3px;
+    bottom: 0;
+    left: 4px;
+    z-index: 3;
+  }
+  
+  /* Face (eyes + mouth) */
+  .bag-face {
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .bag-eyes::before, .bag-eyes::after {
+    content: "";
+    position: absolute;
+    width: 5px; 
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    top: 0;
+  }
+  .bag-eyes::before { left: -7px; }
+  .bag-eyes::after  { right: -7px; }
+  
+  /* Happy mouth */
+  .bag-mouth {
+    position: absolute;
+    width: 8px; 
+    height: 4px;
+    background: transparent;
+    border-radius: 0 0 8px 8px;
+    border-bottom: 2px solid white;
+    top: 6px; 
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* Two wheels at bottom corners */
+  .bag-wheel-left, .bag-wheel-right {
+    position: absolute;
+    width: 8px; 
+    height: 8px;
+    background: #2563eb;
+    border-radius: 50%;
+    bottom: -4px;
+    z-index: 2;
+  }
+  .bag-wheel-left  { left: 4px; }
+  .bag-wheel-right { left: 28px; }
+  
+  /* Shake animation for adding to cart */
+  @keyframes bagShake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(5px); }
+    50%  { transform: translateX(-5px); }
+    75%  { transform: translateX(5px); }
+    100% { transform: translateX(0); }
+  }
+  .animate-bagShake {
+    animation: bagShake 0.5s ease-in-out infinite;
+  }
+  
+  /**********************************/
+  /* SAD BAG (ERROR)                */
+  /**********************************/
+  .bag-sad {
+    position: relative;
+    width: 40px;
+    height: 48px; /* taller container to show handle behind */
+  }
+  
+  /* Handle behind the bag, use red (#e53935) to match error gradient */
+  .bag-sad-handle {
+    position: absolute;
+    width: 18px;         
+    height: 19px;        
+    border: 3px solid #e53935;
+    background-color: #e53935;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    top: 0; 
+    left: 11px; 
+    z-index: 1; 
+  }
+  
+  /* Taller bag body in red (#e53935) */
+  .bag-sad-body {
+    position: absolute;
+    width: 32px;
+    height: 32px; 
+    background-color: #e53935;
+    border-radius: 3px;
+    bottom: 0;
+    left: 4px;
+    z-index: 2;
+  }
+  
+  /* Face (eyes + mouth) */
+  .bag-face {
+    position: absolute;
+    left: 50%; 
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .bag-eyes::before, .bag-eyes::after {
+    content: "";
+    position: absolute;
+    width: 5px; 
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    top: 0;
+  }
+  .bag-eyes::before { left: -7px; }
+  .bag-eyes::after  { right: -7px; }
+  
+  /* Sad mouth (frown) */
+  .bag-frown {
+    position: absolute;
+    width: 8px; 
+    height: 4px;
+    background: transparent;
+    border-radius: 8px 8px 0 0; 
+    border-top: 2px solid white;
+    top: 8px; 
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* No wheels for sad bag */
+  
+  /* Slight "down bounce" for removal */
+  @keyframes bagSad {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(5px); }
+  }
+  .animate-bagSad {
+    animation: bagSad 0.6s ease-in-out infinite;
+  }
+  
+  /**********************************/
+  /* CLOTHING ICON (UPDATED)        */
+  /**********************************/
+  .clothing {
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
+  
+  /* Use a purple (#8e24aa) for the hanger/hook to match updated gradient */
+  .clothing-hanger {
+    position: absolute;
+    width: 24px;
+    height: 12px;
+    border: 2px solid #8e24aa; 
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  .clothing-hook {
+    position: absolute;
+    width: 2px;
+    height: 6px;
+    background: #8e24aa; 
+    top: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+  
+  /* Clothing body in purple (#8e24aa) */
+  .clothing-body {
+    position: absolute;
+    width: 32px;
+    height: 28px;
+    background: #8e24aa; 
+    border-radius: 3px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  
+  /* Face */
+  .clothing-face {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -30%);
+    z-index: 3;
+  }
+  .clothing-eyes::before, .clothing-eyes::after {
+    content: "";
+    position: absolute;
+    width: 5px; 
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    top: 0;
+  }
+  .clothing-eyes::before { left: -7px; }
+  .clothing-eyes::after  { right: -7px; }
+  .clothing-mouth {
+    position: absolute;
+    width: 8px; 
+    height: 4px;
+    background: transparent;
+    border-radius: 0 0 8px 8px;
+    border-bottom: 2px solid white;
+    top: 6px; 
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  /* Jump animation for "updated" */
+  @keyframes jump {
+    0%   { transform: translateY(0); }
+    20%  { transform: translateY(-15px); }
+    40%  { transform: translateY(0); }
+    60%  { transform: translateY(-7px); }
+    80%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+  .animate-jump {
+    animation: jump 1s ease-in-out infinite;
+  }
+  

@@ -1,0 +1,64 @@
+<form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="input-group">
+    <input id="username" formControlName="username" placeholder=" ">
+    <label for="username">Username</label>
+  <!-- Only show required error when empty -->
+  <div *ngIf="signupForm.get('username')?.errors?.['required'] && 
+             signupForm.get('username')?.touched" 
+       class="error">
+    <small>Username is required.</small>
+  </div>
+  
+  <!-- Only show bad words error when present -->
+  <div *ngIf="signupForm.get('username')?.errors?.['badWordsIncluded'] && 
+             signupForm.get('username')?.touched" 
+       class="error">      
+    <small>Username contains prohibited words. Please change.</small>
+  </div>
+  </div>
+
+<div class="input-group">
+  <input id="email" formControlName="email" placeholder=" ">
+  <label for="email">Email</label>
+  
+  <!-- Required error -->
+  <div *ngIf="signupForm.get('email')?.errors?.['required'] && 
+             signupForm.get('email')?.touched" 
+       class="error">
+    <small>Email is required.</small>
+  </div>
+  
+  <!-- Format error -->
+  <div *ngIf="signupForm.get('email')?.errors?.['email'] && 
+             signupForm.get('email')?.touched" 
+       class="error">
+    <small>Please enter a valid email.</small>
+  </div>
+</div>
+  <div class="input-group">
+    <input id="password" type="password" formControlName="password" placeholder=" ">
+    <label for="password">Password</label>
+    <div *ngIf="signupForm.get('password')?.errors?.['strongPassword']" class="error">
+      <small>{{ signupForm.get('password')?.errors?.['strongPassword'].message }}</small>
+      <ul>
+        <li *ngFor="let req of signupForm.get('password')?.errors?.['strongPassword'].requirements">
+          Must contain at least one {{ req }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="input-group">
+    <input id="confirmPassword" type="password" formControlName="confirmPassword" placeholder=" ">
+    <label for="confirmPassword">Confirm Password</label>
+    <div *ngIf="signupForm.hasError('passwordsMismatch') && signupForm.get('confirmPassword')?.touched" class="error">
+      <small>Passwords do not match.</small>
+    </div>
+  </div>
+  <div class="login-link">
+    Already have an account? <a routerLink="/login">Login</a>
+  </div>
+  <button type="submit" [disabled]="signupForm.invalid">Sign Up</button>
+
+  <div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+</form>

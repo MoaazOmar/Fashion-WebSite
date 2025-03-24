@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="slider-header">
+    <h2 class="slider-title">Browse Category</h2>
+  </div>
+
+  <div class="relative">
+    <div class="slider-container" #sliderContainer>
+      <div class="slider-wrapper" #sliderWrapper>
+        <!-- Add (click) handler to each slide to trigger navigation -->
+        <div class="slider-slide" *ngFor="let category of categories" (click)="navigateToShoppingList(category)">
+          <div class="category-card">
+            <img [src]="category.image" class="category-image" [alt]="category.name" />
+            <div class="category-info">
+              <h3 class="category-title">{{ category.gender }} {{ category.name }}</h3>
+              <p class="category-count">{{ category.productCount }} products</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <!-- Previous Button -->
+      <button class="nav-arrow slider-prev" 
+              [class.disabled]="currentIndex === 0" 
+              (click)="prevSlide()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <!-- Next Button -->
+      <button class="nav-arrow slider-next" 
+              [class.disabled]="currentIndex === totalPages - 1" 
+              (click)="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,258 @@
+<div class="product-container  container py-4 py-lg-5 px-3 px-lg-4" style="max-width: 1200px;" *ngIf="product;">
+
+  <div class="product-container container py-4 py-lg-5 px-3 px-lg-4" style="max-width: 1200px;" *ngIf="product;">
+    <header>
+      <p class="prem">Premium Designer Outfit</p>
+      <div class="link-product">
+        <ol>
+          <li [routerLink]="['/']">Home</li> /
+          <li [routerLink]="['/shopping']" [queryParams]="{ gender: product.gender ? product.gender.toString() : '' }">
+            {{ product.gender }}
+          </li> /
+          <li [routerLink]="['/shopping']"
+            [queryParams]="{ category: product.category ? product.category.toString().toLowerCase() : '' }">
+            {{ product.category }}
+          </li> /
+          <li>{{ product.name }}</li>
+        </ol>
+      </div>
+    </header>
+
+    <div class="grid">
+      <!-- Product Images Carousel -->
+      <div class="carousel-wrapper">
+        <div id="carousel-container" class="carousel-container">
+          <img [src]="product.image[activeDotIndex]" alt="{{ product.name }}" class="product-img">
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot" *ngFor="let img of product.image; let i = index"
+            [class.active]="i === activeDotIndex" (click)="onDotClick(i)">
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Information (Updated) -->
+      <div>
+        <h2 style="margin-bottom: 10px;">{{ product.name }}</h2>
+        <div class="flex-container">
+          <div>
+            <div class="rating-overview">
+              <span class="average-rating">{{ getAverageRating().toFixed(1) }}</span>
+              <div class="stars">
+                <div>
+                  <i *ngFor="let i of [1,2,3,4,5]" [ngClass]="getStarClass(i)"></i>
+                </div>
+                <span class="review-count">based on {{ getTotalRatedComments() }} reviews</span>
+              </div>
+            </div>
+          </div>
+          <div class="price">
+            <p>${{ product.price }}</p>
+          </div>
+        </div>
+
+        <!-- Add Color and Stock Status -->
+        <div class="product-details" style="margin-top: 10px;">
+          <p><strong>Color:</strong> {{ product.color }}</p>
+          <p>
+            <strong>Stock:</strong>
+            <span [ngClass]="{'in-stock': product.stock, 'out-stock': !product.stock}">
+              {{ product.stock ? 'In Stock ✔' : 'Out of Stock ✖' }}
+            </span>
+          </p>
+        </div>
+
+        <!-- Product Actions -->
+        <div class="actions">
+          <div class="button-group">
+            <button class="add-to-cart">Add to Cart</button>
+            <!-- Like Button -->
+            <button id="product-like-btn" class="action-btn" (click)="onProductLikeDblClick()"
+              [ngClass]="{'active-like': productLiked}">
+              <i class="fas fa-heart" *ngIf="productLiked"></i>
+              <i class="far fa-heart" *ngIf="!productLiked"></i>
+              <span>{{ productLikeCount }}</span>
+            </button>
+
+            <!-- Dislike Button -->
+            <button id="product-dislike-btn" class="action-btn" (click)="onProductDislikeDblClick()"
+              [ngClass]="{'active-dislike': productDisliked}">
+              <i class="fas fa-thumbs-down" *ngIf="productDisliked"></i>
+              <i class="far fa-thumbs-down" *ngIf="!productDisliked"></i>
+              <span>{{ productDislikeCount }}</span>
+            </button>
+          </div>
+          <div class="quantity-container">
+            <div class="quantity-control">
+              <button class="decrement" (click)="decrement()">-</button>
+              <span class="quantity">{{ quantity }}</span>
+              <button class="increment" (click)="increment()">+</button>
+            </div>
+            <button class="favorite-btn" (click)="toggleFavorite(product)">
+              <i class="fas fa-heart heart-icon" [class.favorited]="isFavorite"></i>
+              <span class="btn-text">Add to Favorite</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- First Tab Group (General Product Details) -->
+        <div class="tabs">
+          <div class="tab-bar">
+            <button class="tab-btn" [class.active]="activeTabGroupOne === 'description'"
+              (click)="activeTabGroupOne = 'description'">
+              Description
+            </button>
+            <button class="tab-btn" [class.active]="activeTabGroupOne === 'details'"
+              (click)="activeTabGroupOne = 'details'">
+              Details
+            </button>
+            <button class="tab-btn" [class.active]="activeTabGroupOne === 'shipping'"
+              (click)="activeTabGroupOne = 'shipping'">
+              Shipping
+            </button>
+          </div>
+        </div>
+        <div id="tab-content">
+          <div class="tab-content" [class.hidden]="activeTabGroupOne !== 'description'">
+            <p>{{ product.description }}</p>
+          </div>
+          <div class="tab-content" [class.hidden]="activeTabGroupOne !== 'details'">
+            <h3>Materials</h3>
+            <p>Dynamic material information here.</p>
+            <h3>Care Instructions</h3>
+            <p>Dynamic care instructions here.</p>
+            <h3>Sustainability</h3>
+            <p>Dynamic sustainability info here.</p>
+          </div>
+          <div class="tab-content tab-content-shipping" [class.hidden]="activeTabGroupOne !== 'shipping'">
+            <div class="info-grid">
+              <div class="info-item">
+                <i class="fas fa-leaf icon green"></i>
+                <div>
+                  <h3>Sustainable Fabric</h3>
+                  <p>Made with eco-friendly materials</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-truck icon blue"></i>
+                <div>
+                  <h3>Free Shipping</h3>
+                  <p>On orders over $100</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-undo-alt icon red"></i>
+                <div>
+                  <h3>Easy Returns</h3>
+                  <p>30-day return policy</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-shield-alt icon yellow"></i>
+                <div>
+                  <h3>Secure Checkout</h3>
+                  <p>Safe & encrypted payment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-browse-categories></app-browse-categories>
+    <!-- Second Tab Group (Additional Product Details) -->
+    <div class="tabs">
+      <div class="tab-bar">
+        <button class="tab-btn" [class.active]="activeTabGroupTwo === 'descriptionDetailed'"
+          (click)="activeTabGroupTwo = 'descriptionDetailed'">
+          Shop Description
+        </button>
+        <button class="tab-btn" [class.active]="activeTabGroupTwo === 'detailsCare'"
+          (click)="activeTabGroupTwo = 'detailsCare'">
+          Details & Care
+        </button>
+        <button class="tab-btn" [class.active]="activeTabGroupTwo === 'reviews'"
+          (click)="activeTabGroupTwo = 'reviews'">
+          Reviews ({{commentsCount}})
+        </button>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div class="product-tab" [class.hidden]="activeTabGroupTwo !== 'descriptionDetailed'">
+        <p>{{ product.descriptionDetailed }}</p>
+        <div class="bigHolder">
+          <div class="Premium-Craftsmanship">
+            <h2>Premium Craftsmanship</h2>
+            <p>Expertly constructed with reinforced seams and detailed finishing for long-lasting quality.</p>
+          </div>
+          <div class="Sustainable-Materials">
+            <h2>Sustainable Materials</h2>
+            <p>Made from eco-friendly fabrics that are responsibly sourced and manufactured.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-tab" [class.hidden]="activeTabGroupTwo !== 'detailsCare'">
+        <h3>Materials</h3>
+        <ul>
+          <li>Material: 78% Organic Cotton, 20% Recycled Polyester, 2% Elastane</li>
+          <li>Fitted silhouette with slight stretch for comfort</li>
+          <li>Concealed back zip with hook-and-eye closure</li>
+          <li>Fully lined for opaque coverage</li>
+          <li>Mid-weight fabric (240 gsm)</li>
+          <li>Model is 5'9" and wearing size S</li>
+        </ul>
+        <h3>Care Instructions</h3>
+        <ul>
+          <li>Machine wash cold on gentle cycle.</li>
+          <li>Use mild detergent</li>
+          <li>Do not bleach</li>
+          <li>Hang or lay flat to dry</li>
+          <li>Iron on low heat if needed</li>
+          <li>Dry clean optional</li>
+        </ul>
+        <h4>Shipping & Returns</h4>
+        <h3>Free standard shipping on all orders over $100. Express shipping available for an additional fee. Easy
+          returns
+          within 30 days of delivery. Item must be unworn, unwashed, and with original tags attached.</h3>
+      </div>
+
+      <div class="product-tab" [class.hidden]="activeTabGroupTwo !== 'reviews'">
+        <div class="product-tab" [class.hidden]="activeTabGroupTwo !== 'reviews'">
+          <div class="review-summary">
+            <!-- Rating Overview -->
+            <div class="rating-overview">
+              <span class="average-rating">{{ getAverageRating().toFixed(1) }}</span>
+              <div class="stars">
+                <div>
+                  <i *ngFor="let i of [1,2,3,4,5]" [ngClass]="getStarClass(i)"></i>
+                </div>
+                <span class="review-count">based on {{ getTotalRatedComments() }} reviews</span>
+
+              </div>
+            </div>
+            <!-- Rating Distribution -->
+            <div class="rating-distribution">
+              <div class="rating-bar" *ngFor="let star of [5,4,3,2,1]">
+                <span>{{ star }} stars</span>
+                <div class="bar-container">
+                  <div class="bar" [style.width]="getStarPercentage(star) + '%'"></div>
+                </div>
+                <span>{{ getStarPercentage(star).toFixed(0) }}%</span>
+              </div>
+            </div>
+            <!-- Write a Review Button -->
+            <button class="write-review-btn" (click)="openReviewForm()">Write a Review</button>
+          </div>
+          <app-comment-section></app-comment-section>
+        </div>
+      </div>
+    </div>
+    <app-you-may-also-like></app-you-may-also-like>
+    <ng-template #loading>
+      <div class="loading-container">
+        <div class="loading-spinner"></div>
+        <p>Loading product details...</p>
+      </div>
+    </ng-template>

@@ -1,0 +1,104 @@
+
+<!-- -----------------------------------------------separtor -->
+
+<div class="search-container">
+  <!-- LEFT PANEL: Product List -->
+  <div class="list-panel" #listPanel>
+    <!-- Button Container for Sort and Filter -->
+    <div class="button-container">
+      <button (click)="openFilterSidebar()" class="action-button">
+        <i class="fas fa-filter"></i>
+        <span class="button-text">Filter</span>
+      </button>
+      <app-sort-dropdown (sortSelected)="changeTheSort($event)"></app-sort-dropdown>
+    </div>
+
+    <!-- Search Results List -->
+    <div class="search-results">
+      <div class="results-header">
+        <h2 class="results-title">Result of <strong>{{ query }}</strong></h2>
+        <span class="results-count">{{ totalSearchProducts }} Results</span>
+      </div>
+      <div class="product-grid" *ngIf="results.length; else noResults">
+        <article class="product-card" *ngFor="let product of results" (click)="openDetail(product)"
+          [class.selected]="selectedProduct?._id === product._id">
+          <div class="product-image">
+            <img [src]="product.image[0]" alt="Product Image">
+            <button class="quick-view">Quick View</button>
+          </div>
+          <div class="product-details">
+            <h3 class="product-name">{{ product.name }}</h3>
+            <p class="product-price">{{ product.price | currency }}</p>
+          </div>
+        </article>
+      </div>
+      <ng-template #noResults>
+        <p class="no-results">No results found for "{{ query }}"</p>
+      </ng-template>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-controls">
+      <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }}</span>
+      <button (click)="changePage(currentPage + 1)" [disabled]="results.length < itemsPerPage">Next</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL: Detail View -->
+  <div class="detail-panel" #detailPanel>
+    <button class="close-button" (click)="closeDetail()">
+      <svg viewBox="0 0 24 24">
+        <path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z" />
+      </svg>
+    </button>
+    <div class="detail-content" *ngIf="selectedProduct">
+      <img class="detail-image" [src]="selectedProduct.image[0]" alt="{{ selectedProduct.name }}">
+      <h2 class="product-title">{{ selectedProduct.name }}</h2>
+      <div class="detail-info">
+        <p class="detail-item"><span class="detail-label">Price:</span> {{ selectedProduct.price | currency }}</p>
+        <p class="detail-item"><span class="detail-label">Color:</span> {{ selectedProduct.color }}</p>
+        <p class="detail-item"><span class="detail-label">Category:</span> {{ selectedProduct.category }}</p>
+        <p class="detail-item"><span class="detail-label">Gender:</span> {{ selectedProduct.gender }}</p>
+        <p class="detail-item">
+          <span class="detail-label">Stock:</span>
+          <span [class]="selectedProduct.stock ? 'in-stock' : 'out-stock'">
+            {{ selectedProduct.stock ? 'Available' : 'Out of Stock' }}
+          </span>
+        </p>
+        <div class="detail-item description">
+          <span class="detail-label">Description:</span>
+          <p class="truncated-description">
+            {{ selectedProduct.description | truncate:15 }}
+            <button *ngIf="selectedProduct?.description && selectedProduct.description.split(' ').length > 15"
+              class="read-more" [routerLink]="['/products', selectedProduct._id]">
+              Read More
+            </button>
+          </p>
+        </div>
+        <div class="additional-details">
+          <div class="detail-stat"><span class="stat-label">Likes:</span> {{ selectedProduct.likes }}</div>
+          <div class="detail-stat"><span class="stat-label">Dislikes:</span> {{ selectedProduct.dislikes }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Sidebar -->
+  <app-filter-sidebar
+  [isOpen]="isFilterSidebarOpen"
+  [FilteringColors]="FilteringColors"
+  [totalCategories]="totalCategories"
+  [productPerPageHolder]="productPerPageHolder"
+  [selectedColors]="selectedColors" 
+  [selectedCategories]="selectedCategories" 
+  [selectedGenders]="selectedGenders" 
+  [itemsPerPage]="itemsPerPage"
+  (colorSelected)="changeTheColor($event)"
+  (categorySelected)="changeTheCategory($event)"
+  (genderSelected)="changeTheGender($event)"
+  (itemsPerPageSelected)="setItemsPerPage($event)"
+  (close)="closeFilterSidebar()"
+>
+</app-filter-sidebar>
+</div>

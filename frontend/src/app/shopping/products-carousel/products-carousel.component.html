@@ -1,0 +1,41 @@
+<div class="big-container">
+  <!-- Most Liked Carousel -->
+  <div class="container">
+    <h2 class="carousel-label">Most Liked Products</h2>
+    <div class="image fade" 
+         *ngFor="let product of mostLikedProducts; let i = index"
+         [class.active]="i === currentLikedIndex">
+      <img [src]="product.image" [alt]="product.name">
+    </div>
+
+    <i class="arrow left" (click)="prevLiked()"><i class="fa-solid fa-chevron-left"></i></i>
+    <i class="arrow right" (click)="nextLiked()"><i class="fa-solid fa-chevron-right"></i></i>
+
+    <div class="dots">
+      <span class="dot" 
+            *ngFor="let product of mostLikedProducts; let i = index"
+            [ngClass]="{ active: i === currentLikedIndex }" 
+            (click)="goToLiked(i)"></span>
+    </div>
+  </div>
+
+  <!-- Most Recent Carousel -->
+  <div class="container">
+    <h2 class="carousel-label">Most Recent Products</h2>
+    <div class="image fade" 
+         *ngFor="let product of mostRecentProducts; let i = index"
+         [class.active]="i === currentRecentIndex">
+      <img [src]="product.image" [alt]="product.name">
+    </div>
+
+    <i class="arrow left" (click)="prevRecent()"><i class="fa-solid fa-chevron-left"></i></i>
+    <i class="arrow right" (click)="nextRecent()"><i class="fa-solid fa-chevron-right"></i></i>
+
+    <div class="dots">
+      <span class="dot" 
+            *ngFor="let product of mostRecentProducts; let i = index"
+            [ngClass]="{ active: i === currentRecentIndex }" 
+            (click)="goToRecent(i)"></span>
+    </div>
+  </div>
+</div>

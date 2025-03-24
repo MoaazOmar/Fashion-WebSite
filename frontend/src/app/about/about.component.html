@@ -1,0 +1,80 @@
+<div class="body" [class.active]="isBodyActive">
+
+    <header [class.active]="isBannerActive">
+        <a href="/" (click)="$event.preventDefault()" class="logo">About</a>
+        <a href="#" class="menu" [class.active]="isMenuActive" (click)="toggleMenu(); $event.preventDefault()">
+            <i class="fa-solid fa-border-all"></i>
+        </a>
+        <ul class="nav">
+            <li><a (click)="$event.preventDefault()" href="#">Women</a></li>
+            <li><a (click)="$event.preventDefault()" href="#">Men</a></li>
+            <li><a (click)="$event.preventDefault()" href="#">New Collection</a></li>
+        </ul>
+        <ul class="nav-mobile" [class.active]="isMenuActive">
+            <li><a (click)="$event.preventDefault()" href="#">Women</a></li>
+            <li><a (click)="$event.preventDefault()" href="#">Men</a></li>
+            <li><a (click)="$event.preventDefault()" href="#">New Collection</a></li>
+        </ul>
+    </header>
+    <div class="banner banner-left" [class.active]="isBannerActive">
+        <div class="content">
+            <h1 class="title">Fashion</h1>
+            <a href="#" class="btn" (click)="toggleBanner(); $event.preventDefault()">
+                Browse<i class="fa-regular fa-circle-left"></i>
+            </a>
+            <a href="#" class="arrow" (click)="toggleBanner(); $event.preventDefault()">
+                <i class="fa-regular fa-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="banner-middle" [class.active]="isBannerActive">
+        <div class="container">
+            <div class="swiper-women">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="women-about-1.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-2.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-3.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-4.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-5.jpg"></div>
+                </div>
+            </div>
+            <div class="swiper-men">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="men-about-1.jpg"></div>
+                    <div class="swiper-slide"><img src="men-about-2.jpg"></div>
+                    <div class="swiper-slide"><img src="men-about-3.jpg"></div>
+                    <div class="swiper-slide"><img src="men-about-4.jpg"></div>
+                    <div class="swiper-slide"><img src="men-about-5.jpg"></div>
+                </div>
+            </div>
+            <div class="swiper-new">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="women-about-6.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-7.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-8.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-9.jpg"></div>
+                    <div class="swiper-slide"><img src="women-about-10.jpg"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="banner-right" [class.active]="isBannerActive">
+        <h1>Spring</h1>
+        <span class="number">#01</span>
+        <div class="content">
+            <img src="women-about-1.jpg" />
+            <div class="description">
+                <span class="date">Blog | 03 March 2025</span>
+                <p>
+                    Breezy fabrics, pastel hues, and lightweight layers steal the spotlight this spring. Flowy dresses,
+                    tailored blazers, and cheerful accessories bring wardrobe refreshment. Soft florals, crisp cotton,
+                    and hints of vintage charm bloom in style. Comfort meets elegance as spring fashion blossoms with
+                    versatility, celebrating individuality and seasonal vibrance!
+                </p>
+                <a href="#" (click)="toggleBanner(); $event.preventDefault()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

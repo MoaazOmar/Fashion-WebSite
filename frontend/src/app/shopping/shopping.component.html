@@ -1,0 +1,51 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<div class="carousel">
+  <div class="counter">
+    <svg width="50" height="50">
+      <circle cx="25" cy="25" r="20" stroke="#ff5e00" stroke-width="4" fill="none" />
+    </svg>
+    <div class="countdown">8</div>
+  </div>
+
+  <!-- shopping.component.html -->
+  <div class="list">
+    <div *ngFor="let product of carouselProducts; let i = index" class="item">
+      <!-- Changed allProducts to carouselProducts -->
+      <img [src]="product.image" alt="{{ product.name }}">
+      <div class="content">
+        <h3 *ngIf="i === 0"><i class="fa-solid fa-rocket"></i>Most Liked</h3>
+        <h3 *ngIf="i === 1"><i class="fa-solid fa-fire"></i>Trendy</h3>
+        <h3 *ngIf="i === 2"><span>✨</span> New Product</h3>
+        <h3>{{ product.name }}</h3>
+        <div class="author">{{ product.color }}</div>
+        <div class="topic">{{ product.category }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="thumnail">
+    <div *ngFor="let product of carouselProducts; let i = index" class="item">
+      <!-- Changed allProducts to carouselProducts -->
+      <img [src]="carouselProducts[(i + 1) % carouselProducts.length].image"
+        alt="{{ carouselProducts[(i + 1) % carouselProducts.length].name }}">
+      <div class="content">
+        <div class="title">{{ carouselProducts[(i + 1) % carouselProducts.length].name }}</div>
+        <div class="description">{{ carouselProducts[(i + 1) % carouselProducts.length].category }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="arrows">
+    <button id="prev"><i class="fa-solid fa-angle-left"></i></button>
+    <button id="next"><i class="fa-solid fa-angle-right"></i></button>
+  </div>
+
+  <div class="time"></div>
+</div>
+
+<app-products-carousel></app-products-carousel>
+<app-theater></app-theater>
+<app-products></app-products>

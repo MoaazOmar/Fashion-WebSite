@@ -1,0 +1,18 @@
+<div class="dropdown-container" [class.open]="isOpen">
+    <div class="dropdown-header" (click)="toggleDropdown()">
+      <span>{{ selectedColor || 'All' }}</span>
+      <i class="arrow" [class.open]="isOpen"></i>
+    </div>
+    <ul class="dropdown-list" *ngIf="isOpen">
+      <li class="dropdown-item" (click)="selectColor('')">
+        All
+      </li>
+      <li
+        class="dropdown-item"
+        *ngFor="let color of FilteringColors ?? []"
+        (click)="selectColor(color.name)"
+      >
+        {{ color.name }} ({{ color.count }})
+      </li>
+    </ul>
+  </div>

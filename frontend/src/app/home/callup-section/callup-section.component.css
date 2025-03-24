@@ -1,0 +1,43 @@
+/* Call-Up Section */
+.call-up {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px 100px;
+    background: var(--background);
+}
+
+.call-up-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: white;
+    margin: 0 10px;
+}
+
+.call-up-box .icon i {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.call-up-box h4 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.call-up-box p {
+    font-size: 1em;
+    color: var(--secondary);
+}
+
+.call-up-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.2);
+}
+

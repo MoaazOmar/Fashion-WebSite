@@ -1,0 +1,347 @@
+/* ======================================
+   Base Layout & Utility Classes
+====================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.flex {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.items-center {
+  align-items: center;
+}
+
+/* ======================================
+   Header & Navigation
+====================================== */
+header {
+  background-color: white;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dark header {
+  background-color: var(--gray-800);
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.logo span {
+  font-weight: 300;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--gray-600);
+  transition: color 0.2s;
+}
+
+.dark nav a {
+  color: var(--gray-300);
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--primary-color);
+}
+
+/* ======================================
+   Main Content & Typography
+====================================== */
+main {
+  padding: 2rem 0;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+/* ======================================
+   Form Elements
+====================================== */
+select {
+  background-color: white;
+  border: 1px solid var(--gray-300);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  margin-left: 1rem;
+}
+
+.dark select {
+  background-color: var(--gray-800);
+  border-color: var(--gray-700);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(93, 92, 222, 0.2);
+}
+
+/* ======================================
+   Favorites Section
+====================================== */
+#favoritesCount {
+  color: var(--gray-600);
+  margin-bottom: 1.5rem;
+}
+.dark #favoritesCount {
+  color: var(--gray-400);
+}
+
+#emptyState {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 0;
+  text-align: center;
+}
+#emptyState.hidden {
+  display: none;
+}
+
+/* ======================================
+   Grid Layout & Cards
+====================================== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem 0;
+}
+
+.card {
+  background: var(--light-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.dark .card {
+  background: var(--gray-800);
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image-container {
+  position: relative;
+  padding-bottom: 100%;
+  background: var(--gray-100);
+  overflow: hidden;
+}
+.dark .image-container {
+  background: var(--gray-700);
+}
+.image-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Remove Favorite Button */
+.remove-favorite {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.dark .remove-favorite {
+  background-color: var(--gray-800);
+}
+.remove-favorite:hover {
+  background-color: var(--gray-100);
+}
+.dark .remove-favorite:hover {
+  background-color: var(--gray-700);
+}
+
+/* Card Content */
+.card-content {
+  padding: 1rem;
+}
+.card h3 {
+  font-weight: 500;
+  font-size: 1.125rem;
+  margin-bottom: 0.25rem;
+  transition: color 0.2s;
+}
+.card:hover h3 {
+  color: var(--primary-color);
+}
+.card .category {
+  color: var(--gray-500);
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+.dark .card .category {
+  color: var(--gray-400);
+}
+
+/* Price & Cart Button */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.price {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+.add-to-cart {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem;
+  border: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.add-to-cart:hover {
+  background-color: #4b4ac8;
+}
+
+/* ======================================
+   No Results & Empty States
+====================================== */
+#noResults div {
+  background-color: var(--gray-800);
+  color: var(--gray-200);
+  padding: 3rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+#noResults div:hover {
+  transform: translateY(-5px);
+}
+#noResults h3 {
+  color: var(--gray-100);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+#noResults p {
+  color: var(--gray-400);
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 2rem;
+}
+
+.no-results-container {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 0;
+  background-color: var(--gray-800);
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+}
+.no-results-container h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--gray-200);
+}
+.no-results-container p {
+  color: var(--gray-400);
+  margin-bottom: 1.5rem;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.no-resultH3 {
+  font-size: 2rem;
+  margin: 30px 0;
+}
+.no-resultP {
+  font-size: 1.3rem;
+  margin: 30px 0;
+}
+
+/* ======================================
+   Enhanced Button Styling
+====================================== */
+#noResults a,
+#emptyState a,
+.browse-btn {
+  background-color: var(--primary) !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  font-weight: 500 !important;
+  font-size: 1rem;
+  transition: all 0.3s ease !important;
+  display: inline-block !important;
+}
+#noResults a:hover,
+#emptyState a:hover,
+.browse-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 0, 82, 0.3);
+}
+.browse-btn{
+  background: var(--primary)!important;
+}
+/* ======================================
+   Additional Styles & Animations
+====================================== */
+.holder {
+  background: var(--lightBlue-color);
+}
+
+/* Crying Creature Animations */
+@keyframes cry {
+  0% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.05); }
+  100% { transform: translateY(0) scale(1); }
+}
+@keyframes tear-fall {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(20px); opacity: 0; }
+}
+.crying-creature {
+  margin-bottom: 1.5rem;
+  animation: cry 1.5s ease-in-out infinite;
+}
+.tear {
+  animation: tear-fall 1s linear infinite;
+}

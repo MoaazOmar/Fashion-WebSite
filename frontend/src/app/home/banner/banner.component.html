@@ -1,0 +1,33 @@
+<div id="banner" class="banner" #banner>
+    <!-- left-part -->
+    <div class="women">
+      <img src="women-1.jpg">
+      <a href="#" class="switch-btn" (click)="switchBanner('left')">Women</a> 
+      <div class="content">
+        <h1>Ladies Fashion</h1>
+        <p>Discover the latest trends in women's fashion. From chic dresses to stylish accessories, our collection offers something for every occasion. Step out in confidence and express your unique style with our diverse range of clothing designed for modern women.</p>
+        <a [routerLink]="['/shopping']" [queryParams]="{ gender: 'Female' }">Shop Women</a>      </div>
+    </div>
+    <!-- middle-part -->
+    <div class="men">
+      <img src="men-1.jpg">
+      <a href="#" class="switch-btn" (click)="switchBanner('middle')">Men</a>
+      <div class="content">
+        <h1>Men with Taste</h1>
+        <p>Explore contemporary men's fashion. From classic suits to casual wear, our collection features quality garments for the modern man. Whether you're dressing for a business meeting or a casual weekend, our styles ensure you look your best.</p>
+        <a [routerLink]="['/shopping']" [queryParams]="{ gender: 'Male' }">Shop Men</a>
+      </div>
+    </div>
+    <!-- right-part -->
+    <div class="special">
+      <img src="special-2.jpg">
+      <a href="#" class="switch-btn" (click)="switchBanner('right')">Special</a>
+      <div class="content">
+        <h1>Special Collections</h1>
+        <p>Unveil unique fashion pieces in our Special Collections. Featuring limited editions, collaborations, and exclusive designs, this category showcases the most unique and extraordinary items for fashion-forward individuals.</p>
+        <a [routerLink]="['/shopping']" [queryParams]="{ gender: 'Special' }">Shop Special</a>
+      </div>
+    </div>
+    <a href="#" #resetBtn (click)="resetBanner()" class="reset"><i class="fa-solid fa-power-off"></i></a>
+  </div>
+  

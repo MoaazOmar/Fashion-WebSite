@@ -1,0 +1,147 @@
+.checkout-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    border: 1px solid #ff44cc;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+  }
+
+  form {
+    position: relative;
+    padding: 2rem;
+    border-left: 3px solid #ff44cc;
+  }
+
+  h3 {
+    font-size: 2rem;
+    color: #ff44cc;
+    margin: 0 0 2rem 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-weight: 300;
+    text-shadow: 0 0 15px rgba(255,68,204,0.3);
+  }
+
+  label {
+    display: block;
+    margin: 1.5rem 0 0.5rem;
+    color: #fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid #444;
+    color: #fff;
+    font-size: 1.1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding-right: 40px;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #ff44cc;
+    box-shadow: 0 0 15px rgba(255,68,204,0.2);
+    background: rgba(255,68,204,0.05);
+  }
+
+  button[type="submit"] {
+    background: linear-gradient(45deg, #ff44cc, #ff0066);
+    color: white;
+    padding: 1.2rem 3rem;
+    border: none;
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  button[type="submit"]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255,68,204,0.3);
+  }
+
+  button[type="submit"]:disabled {
+    background: #444;
+    color: #666;
+    cursor: not-allowed;
+  }
+
+  .order-items {
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid #444;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid #333;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    color: white;
+  }
+
+  .order-item:last-child {
+    border-bottom: none;
+  }
+
+  .order-item div:last-child {
+    color: #ff44cc;
+    font-weight: bold;
+  }
+
+  @media (max-width: 768px) {
+    .checkout-container {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    
+    body {
+      padding: 1rem;
+    }
+  }
+
+  /* Fashionable Extras */
+  .glow {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,68,204,0.2) 0%, rgba(255,68,204,0) 70%);
+    pointer-events: none;
+  }
+  .input-info{
+    position: relative;
+  }
+  .material-icon {
+    position: absolute;
+    right: 9px;
+    color: #ff44cc;
+    top: 35px;
+  }
+  .error {
+    color: red;
+    font-weight: bolder; 
+    font-size: 18px;
+    border: 1px solid red;
+    padding: 8px 16px; 
+    border-radius: 4px; 
+    margin-top: 5px;
+    background: #ffe6e6; 
+    width: fit-content;
+    letter-spacing: 0.5px;
+    gap: 3px;
+}

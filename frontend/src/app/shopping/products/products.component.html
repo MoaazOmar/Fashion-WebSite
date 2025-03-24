@@ -1,0 +1,117 @@
+<!-- Filters Container -->
+<div class="filters-container">
+  <!-- Category Filter -->
+  <div class="custom-select-wrapper">
+    <label for="categoryFilter" class="filter-label">Category:</label>
+    <div class="custom-select" (click)="toggleDropdown()" [class.active]="isDropdownOpen">
+      <div class="selected-option">
+        {{ getSelectedCategoryLabel() }}
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </div>
+      <div class="options-container" id="options-container-for-Category" *ngIf="isDropdownOpen">
+        <!-- All Categories option -->
+        <div class="option" (click)="selectCategory('')" [class.selected]="selectedCategory === ''">
+          <span class="category-name">All Categories</span>
+          <span class="category-count">{{DisplayingfullProductsNumber}}</span>
+        </div>
+        <!-- Other categories -->
+        <div class="option" *ngFor="let category of uniqueCategories" (click)="selectCategory(category.name)"
+          [class.selected]="selectedCategory === category.name">
+          <span class="category-name">{{ category.name }}</span>
+          <span class="category-count">({{ category.count }})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Filter -->
+  <div class="custom-select-wrapper">
+    <label for="colorFilter" class="filter-label">Color:</label>
+    <div class="custom-select" (click)="toggleColorDropdown()" [class.active]="isColorDropdownOpen">
+      <div class="selected-option">
+        {{ getSelectedColorLabel() }}
+        <i class="fas fa-chevron-down dropdown-icon"></i>
+      </div>
+      <div class="options-container" *ngIf="isColorDropdownOpen">
+        <div class="option" (click)="selectColor('')" [class.selected]="selectedColor === ''">
+          <span class="color-name">All Colors</span>
+          <span class="color-count">{{DisplayingfullProductsNumber}}</span>
+        </div>
+        <div class="option" *ngFor="let color of uniqueColors" (click)="selectColor(color.name)"
+          [class.selected]="selectedColor === color.name">
+          <span class="color-dot" [style.backgroundColor]="color.name.toLowerCase()"></span>
+          <span class="color-name">{{ color.name | titlecase }}</span>
+          <span class="color-count">({{ color.count }})</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sort Filter -->
+  <div class="sort-filter">
+    <label>Sort By:</label>
+    <select [(ngModel)]="selectedSort" (change)="onSortChange()">
+      <option value="newest">Newest Arrivals</option>
+      <option value="oldest">From old to new</option>
+      <option value="price_asc">Price: Low to High</option>
+      <option value="price_desc">Price: High to Low</option>
+    </select>
+  </div>
+
+  <!-- Search Filter -->
+  <div class="search-filter">
+    <input type="text" [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Search products...">
+    <button (click)="onSearch()">
+      <i class="fas fa-search"></i>
+    </button>
+  </div>
+</div>
+
+<!-- Product Container with a single loop -->
+<div class="product-container" [@listAnimation]="allProducts.length">
+  <div *ngFor="let product of allProducts" class="product-item" [class.visible]="product.visible">
+    <img [src]="product.image" alt="Product Image" [routerLink]="['/products', product._id]"/>
+    <div class="product-info">
+      <h4>{{ product.name }}</h4>
+      <p>
+        <span *ngIf="product.price" class="cross">{{ product.price }}</span>
+        <span class="price">{{ product.price }}</span>
+      </p>
+    </div>
+    <form (submit)="addToCart(product)">
+      <input type="number" [(ngModel)]="product.amount" name="amount" class="form-control mb-2" placeholder="Quantity"
+        min="1">
+      <button type="submit" class="btn btn-primary">
+        <i type="submit" class="fa-solid fa-cart-plus"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Pagination Controls -->
+<div class="container">
+  <div class="pagination">
+    <button class="btn1" (click)="backBtn()">
+      <img src="https://th.bing.com/th/id/R.b0fe0ec70022874db919640c6847dab5?rik=GnxyELASbLc4xw&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2f4i9%2fpXj%2f4i9pXjxAT.png&ehk=IChqDnthjyfajB3VWJYfHXPh1aYUzZqFO270ExJAclk%3d&risl=&pid=ImgRaw&r=0" alt="Previous"> prev
+    </button>
+    <ul>
+      <li *ngFor="let page of totalPages"
+          class="link"
+          [class.active]="currentPage === page"
+          (click)="activeLink(page)">
+        {{ page }}
+      </li>
+    </ul>
+    <button class="btn2" (click)="nextBtn()">
+      next <img src="https://th.bing.com/th/id/R.b0fe0ec70022874db919640c6847dab5?rik=GnxyELASbLc4xw&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2f4i9%2fpXj%2f4i9pXjxAT.png&ehk=IChqDnthjyfajB3VWJYfHXPh1aYUzZqFO270ExJAclk%3d&risl=&pid=ImgRaw&r=0" alt="Next">
+    </button>
+  </div>
+</div>
+
+
+<div>
+  <label for="productsPerPage">Products per page:</label>
+  <select id="productsPerPage" [(ngModel)]="productsPerPage" (change)="updateProductsPerPage()">
+    <option *ngFor="let option of [4, 8, 10, 20]" [value]="option">{{ option }}</option>
+  </select>
+</div>

@@ -1,0 +1,539 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Lobster&family=Lobster+Two&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap');
+
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables */
+:root {
+    --primary: #ff0077;
+}
+
+/* Body styles */
+.body {
+    position: relative;
+    background-color: white;
+    font-family: 'Lobster', cursive;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Header styles */
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 64px;
+    z-index: 20;
+    transition: 1s;
+    transition-delay: 0.5s;
+}
+
+header.active {
+    width: 10%;
+}
+
+.logo {
+    font-family: 'Lobster Two', cursive;
+    font-size: 30px;
+    color: black;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+header.active .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Navigation styles */
+.nav {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s;
+    transform-origin: left;
+}
+
+header.active .nav {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.nav li {
+    list-style: none;
+    margin: 0 25px;
+}
+
+.nav li a {
+    color: #000000;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.nav li:hover a,
+.nav-mobile li:hover a {
+    color: var(--primary);
+}
+
+/* Mobile navigation styles */
+.nav-mobile {
+    position: absolute;
+    left: 50%;
+    top: 250%;
+    transform: translateX(-50%);
+    transition: 0.5s;
+    transform-origin: top;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.nav-mobile.active {
+    display: flex;
+    flex-direction: column;
+    opacity: 1;
+    visibility: visible;
+    height: fit-content;
+}
+
+.nav-mobile li {
+    list-style: none;
+    transform: rotateZ(90deg);
+    margin-top: 90px;
+    width: 200px;
+    font-size: smaller;
+}
+
+.nav-mobile li a {
+    text-decoration: none;
+    display: inline;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.5s;
+    font-weight: 300;
+}
+
+/* Menu toggle styles */
+.menu {
+    display: none;
+    font-size: 2em;
+    transition: 1s;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu .fa-solid {
+    transform: rotateZ(0);
+    color: #000000;
+}
+
+header.active .menu {
+    display: block;
+    transform: translateX(-50%) rotateZ(0);
+    transition: 0.5s;
+}
+
+.menu.active {
+    transform: translateX(-50%) rotateZ(45deg) !important;
+}
+
+/* Banner styles */
+.banner {
+    position: relative;
+    width: 45%;
+    min-height: 100vh;
+    padding: 0 64px;
+    background: #ffffff;
+    overflow: hidden;
+    transition: ease-in-out 1s;
+    z-index: 10;
+}
+
+.banner.active {
+    width: 10%;
+    transition: ease-in-out 1s;
+}
+
+.banner .content {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.banner .content h1 {
+    font-family: 'Lobster Two', cursive;
+    font-size: 7.5em;
+    letter-spacing: 2px;
+    font-weight: 300;
+    text-transform: uppercase;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    margin-bottom: 20px;
+    transition: 1s;
+    transition-delay: 0.5s;
+}
+
+.banner.active .content h1 {
+    opacity: 0;
+    visibility: hidden;
+    transition: 1s;
+    transform: translateX(-100%);
+}
+
+/* General link styles in banner content */
+.banner .content a {
+    position: relative;
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-weight: 200;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+.btn {
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 1;
+    visibility: visible;
+    transition: 0.5s;
+}
+
+.btn i {
+    font-size: 1.1rem;
+    margin-left: 0;
+    transition: margin-left 0.3s ease;
+}
+
+.btn:hover i {
+    margin-left: 10px;
+}
+
+/* Arrow styles */
+.arrow {
+    padding: 10px;
+}
+
+.arrow i {
+    display: inline-block;
+}
+
+.banner .content .arrow {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.5s; 
+    padding: 0;
+    visibility: hidden;
+    opacity: 0;
+    bottom: 10%;
+    border: none;
+    z-index: 100;    
+}
+.banner .content .arrow .fa-regular{
+    font-size: 2rem;
+    transition: 0.5s;
+}
+.banner .content .arrow:hover .fa-regular{
+    color: var(--primary);
+}
+.banner.active .content .arrow {
+    opacity: 1;
+    visibility: visible;
+}
+.banner.active .content a.btn{
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Banner middle */
+.banner-middle {
+    position: absolute;
+    top: 0;
+    left: 45%;
+    width: 45%;
+    height: 100vh;
+    padding: 0 10px;
+    background: #f0f0f0;
+    overflow: hidden;
+    transition: ease-in-out 1s;
+    transition-delay: 0.2s;
+}
+.banner-middle.active {
+    left: 10%;
+}
+.banner-middle .container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+/* Swiper design */
+.swiper-men,
+.swiper-women,
+.swiper-new {
+    width: 100%;
+    height: 100vh;
+}
+.swiper-slide {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+    filter: blur(0); /* Fix for Chrome rendering */
+}
+.swiper-wrapper {
+    will-change: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+.swiper {
+    perspective: 1200px;
+    transform-style: preserve-3d;
+}
+
+.swiper-slide {
+    transition: 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #000;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    image-rendering: auto;
+}
+
+/* Right Banner */
+.banner-right {
+    position: absolute;
+    top: 0;
+    left: 90%;
+    width: 45%;
+    height: 100vh;
+    padding: 50px 40px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    transition: ease-in-out 1s;
+    transition-delay: 0.4s;
+}
+.banner-right.active {
+    left: 55%;
+}
+
+.banner-right h1 {
+    font-family: 'Lobster Two', cursive;
+    font-size: 5.5rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 1;
+    visibility: visible;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    transform-origin: left;
+    line-height: 1px;
+}
+.banner-right .number {
+    position: absolute;
+    font-size: 4em;
+    top: 10%;
+    right: 15%;
+}
+.banner-right .content {
+    display: flex;
+    border-top: 1px solid;
+    border-image: linear-gradient(90deg, #000000, transparent, transparent) 30;
+}
+.content img {  
+    padding: 20px;
+    max-width: 55%;
+    object-fit: cover;
+    border-left: 1px solid;
+    border-image: linear-gradient(#000000, transparent, transparent) 30;
+}
+.content .description {
+    padding: 20px;
+    border-right: 1px solid;
+    border-bottom: 1px solid;
+    border-image: linear-gradient(#000000, transparent, #000000) 30;
+}
+.content .description h3 {
+    font-family: 'Lobster Two', cursive;
+    font-size: 3em;
+    letter-spacing: 1px;
+    font-weight: 200;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+.content .description span {
+    text-transform: uppercase;
+    font-weight: 300;
+}
+.content .description p {
+    font-weight: 200;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+.content .description a {
+    font-weight: 400;
+    display: inline-block;
+    align-items: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #000;
+    transition: 0.5s;
+}
+
+.content .description a .fa-solid {
+    margin-left: 3px;
+}
+.content .description a:hover {
+    color: var(--primary);
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    /* Show the .menu icon, hide the .nav on smaller screens */
+    .menu {
+        display: block;
+      }
+      .nav {
+        display: none;
+      }
+      header {
+        padding: 10px 20px;
+      }
+      .banner .content h1 {
+        font-size: 3.5em;
+      }
+      /* Adjust widths so the “shrink” effect is less dramatic if you want */
+      .banner .content h1 {
+          transform: rotate(90deg);
+          transform-origin: right top; /* Anchor rotation to top-right corner */
+          position: absolute;
+          right: 5px; /* Reduced from -190px */
+          bottom: auto;
+          top: 70%;
+          font-size: 2.5rem; /* Slightly smaller font */
+          white-space: nowrap; /* Prevent line breaks */
+          margin: 0;
+          z-index: 100;
+          line-height: 1.2; /* Better spacing */
+        }
+      
+        .banner .content a {
+          transform: rotate(90deg);
+          position: relative;
+          z-index: 100;
+          margin-top: 80px; /* Add spacing between elements */
+        }
+      
+        .banner-left {
+          width: 20%; /* Slightly wider container */
+          overflow: visible; /* Prevent clipping */
+        }
+      
+        .banner-middle {
+          width: 80%;
+          transition: left 1s ease-in-out;
+        }
+        /* Move completely off-screen */
+        .banner-middle.active {
+          left: -100%; 
+        }
+        .banner-right.active{
+          left: 0;
+        }
+        .banner-right.active{
+          width: 110%;
+        }
+        .banner-right{
+          font-size: 1rem;
+        }
+        .banner-right h1{
+          font-size: 20px;
+        }      
+        .date {
+          font-size: 11px;
+        }
+        .number{
+          font-size: 7px;
+        }
+        header.active {
+          padding: 10px 15px; /* Add padding to prevent cutoff */
+          width: 20%;
+        }
+      
+        header.active .logo {
+          position: relative;
+          left: auto;
+          transform: none;
+          font-size: 1.2rem; /* Reduce logo size */
+          white-space: nowrap; /* Keep text in one line */
+        }
+      
+        .banner-right .number {
+          font-size: 1.5rem !important; /* Increase size slightly */
+          top: 5%;
+          right: 5%;
+        }
+      
+        .banner-right.active {
+          width: 80%;
+          left: 20%;
+          padding: 20px 15px;
+          overflow:none;
+        }
+      
+        .banner-right .content {
+          flex-direction: column; 
+        }
+    .content img {
+        max-width: 100%;
+        padding: 10px;
+    }
+    .body.active{
+        overflow-y: auto;
+    }
+    
+}

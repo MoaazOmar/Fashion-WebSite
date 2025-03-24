@@ -1,0 +1,33 @@
+    <!-- star-rating.component.html -->
+    <div class="body">
+        <div class="star-rating">
+            <div class="stars">
+            <label 
+                class="number" 
+                (mouseover)="setHoverRating(0)" 
+                (mouseleave)="clearHoverRating()">
+                <input 
+                type="radio" 
+                name="rating" 
+                [value]="0" 
+                (click)="setRating(0)"
+                [checked]="rating === 0">
+            </label>
+            
+            <label 
+                class="star" 
+                *ngFor="let star of stars" 
+                (mouseover)="setHoverRating(star)" 
+                (mouseleave)="clearHoverRating()">
+                <input 
+                type="radio" 
+                name="rating" 
+                [value]="star" 
+                (click)="setRating(star)"
+                [checked]="rating === star">
+            </label>
+            
+            <div class="number-rating" [ngStyle]="{'content': '\'' + getDisplayRating() + '\''}"></div>
+            </div>
+        </div>
+    </div>

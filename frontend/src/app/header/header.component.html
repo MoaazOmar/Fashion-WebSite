@@ -1,0 +1,86 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSF7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- User-specific content -->
+<div *ngIf="userRole === 'user' || ''">
+  <header id="header">
+    <!-- Logo -->
+    <a routerLink="/" class="logo">Shop</a>
+    
+    <!-- Desktop Navigation (visible on large screens) -->
+    <ul class="nav nav-desktop">
+      <li><a routerLink="/about"><i class="fa-solid fa-house"></i></a></li>
+      <li><a routerLink="/about">About</a></li>
+      <li><a routerLink="/shopping">Shopping</a></li>
+      <li><a routerLink="/contact">Contact</a></li>
+      <li><a routerLink="/orders">Orders</a></li>
+    </ul>
+    
+    <!-- Utility Menu -->
+    <ul class="util">
+      <li>
+        <i class="fa-solid fa-magnifying-glass" (click)="becameClicked($event)"></i>
+      </li>
+      <li>
+        <a routerLink="/love">
+          <i class="fa-regular fa-heart"></i>
+          <span class="number">{{ loveNumber }}</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/cart">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="number">{{ cartItemCount }}</span>
+        </a>
+      </li>
+      <li *ngIf="!isAuthenticated">
+        <a routerLink="/login"><i class="fa-solid fa-user"></i></a>
+      </li>
+      <div class="profile" *ngIf="isAuthenticated">
+        <span class="profile-Icon" (click)="gettingTheIconRotation($event)">
+          {{ firstChar }}
+        </span>
+        <div class="profile-description" *ngIf="isUserMenuOpen">
+          <p class="greeting">Greeting,</p>
+          <h4 class="greeting-user">{{ userUsername | uppercase }}</h4>
+          <p class="email">
+            <strong class="strong">Email:</strong>{{ EmailOfTheUser }}
+          </p>
+          <hr>
+          <button type="submit" (click)="logout()" class="signout">SignOut</button>
+        </div>
+      </div>
+    </ul>
+    
+    <!-- Hamburger Button for Mobile (visible on small screens) -->
+    <button class="hamburger" (click)="toggleMenu()" [class.open]="isMenuOpen">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    
+    <!-- Mobile Navigation (visible on small screens) -->
+    <ul class="nav nav-mobile" [class.open]="isMenuOpen">
+      <li><a routerLink="/about" (click)="closeMenu()"><i class="fa-solid fa-house"></i></a></li>
+      <li><a routerLink="/about" (click)="closeMenu()">About</a></li>
+      <li><a routerLink="/shopping" (click)="closeMenu()">Shopping</a></li>
+      <li><a routerLink="/contact" (click)="closeMenu()">Contact</a></li>
+      <li><a routerLink="/orders" (click)="closeMenu()">Orders</a></li>
+    </ul>
+    
+    <!-- Search Container -->
+    <div class="search-container" [class.active]="isClicked">
+      <input (keyup)="onSearchInput($event)" [(ngModel)]="searchQuery" type="text"
+        placeholder="Search products..." class="search-input">
+      <i class="fa-solid fa-xmark close-search" (click)="becameClicked($event)"></i>
+      <button (click)="goToSearchComponent()" class="button-search" role="button">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </header>
+  <app-searchinput [isClicked]="isClicked" [query]="searchQuery"></app-searchinput>
+</div>
+
+<!-- Admin-specific content -->
+<!-- <app-navbar-admin *ngIf="userRole === 'admin'"></app-navbar-admin> -->

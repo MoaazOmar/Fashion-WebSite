@@ -1,0 +1,610 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* :root {
+    --primary: #005a68;
+    --secondary: #b20153;
+    --third: #3a5801;
+    --fourth: #873200;
+} */
+
+body {
+    font-family: 'Roboto', 'sans-serif';
+}
+/*banner*/
+.banner {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 0 100px;
+    overflow: hidden;
+    background-color: #e0e0e0;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* container class for banner-section */
+.banner-section {
+    position: absolute;
+    top: 0;
+    width: 25%;
+    height: 100%;
+    transition: 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    cursor: pointer;
+    transform: skew(0, 0);
+}
+
+.banner-section::after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    z-index: 900;
+    pointer-events: none;
+    /* Allows clicks to pass through to the image */
+}
+
+.banner-section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 150%;
+    z-index: 800;
+    transition: 0.5s;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* activation of banner */
+.banner.active .banner-section:nth-child(odd) {
+    transform: skew(0, -35deg);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.banner.active .banner-section:nth-child(even) {
+    transform: skew(0, 35deg);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.4);
+}
+
+.banner.active .banner-section {
+    width: 15%;
+}
+
+.banner.active .banner-section.two {
+    left: 15%;
+}
+
+.banner.active .banner-section.three {
+    right: 15%;
+    left: auto;
+}
+
+.banner.active .banner-section.four {
+    right: 0;
+    left: auto;
+}
+
+.banner.active .banner-section img {
+    opacity: 1;
+    visibility: visible;
+    width: 100%;
+}
+
+/* banner-section-content-onReveal */
+.banner .banner-content .item {
+    opacity: 0;
+    visibility: hidden;
+    transition: 1s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30vw;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 700;
+
+}
+
+.banner .banner-content .item.active {
+    opacity: 1;
+    visibility: visible;
+
+}
+
+.banner .banner-content .item h1 {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 2em;
+    text-align: center;
+}
+
+.banner .banner-content .item p {
+    font-weight: 300;
+    line-height: 1.5;
+    letter-spacing: 1px;
+}
+
+/**Banner-section-1**/
+.banner-section.one {
+    left: 0%;
+}
+
+.banner-section.one:hover::after,
+.banner-section.one.active::after {
+    background: var(--two);
+    opacity: 0.6;
+}
+
+/**Banner-section-2**/
+
+.banner-section.two {
+    left: 25%;
+}
+
+.banner-section.two:hover::after,
+.banner-section.two.active::after {
+    background: var(--one);
+    opacity: 0.6;
+}
+/**Banner-section-3**/
+
+.banner-section.three {
+    left: 50%;
+}
+
+.banner-section.three:hover::after,
+.banner-section.three.active::after {
+    background: var(--three);
+    opacity: 0.6;
+}
+
+
+/**Banner-section-4**/
+
+.banner-section.four {
+    left: 75%;
+}
+
+.banner-section.four:hover::after,
+.banner-section.four.active::after {
+    background: var(--four);
+    opacity: 0.6;
+}
+
+.banner-section.four:hover img,
+.banner-section.four.active img {
+    right: 0;
+
+}
+
+.banner-section:hover img,
+.banner-section.active img {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Banner Section  content */
+
+.banner-section .content {
+    position: relative;
+    color: #000000;
+    z-index: 1000;
+    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    gap: 40px;
+    flex-direction: column;
+
+}
+
+.banner-section:hover .content,
+.banner-section.active .content {
+    color: #ffffff;
+
+}
+
+.banner-section .content h2 {
+    font-family: 'Berkshire Swash', cursive;
+    font-size: 2.5rem;
+    font-weight: 600;
+}
+
+.banner-section .banner-btn {
+    border: 2px solid #000000;
+    color: #000000;
+    border-radius: 30px;
+    padding: 10px 30px;
+    width: 150px;
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 50px;
+    transition: 0.5s;
+}
+
+.banner-section:hover .banner-btn,
+.banner-section.active .banner-btn {
+    color: #ffffff;
+    border: 2px solid #ffffff;
+
+}
+
+.banner-section .banner-btn:hover {
+    transform: translateX(20px);
+}
+
+/* .item .cancel-display h5 {
+    position: absolute;
+    display: none;
+
+} */
+
+.item .cancel-display .fa-circle-xmark {
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all ease-out 0.5s;
+
+
+
+}
+
+.fa-circle-xmark:hover {
+    color: red;
+
+}
+
+.fa-circle-xmark:hover+h5 {
+    display: block;
+}
+
+
+
+@media (max-width: 760px) {
+    header {
+        display: none;
+        visibility: hidden;
+    }
+
+    /*banner*/
+    .banner {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        padding: 0 100px;
+        overflow: hidden;
+        background-color: #ffffff;
+        transition: 0.5s;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* container class for banner-section */
+    .banner-section {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 25%;
+        transition: 1s;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 50px;
+        cursor: pointer;
+        transform: skew(0, 0);
+        overflow: hidden;
+    }
+
+    .banner-section.one {
+        top: 0;
+        left: 0;
+    }
+
+    .banner-section.two {
+        top: 25%;
+        left: 0;
+
+    }
+
+    .banner-section.three {
+        top: 50%;
+        left: 0;
+
+    }
+
+    .banner-section.four {
+        top: 75%;
+        left: 0;
+
+    }
+
+    .banner-section .content {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        position: relative;
+        color: #000000;
+        z-index: 1000;
+        transition: 0.5s;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        gap: 1px;
+        flex-direction: column;
+    }
+
+    .banner-section .content h2 {
+        font-size: 2.3rem;
+        font-weight: 500;
+
+    }
+
+    .banner-section img {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 150px;
+        height: 100%;
+        width: 80%;
+        object-position: center;
+        /* z-index: 800;
+    transition: 0.5s; q
+    object-position: center;
+    opacity: 0;
+    visibility: hidden; */
+    }
+    .banner.active .banner-section {
+        width: 100%;
+    }
+    
+    .banner.active .banner-section.two {
+        left: 15%;
+    }
+    
+    .banner.active .banner-section.three {
+        right: 15%;
+        left: auto;
+    }
+    
+    .banner.active .banner-section.four {
+        right: 0;
+        left: auto;
+    }
+    
+    .banner.active .banner-section img {
+        opacity: 1;
+        visibility: visible;
+        width: 80%;
+    }
+
+    .banner.active .banner-section:nth-child(odd) {
+        transform: skew(0, -20deg);
+        /* Adjust to milder skew for smaller screens */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        /* Adjust the box-shadow to be less intense */
+    }
+
+    .banner.active .banner-section:nth-child(even) {
+        transform: skew( 0 , -20deg);
+        /* Adjust to milder skew for smaller screens */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        /* Adjust the box-shadow to be less intense */
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-section {
+        width: 100%;
+        height: 25%;
+        top: auto;
+        bottom: 0;
+        transform: skew(0, 0) !important;
+        padding: 10px;
+    }
+
+    .banner.active .banner-section {
+        width: 100%;
+        height: 15%;
+    }
+
+    .banner-section img {
+        width: 100%;
+        height: 150%;
+    }
+
+    .banner-section .content h2 {
+        font-size: 1.5rem;
+    }
+
+    .banner-section .banner-btn {
+        width: 120px;
+        padding: 8px 20px;
+        font-size: 1.2rem;
+    }
+
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .banner-section {
+        padding: 30px;
+    }
+
+    .banner-section .content h2 {
+        font-size: 2rem;
+    }
+
+    .banner.active .banner-section {
+        width: 20%;
+    }
+
+    .banner.active .banner-section.two {
+        left: 20%;
+    }
+    
+    .banner.active .banner-section.three {
+        right: 20%;
+    }
+
+    
+}
+@media (max-width: 768px) {
+
+    /* Mobile Skew Adjustments */
+    .banner.active .banner-section:nth-child(1),
+    .banner.active .banner-section:nth-child(3) {
+        transform: skew(-35deg, 0) !important;
+        /*transform-origin: top;
+         top: 0;
+        bottom: auto; */
+    }
+
+    .banner.active .banner-section:nth-child(2),
+    .banner.active .banner-section:nth-child(4) {
+        transform: skew(35deg, 0) !important;
+        /* transform-origin: bottom;
+        bottom: 0;
+        top: auto; */
+    }
+
+    /* Position Adjustments */
+    .banner.active .banner-section.one {
+        left: 0;
+    }
+    .banner.active .banner-section.two {
+        left: 0;
+        top: 20%;
+    }
+    .banner.active .banner-section.three {
+        left: 0;
+        top: 60%;
+    }
+    .banner.active .banner-section.four {
+        left: 0;
+        top: 80%;
+    }
+
+    /* Height Adjustments */
+    .banner.active .banner-section {
+        height: 20%;
+        width: 100%;
+    }
+    
+}
+
+/* Add transform-origin to desktop version */
+@media (min-width: 769px) {
+    .banner.active .banner-section:nth-child(odd) {
+        transform-origin: left;
+    }
+    .banner.active .banner-section:nth-child(even) {
+        transform-origin: right;
+    }
+}
+/* General banner-content styles */
+.banner-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Prevent interaction until active */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
+}
+
+/* Active state for banner-content */
+.banner.active .banner-content {
+    pointer-events: auto;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* General item styles */
+.item {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s, transform 0.5s;
+    position: relative;
+    max-width: 80%; /* Responsive width */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transform: scale(0.9); /* Slightly smaller initially */
+}
+
+/* Active state for item */
+.banner.active .banner-content .item.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1); /* Full size when active */
+}
+
+/* Centering the content within the item */
+.banner.active .banner-content .item.active {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    z-index: 1000; /* Ensure it's on top */
+}
+
+/* Cancel display adjustments */
+.cancel-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cancel-display i {
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--two);
+    transition: color 0.3s;
+}
+
+.cancel-display i:hover {
+    color: red;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .item {
+        min-width: 90%; /* Wider on smaller screens */
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+
+    .item h1 {
+        font-size: 1.5rem;
+    }
+
+    .item p {
+        font-size: 0.8rem;
+    }
+}
+

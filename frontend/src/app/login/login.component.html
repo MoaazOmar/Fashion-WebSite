@@ -1,0 +1,22 @@
+<!-- login.component.html -->
+<form (ngSubmit)="loginUser()">  <!-- Changed -->
+  <div class="container">
+    <div class="login-form">
+      <h2>Login</h2>
+      <div class="input-group">
+        <input type="text" name="username" [(ngModel)]="credentials.username" required> <!-- Added ngModel -->
+        <label>Username</label>
+      </div>
+      <div class="input-group">
+        <input [type]="passwordFieldType" name="password" [(ngModel)]="credentials.password" required> <!-- Added ngModel -->
+        <div class="password-toggle" (click)="togglePassword()">
+          <div class="eye-icon" [class.visible]="showPassword"></div>
+        </div>
+      </div>
+      <button class="btn" type="submit">Login</button> <!-- Removed click handler -->
+      <div class="signup-form">
+        Don't have an account? <a class="link-signup" routerLink="/signup">Signup</a>
+      </div>
+    </div>
+  </div>
+</form>

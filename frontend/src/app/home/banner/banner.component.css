@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/*  er Section */
+#banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Make the Shade for the images */
+.women::before,
+.men::before,
+.special::before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    transition: all 0.7s ease-out;
+}
+
+/* remove the shade on hover */
+.women:hover::before,
+.men:hover::before,
+.special:hover::before {
+    background: transparent;
+}
+
+.women {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 40%;
+    clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+    background: var(--primary);
+    transition: 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.men {
+    position: absolute;
+    top: 0;
+    left: 30%;
+    height: 100%;
+    width: 40%;
+    clip-path: polygon(100% 0, 75% 50%, 100% 100%, 0 100%, 25% 50%, 0 0);
+    background: var(--secondary);
+    transition: 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.special {
+    position: absolute;
+    top: 0;
+    left: 60%;
+    height: 100%;
+    width: 40%;
+    clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0% 50%);
+    background: var(--primary);
+    transition: 1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* women checked , men checked , special checked acquire whole the width */
+#banner.left .women,
+#banner.middle .men,
+#banner.right .special {
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 100% 100%, 0 100%, 0% 50%);
+    transition: 1s;
+}
+
+#banner.right .special {
+    left: 0;
+}
+
+#banner.middle .men {
+    left: 0;
+}
+
+#banner.left .men,
+#banner.left .special {
+    left: 120%;
+}
+
+#banner.right .men,
+#banner.right .women {
+    left: -120%;
+}
+
+#banner.middle .women {
+    left: -120%;
+}
+
+#banner.middle .special {
+    left: 120%;
+}
+
+/* banner Images */
+.women img,
+.men img,
+.special img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+#banner.left .women img {
+    width: 50%;
+}
+
+#banner.middle .men img {
+    width: 50%;
+    left: 50%;
+}
+
+#banner.right .special img {
+    width: 50%;
+    left: 50%;
+}
+
+/* styling of switch button */
+.switch-btn {
+    position: relative;
+    text-decoration: none;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-size: 5em;
+    font-weight: 300;
+    margin-top: 40%;
+    z-index: 1000;
+    transition: all 0.7s ease-out;
+    transform: scale(1);
+}
+
+.switch-btn:hover {
+    transform: scale(1.2);
+}
+
+.reset {
+    position: absolute;
+    left: 100px;
+    bottom: 5%;
+    z-index: 1000;
+    transition: all 0.7s ease-out;
+
+}
+
+.reset.active {
+    transform: rotateZ(180deg);
+}
+
+.reset i {
+    color: #ffffff;
+    font-size: 3em;
+    transition: 0.3s;
+}
+
+.reset i:hover {
+    color: var(--primary);
+}
+
+/* Banner Content */
+#banner .content {
+    position: absolute;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.7s ease-out;
+    z-index: 900;
+}
+
+#banner .content h1 {
+    color: #ffffff;
+    font-size: 4.5em;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+#banner .content p {
+    color: #ffffff;
+    font-weight: 200;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+#banner .content a {
+    position: relative;
+    width: 200px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: 1px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+    border-radius: 4.8px;
+    left: 18px;
+}
+
+#banner .content a:hover {
+    border: 2px solid #ffbbdd;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background-color: #ffffff;
+    color: var(--primary);
+}
+
+#banner .content a,
+#banner .content a i {
+    transform: scale(1.2);
+}
+
+#banner.left .women .content,
+#banner.middle .men .content,
+#banner.right .special .content {
+    opacity: 1;
+    visibility: visible;
+}
+
+.women .content {
+    left: 55%;
+}
+
+.men .content,
+.special .content {
+    left: 80px;
+}
+
+
+/* rotation of the checked button */
+
+.rotate {
+    /* animation: rotateAnimation 0.5s ease-in-out; */
+    transform: rotateZ(180deg);
+    transition: all ease-in 0.6s;
+  }
+  
+  
+  .reset[disabled] {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  

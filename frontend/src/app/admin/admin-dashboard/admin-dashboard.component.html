@@ -1,0 +1,170 @@
+<div class="greeting">
+  <h1>Fashion Dashboard</h1>
+  <p>
+    Welcome back! Here's what's happening with your fashion store today.
+  </p>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="loading">
+  <p>Loading dashboard data...</p>
+</div>
+
+<!-- Error State -->
+<div *ngIf="error && !isLoading" class="error">
+  <p>{{ error }}</p>
+  <button (click)="retry()" class="retry-btn">Retry</button>
+</div>
+
+<!-- Stats Grid -->
+<div class="dashboard-grid mb-8">
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <h3>Total Sales</h3>
+      <div class="stat-icon">
+        <i class="fas fa-dollar-sign text-primary-500"></i>
+      </div>
+    </div>
+    <p class="stat-value">
+      ${{ stats && stats.totalSales ? stats.totalSales.toLocaleString() : '0' }}
+    </p>
+    <div class="stat-trend">
+      <span class="trend" [ngClass]="stats && stats.salesTrendDirection ? stats.salesTrendDirection : 'neutral'">
+        <i class="fas" [ngClass]="stats && stats.salesTrendDirection === 'up' ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+        {{ stats && stats.salesTrend != null ? (stats.salesTrend >= 0 ? '+' : '') + stats.salesTrend : '0' }}%
+      </span>
+      <span>vs last week</span>
+    </div>
+  </div>
+
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <h3>New Orders</h3>
+      <div class="stat-icon">
+        <i class="fas fa-shopping-cart"></i>
+      </div>
+    </div>
+    <p class="stat-value">
+      {{ stats && stats.newOrders ? stats.newOrders.toLocaleString() : '0' }}
+    </p>
+    <div class="stat-trend">
+      <span class="trend" [ngClass]="stats && stats.ordersTrendDirection ? stats.ordersTrendDirection : 'neutral'">
+        <i class="fas" [ngClass]="stats && stats.ordersTrendDirection === 'up' ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+        {{ stats && stats.ordersTrend != null ? (stats.ordersTrend >= 0 ? '+' : '') + stats.ordersTrend : '0' }}%
+      </span>
+      <span>vs yesterday</span>
+    </div>
+  </div>
+
+  <!-- Visitors -->
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <h3>Visitors</h3>
+      <div class="stat-icon">
+        <i class="fas fa-users"></i>
+      </div>
+    </div>
+    <p class="stat-value">{{ stats?.totalVisitors?.toLocaleString() || '0' }}</p>
+    <div class="stat-trend">
+      <span class="trend" [ngClass]="stats?.visitorsTrendDirection || 'neutral'">
+        <i class="fas" [ngClass]="stats?.visitorsTrendDirection === 'up' ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+        {{ (stats?.visitorsTrend ?? 0) >= 0 ? '+' : '' }}{{ stats?.visitorsTrend ?? 0 }}%
+      </span>
+      <span>vs last week</span>
+    </div>
+  </div>
+  <!-- Inventory -->
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <h3>Inventory</h3>
+      <div class="stat-icon">
+        <i class="fas fa-box"></i>
+      </div>
+    </div>
+    <p class="stat-value">{{ stats?.totalInventory?.toLocaleString() || '0' }}</p>
+    <div class="stat-trend">
+      <span class="warning">
+        <i class="fas fa-exclamation-triangle"></i> {{ stats?.lowStockItems || '0' }}
+      </span>
+      <span>low stock items</span>
+    </div>
+  </div>
+</div>
+<!-- End of dashboard-grid -->
+
+<div class="content-section">
+  <div class="recent-orders">
+    <h2>Recent Orders <a href="#">View all</a></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of recentOrders">
+          <td>{{ order._id ? '#ORD-' + order._id.slice(-4) : 'N/A' }}</td>
+          <td>{{ order.customerName || 'Unknown' }}</td>
+          <td>${{ order.totalPrice ? order.totalPrice.toFixed(2) : '0.00' }}</td>
+          <td>
+            <span class="status" [ngClass]="{
+              'delivered': order.status === 'Delivered',
+              'processing': order.status === 'Processing',
+              'shipped': order.status === 'Shipped',
+              'pending': order.status === 'Pending',
+              'cancelled': order.status === 'Cancelled'
+            }">
+              {{ order.status || 'Unknown' }}
+            </span>
+          </td>
+        </tr>
+        <!-- Display a message if there are no orders -->
+        <tr *ngIf="recentOrders.length === 0">
+          <td colspan="4">No recent orders available.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Top-selling Products -->
+  <div class="top-products">
+    <h2>Top Selling Products <a href="#">View all</a></h2>
+    <div class="product-item" *ngFor="let product of topProducts">
+      <div class="product-icon" [ngClass]="{
+        'tshirt': product.name.toLowerCase().includes('t-shirt') || product.name.toLowerCase().includes('top'),
+        'sneakers': product.name.toLowerCase().includes('sneaker'),
+        'jacket': product.name.toLowerCase().includes('jacket'),
+        'hat': product.name.toLowerCase().includes('hat'),
+        'sunglasses': product.name.toLowerCase().includes('sunglasses'),
+        'high-heels': product.name.toLowerCase().includes('high heel') || product.name.toLowerCase().includes('heel'),
+        'dresses': product.name.toLowerCase().includes('dress'),
+        'footwear': product.name.toLowerCase().includes('footwear') || product.name.toLowerCase().includes('shoe') || product.name.toLowerCase().includes('boot'),
+        'pants': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans')
+      }">
+        <i class="fas" [ngClass]="{
+          'fa-tshirt': product.name.toLowerCase().includes('t-shirt') || product.name.toLowerCase().includes('top'),
+          'fa-shoe-prints': product.name.toLowerCase().includes('sneaker') || product.name.toLowerCase().includes('footwear') || product.name.toLowerCase().includes('shoe') || product.name.toLowerCase().includes('boot') || product.name.toLowerCase().includes('high heel') || product.name.toLowerCase().includes('heel'),
+          'fa-vest': product.name.toLowerCase().includes('jacket'),
+          'fa-hat-cowboy': product.name.toLowerCase().includes('hat'),
+          'fa-glasses': product.name.toLowerCase().includes('sunglasses'),
+          'fa-person-dress': product.name.toLowerCase().includes('dress'),
+          'fa-person': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans')
+        }"></i>
+      </div>
+      <div class="product-details">
+        <h4 class="product-name">{{ product.name || 'Unknown Product' }}</h4>
+        <p class="product-stats">${{ product.price ? product.price.toFixed(2) : '0.00' }} - {{ product.totalUnitsSold ||
+          0 }} units sold</p>
+      </div>
+      <span class="trend" [ngClass]="product.trendDirection || 'neutral'">
+        {{ product.trendDirection === 'up' ? '↑' : '↓' }} {{ product.trend ? product.trend.toFixed(1) : '0' }}%
+      </span>
+    </div>
+    <div *ngIf="topProducts.length === 0">
+      <p>No top selling products available.</p>
+    </div>
+  </div>
+</div>

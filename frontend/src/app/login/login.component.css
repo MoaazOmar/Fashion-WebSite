@@ -1,0 +1,306 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 140vh;
+  margin: 0;
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+              url('https://static1.thegamerimages.com/wordpress/wp-content/uploads/2024/07/jeffmarvelrivals.jpg') center/cover;
+  font-family: 'Poppins', sans-serif;
+  animation: backgroundPan 20s linear infinite;
+  background-position: left ;
+}
+@keyframes backgroundPan {
+  0% { background-position: 0% center; }
+  100% { background-position: -200% center; }
+}
+
+.container {
+  width: 90%;
+  max-width: 400px;
+  padding: 30px;
+}
+
+.login-form {
+  /* background: rgba(255, 255, 255, 0.95); */
+  border-radius: 20px;
+  padding: 40px;
+  /* box-shadow: 0 10px 40px rgba(0,0,0,0.1); */
+  transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  /* background: rgba(255, 255, 255, 0.95); */
+  border-radius: 20px;
+  padding: 40px;
+  background-color: #0007;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+  /* position: relative; */
+  /* overflow: hidden; */
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+}
+
+.login-form::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(231, 76, 60, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shine 6s infinite;
+}
+
+@keyframes shine {
+  0% { transform: rotate(45deg) translateX(-50%); }
+  100% { transform: rotate(45deg) translateX(50%); }
+}
+
+
+
+h2 {
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 2em;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+h2:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background: #e74c3c;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  border-bottom: 2px solid #eee;
+  background: transparent;
+  outline: none;
+  color: #000; /* Default black color */
+  font-weight: bolder;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+/* When input is filled but not focused */
+.input-group input:not(:placeholder-shown) {
+  color: #fff; /* White color when filled */
+}
+
+/* When input is focused (during typing) */
+.input-group input:focus {
+  color: #000; /* Black color during typing */
+  border-bottom-color: #e74c3c;
+}
+
+
+.input-group label {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 16px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+.input-group input:focus ~ label,
+.input-group input:valid ~ label {
+  top: -5px;
+  left: 10px;
+  font-size: 12px;
+  color: #e74c3c;
+  font-weight: 500;
+}
+
+.input-group:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #e74c3c;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus ~ :after {
+  width: 100%;
+}
+
+.btn {
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: white;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+      120deg,
+      transparent,
+      rgba(255,255,255,0.3),
+      transparent
+  );
+  transition: all 0.5s;
+}
+
+.btn:hover:before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231,76,60,0.3);
+}
+
+.signup-form {
+  text-align: center;
+  margin-top: 20px;
+  color: #666;
+}
+
+.signup-form a {
+  color: #e74c3c;
+  text-decoration: none;
+  font-weight: 500;
+  position: relative;
+}
+
+.signup-form a:after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #e74c3c;
+  transition: width 0.3s ease;
+}
+
+.signup-form a:hover:after {
+  width: 100%;
+}
+
+/* Fashion icon additions */
+.input-group:before {
+  content: '';
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  background-size: cover;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.input-group:nth-child(2):before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232c3e50"><path d="M12 2C9.243 2 7 4.243 7 7v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7c0-2.757-2.243-5-5-5zm-1 12.732V18h2v-3.268a2 2 0 1 0-2 0zM15 10V7c0-1.654-1.346-3-3-3S9 5.346 9 7v3h6z"/></svg>');
+}
+
+.input-group:nth-child(3):before {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%232c3e50"><path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 3c1.654 0 3 1.346 3 3s-1.346 3-3 3-3-1.346-3-3 1.346-3 3-3zm0 14.2a7.2 7.2 0 0 1-6-3.22c.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08a7.2 7.2 0 0 1-6 3.22z"/></svg>');
+}
+
+.input-group input:focus ~ :before {
+  opacity: 0.6;
+}
+
+@media (max-width: 480px) {
+  .login-form {
+      padding: 25px;
+  }
+  
+  h2 {
+      font-size: 1.5em;
+  }
+}
+
+/* Add this to your existing CSS */
+.input-group input:focus {
+  border-bottom-color: #e74c3c;
+  box-shadow: inset 0 -2px 0 #e74c3c, 
+              inset 4px 4px 6px rgba(0,0,0,0.05),
+              inset -4px -4px 6px rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.95);
+}
+
+.btn:focus {
+  box-shadow: inset 4px 4px 8px rgba(199, 49, 38, 0.3),
+              inset -4px -4px 8px rgba(255,255,255,0.2),
+              0 5px 15px rgba(231,76,60,0.3);
+  transform: translateY(0);
+  outline: none;
+}
+
+/* Update the existing .input-group input transition */
+.input-group input {
+  transition: all 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+
+
+/* Password Toggle Icons */
+.password-toggle {
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  .eye-icon {
+    width: 24px;
+    height: 24px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%235a7a9a"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>');
+    &.visible {
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23e74c3c"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46A11.804 11.804 0 0 0 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/></svg>');
+    }
+  }
+}

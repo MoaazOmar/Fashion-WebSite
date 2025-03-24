@@ -1,0 +1,64 @@
+<div class="notification-container">
+    <ng-container *ngFor="let notification of notifications$ | async">
+      <div class="notification" 
+           [ngClass]="{
+             'bag-happy-notification': notification.type === 'success',
+             'updated-notification': notification.type === 'updated',
+             'error-notification': notification.type === 'error'
+           }">
+  
+        <ng-container [ngSwitch]="notification.type">
+  
+          <!-- SUCCESS → Happy bag (two wheels at corners) -->
+          <div *ngSwitchCase="'success'" class="bag-happy animate-bagShake">
+            <!-- Bag handle (z-index can be in front or behind) -->
+            <div class="bag-handle"></div>
+  
+            <!-- Main bag body -->
+            <div class="bag-happy-body">
+              <div class="bag-face">
+                <div class="bag-eyes"></div>
+                <div class="bag-mouth"></div> <!-- happy mouth -->
+              </div>
+            </div>
+  
+            <!-- Two wheels at the corners -->
+            <div class="bag-wheel-left"></div>
+            <div class="bag-wheel-right"></div>
+          </div>
+  
+          <!-- UPDATED → Clothing icon (unchanged) -->
+          <div *ngSwitchCase="'updated'" class="clothing animate-jump">
+            <div class="clothing-hanger"></div>
+            <div class="clothing-hook"></div>
+            <div class="clothing-body">
+              <div class="clothing-face">
+                <div class="clothing-eyes"></div>
+                <div class="clothing-mouth"></div>
+              </div>
+            </div>
+          </div>
+  
+          <!-- DELETE → Sad bag (taller, handle behind, no wheels) -->
+          <div *ngSwitchCase="'delete'" class="bag-sad animate-bagSad">
+            <!-- Handle behind the bag (covered) -->
+            <div class="bag-sad-handle"></div>
+  
+            <!-- Taller bag body -->
+            <div class="bag-sad-body">
+              <div class="bag-face">
+                <div class="bag-eyes"></div>
+                <div class="bag-frown"></div> <!-- sad mouth -->
+              </div>
+            </div>
+          </div>
+  
+          <!-- Default → cross (✗) -->
+          <div *ngSwitchDefault class="simple-icon">✗</div>
+        </ng-container>
+  
+        <span>{{ notification.message }}</span>
+      </div>
+    </ng-container>
+  </div>
+  

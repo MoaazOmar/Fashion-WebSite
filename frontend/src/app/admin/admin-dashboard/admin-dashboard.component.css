@@ -1,0 +1,692 @@
+/* Dashboard Grid */
+
+
+/*greeting*/
+.greeting{
+  margin-bottom: 120px;
+  
+}
+.greeting p{
+  margin: 10px;
+  margin-left: 0;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 15px;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+:host-context(body.dark) .stat-card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.stat-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+:host-context(body.dark) .stat-card h3 {
+    color: #9ca3af;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-card:nth-child(1) .stat-icon {
+    background-color: #f0f0ff;
+}
+
+:host-context(body.dark) .stat-card:nth-child(1) .stat-icon {
+    background-color: rgba(93, 92, 222, 0.3);
+}
+
+.stat-card:nth-child(2) .stat-icon {
+    background-color: #FFF8E1;
+}
+
+:host-context(body.dark) .stat-card:nth-child(2) .stat-icon {
+    background-color: rgba(44, 62, 80, 0.3);
+}
+
+.stat-card:nth-child(3) .stat-icon {
+    background-color: rgba(255, 107, 129, 0.1);
+}
+
+:host-context(body.dark) .stat-card:nth-child(3) .stat-icon {
+    background-color: rgba(255, 107, 129, 0.2);
+}
+
+.stat-card:nth-child(4) .stat-icon {
+    background-color: rgba(152, 215, 194, 0.2);
+}
+
+:host-context(body.dark) .stat-card:nth-child(4) .stat-icon {
+    background-color: rgba(152, 215, 194, 0.3);
+}
+
+.stat-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+:host-context(body.dark) .stat-value {
+    color: #d1d5db;
+}
+
+.stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.stat-trend span:last-child {
+    color: #6b7280;
+}
+
+:host-context(body.dark) .stat-trend span:last-child {
+    color: #9ca3af;
+}
+
+.trend {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.trend.up {
+    color: #22c55e;
+}
+
+.trend.down {
+    color: #ef4444;
+}
+
+.trend i {
+    margin-right: 4px;
+}
+
+.warning {
+    color: #f59e0b;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.warning i {
+    margin-right: 4px;
+}
+
+.content-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.recent-orders,
+.top-products {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+:host-context(body.dark) .recent-orders,
+:host-context(body.dark) .top-products {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #d1d5db;
+}
+
+.recent-orders h2,
+.top-products h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #374151;
+}
+
+:host-context(body.dark) .recent-orders h2,
+:host-context(body.dark) .top-products h2 {
+    color: #d1d5db;
+}
+
+.recent-orders h2 a,
+.top-products h2 a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #5D5CDE;
+    text-decoration: none;
+    float: right;
+    transition: color 0.3s ease;
+}
+
+.recent-orders h2 a:hover,
+.top-products h2 a:hover {
+    color: #4a48c6;
+}
+
+:host-context(body.dark) .recent-orders h2 a,
+:host-context(body.dark) .top-products h2 a {
+    color: #9897ff;
+}
+
+:host-context(body.dark) .recent-orders h2 a:hover,
+:host-context(body.dark) .top-products h2 a:hover {
+    color: #c2c1ff;
+}
+
+/* Recent Orders Table */
+.recent-orders table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-orders th,
+.recent-orders td {
+    padding: 12px 8px;
+    text-align: left;
+    font-size: 12px;
+    color: #374151;
+}
+
+:host-context(body.dark) .recent-orders th,
+:host-context(body.dark) .recent-orders td {
+    color: #d1d5db;
+}
+
+.recent-orders th {
+    color: #6b7280;
+    font-weight: 500;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+:host-context(body.dark) .recent-orders th {
+    color: #9ca3af;
+    border-bottom-color: #374151;
+}
+
+.recent-orders td {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+:host-context(body.dark) .recent-orders td {
+    border-bottom-color: #374151;
+}
+
+.recent-orders tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status.delivered {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+:host-context(body.dark) .status.delivered {
+    background-color: #14532d;
+    color: #86efac;
+}
+
+.status.processing {
+    background-color: #fefce8;
+    color: #d97706;
+}
+
+:host-context(body.dark) .status.processing {
+    background-color: #713f12;
+    color: #fef08a;
+}
+
+.status.shipped {
+    background-color: #e0f2fe;
+    color: #1d4ed8;
+}
+
+:host-context(body.dark) .status.shipped {
+    background-color: #1e3a8a;
+    color: #93c5fd;
+}
+
+.status.pending {
+    background-color: #f3e8ff;
+    color: #6b21a8;
+}
+
+:host-context(body.dark) .status.pending {
+    background-color: #4c1d95;
+    color: #d8b4fe;
+}
+
+.status.cancelled {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+:host-context(body.dark) .status.cancelled {
+    background-color: #7f1d1d;
+    color: #f87171;
+}
+
+/* Top Selling Products */
+.top-products .product-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.top-products .product-item:hover {
+    background-color: #f9fafb;
+}
+
+:host-context(body.dark) .top-products .product-item:hover {
+    background-color: #2d3748;
+}
+
+.top-products .product-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    font-size: 20px;
+}
+
+.top-products .product-icon.tshirt {
+    background-color: #FFF8E1;
+    color: #FFD700;
+}
+
+:host-context(body.dark) .top-products .product-icon.tshirt {
+    background-color: #2d3748;
+    color: #FFD700;
+}
+
+.top-products .product-icon.sneakers {
+    background-color: rgba(255, 107, 129, 0.1);
+    color: #FF6B81;
+}
+
+:host-context(body.dark) .top-products .product-icon.sneakers {
+    background-color: #2d3748;
+    color: #FF6B81;
+}
+
+.top-products .product-icon.jacket {
+    background-color: #f0f0ff;
+    color: #5D5CDE;
+}
+
+:host-context(body.dark) .top-products .product-icon.jacket {
+    background-color: #2d3748;
+    color: #5D5CDE;
+}
+
+.top-products .product-icon.hat {
+    background-color: rgba(152, 215, 194, 0.2);
+    color: #98D7C2;
+}
+
+:host-context(body.dark) .top-products .product-icon.hat {
+    background-color: #2d3748;
+    color: #98D7C2;
+}
+
+.top-products .product-icon.sunglasses {
+    background-color: rgba(44, 62, 80, 0.2);
+    color: #2C3E50;
+}
+
+:host-context(body.dark) .top-products .product-icon.sunglasses {
+    background-color: #2d3748;
+    color: #2C3E50;
+}
+
+.top-products .product-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.top-products .product-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+:host-context(body.dark) .top-products .product-name {
+    color: #d1d5db;
+}
+
+.top-products .product-stats {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+:host-context(body.dark) .top-products .product-stats {
+    color: #9ca3af;
+}
+
+.top-products .trend {
+    margin-left: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    padding: 24px;
+    color: #374151;
+  }
+  
+  :host-context(body.dark) .loading {
+    color: #d1d5db;
+  }
+  
+  /* Error State */
+  .error {
+    text-align: center;
+    padding: 24px;
+    color: #ef4444;
+    position: absolute;
+    top:   190px ;
+    right:500px;
+  }
+  
+  :host-context(body.dark) .error {
+    color: #f87171;
+  }
+  
+  .retry-btn {
+    padding: 8px 16px;
+    background-color: #5D5CDE;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .retry-btn:hover {
+    background-color: #4a48c6;
+  }
+  
+  .text-center {
+    text-align: center;
+    padding: 16px;
+    color: #6b7280;
+  }
+  
+  :host-context(body.dark) .text-center {
+    color: #9ca3af;
+  }
+  /* Existing styles (ensure these are present) */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .stat-card {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  :host-context(body.dark) .stat-card {
+    background-color: #1f2937;
+    border-color: #374151;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .stat-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .stat-card h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+  }
+  
+  :host-context(body.dark) .stat-card h3 {
+    color: #9ca3af;
+  }
+  
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .stat-card:nth-child(1) .stat-icon {
+    background-color: #f0f0ff;
+  }
+  
+  :host-context(body.dark) .stat-card:nth-child(1) .stat-icon {
+    background-color: rgba(93, 92, 222, 0.3);
+  }
+  
+  .stat-card:nth-child(2) .stat-icon {
+    background-color: #FFF8E1;
+  }
+  
+  :host-context(body.dark) .stat-card:nth-child(2) .stat-icon {
+    background-color: rgba(44, 62, 80, 0.3);
+  }
+  
+  .stat-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 8px;
+  }
+  
+  :host-context(body.dark) .stat-value {
+    color: #d1d5db;
+  }
+  
+  .stat-trend {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+  }
+  
+  .stat-trend span:last-child {
+    color: #6b7280;
+  }
+  
+  :host-context(body.dark) .stat-trend span:last-child {
+    color: #9ca3af;
+  }
+  
+  .trend {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .trend.up {
+    color: #22c55e;
+  }
+  
+  .trend.down {
+    color: #ef4444;
+  }
+  
+  .trend i {
+    margin-right: 4px;
+  }
+  
+  /* Loading and Error Styles */
+  .loading {
+    text-align: center;
+    padding: 24px;
+    color: #374151;
+  }
+  
+  :host-context(body.dark) .loading {
+    color: #d1d5db;
+  }
+  
+  .error {
+    text-align: center;
+    padding: 24px;
+    color: #ef4444;
+  }
+  
+  :host-context(body.dark) .error {
+    color: #f87171;
+  }
+  
+  .retry-btn {
+    padding: 8px 16px;
+    background-color: #5D5CDE;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .retry-btn:hover {
+    background-color: #4a48c6;
+  }
+  /* Existing styles (ensure these are present) */
+.trend.up {
+    color: #22c55e; /* Green for positive trend */
+  }
+  
+  .trend.down {
+    color: #ef4444; /* Red for negative trend */
+  }
+  
+  .trend.neutral {
+    color: #6b7280; /* Gray for neutral trend */
+  }
+  
+  :host-context(body.dark) .trend.neutral {
+    color: #9ca3af;
+  }
+  
+  .trend i {
+    margin-right: 4px;
+  }
+  
+  /* Ensure the stat-icon styles for Visitors and Inventory are present */
+  .stat-card:nth-child(3) .stat-icon {
+    background-color: rgba(255, 107, 129, 0.1);
+  }
+  
+  :host-context(body.dark) .stat-card:nth-child(3) .stat-icon {
+    background-color: rgba(255, 107, 129, 0.2);
+  }
+  
+  .stat-card:nth-child(4) .stat-icon {
+    background-color: rgba(152, 215, 194, 0.2);
+  }
+  
+  :host-context(body.dark) .stat-card:nth-child(4) .stat-icon {
+    background-color: rgba(152, 215, 194, 0.3);
+  }
+  .product-icon.high-heels {
+    background-color: #ffe6e6;
+    color: #ff4040;
+  }
+  
+  .product-icon.dresses {
+    background-color: #f0f0e6;
+    color: #d4a017;
+  }
+  
+  .product-icon.footwear {
+    background-color: #e6f5fa;
+    color: #17a2b8;
+  }
+  
+  .product-icon.pants {
+    background-color: #e6e6ff;
+    color: #6666ff;
+  }
+  
+  /* Ensure the trend styling is applied correctly */
+  .trend.up {
+    color: #2ecc71;
+  }
+  
+  .trend.down {
+    color: #ff4040;
+  }
+  
+  .trend.neutral {
+    color: #666;
+  }
+  
+  

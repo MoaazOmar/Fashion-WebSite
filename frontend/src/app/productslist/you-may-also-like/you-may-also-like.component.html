@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="slider-header">
+    <h2 class="slider-title">You May Also Like</h2>
+    <div class="nav-products">
+      <span class="nav-arrow slider-prev" (click)="prevSlide()">
+        <i class="fas fa-chevron-left"></i>
+      </span>
+      <span class="nav-arrow slider-next" (click)="nextSlide()">
+        <i class="fas fa-chevron-right"></i>
+      </span>
+    </div>
+  </div>
+
+  <div class="slider-container" #sliderContainer>
+    <div class="slider-wrapper" #sliderWrapper>
+      <div class="slider-slide" *ngFor="let product of products">
+        <div class="product-card">
+          <div style="position: relative;">
+            <img [src]="product.image + '?t=' + currentIndex" class="product-image" [alt]="product.name">            <div class="product-actions">
+              <button class="action-btn favorite-btn" [ngClass]="{'active': product.isFavorite}"
+                (click)="toggleFavorite(product)">
+                <i class="{{product.isFavorite ? 'fas' : 'far'}} fa-heart"></i>
+              </button> <button class="action-btn menu-trigger" (click)="toggleMenu(product)">
+                <i class="fas fa-ellipsis-v"></i>
+              </button>
+            </div>
+            <div class="product-menu" [class.active]="product.showMenu">
+              <div class="menu-item" (click)="viewProduct(product)"><i class="fas fa-eye"></i> View Product</div>
+              <div class="menu-item" (click)="addToCart(product)"><i class="fas fa-cart-plus"></i> Add to Cart</div>
+              <div class="menu-item" (click)="shareProduct(product)"><i class="fas fa-share"></i> Share</div>
+            </div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">{{product.name}}</h3>
+            <p class="product-price">{{product.price | currency}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pagination">
+    <div class="pagination-bullet" *ngFor="let page of [].constructor(totalPages); let i = index"
+      [class.active]="currentIndex === i" (click)="goToPage(i)"></div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="container" *ngIf="isClicked">
+  <div class="search-status">
+    <div *ngIf="loading" class="loading">
+      <i class="fa-solid fa-spinner fa-spin"></i>
+      Loading suggestions...
+    </div>
+    <p *ngIf="!suggestions.length && query && !loading">No suggestions found for "{{ query }}"</p>
+    <p *ngIf="!query && !loading">Type something to search...</p>
+  </div>
+  
+  <ul *ngIf="suggestions.length && !loading">
+    <li *ngFor="let suggestion of suggestions">
+      <img [src]="suggestion.image[0]" alt="Product Image" width="50">
+      <span>{{ suggestion.name }}</span>
+    </li>
+  </ul>
+</div>

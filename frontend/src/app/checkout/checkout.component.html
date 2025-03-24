@@ -1,0 +1,53 @@
+<div class="glow" style="top: 20%; left: 10%"></div>
+<div class="glow" style="top: 60%; right: 15%"></div>
+
+<div class="checkout-container">
+    <form [formGroup]="formUser">
+        <h3>VIP Checkout</h3>
+        <div class="input-info">
+            <label for="customerName">NAME</label>
+            <input id="customerName" formControlName="customerName">
+            <svg class="material-icon" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
+            </svg>
+            <div class="error" *ngIf="formUser.get('customerName')?.errors?.['required'] && formUser.get('customerName')?.touched">
+                <p>⚠️Name is required!</p>
+            </div>        
+        </div>
+
+        <div class="input-info">
+
+            <label for="address">DELIVERY ADDRESS</label>
+            <input id="address" formControlName="address">
+            <svg class="material-icon" width="24" height="24" viewBox="0 0 24 24">
+                <path fill="currentColor"
+                    d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z" />
+            </svg>
+            <div class="error" *ngIf="formUser.get('address')?.errors?.['required'] && formUser.get('address')?.touched">
+                <p>⚠️Address is required!</p>
+            </div>        
+
+        </div>
+        <button (click)="onSubmit() " type="submit" [disabled]="formUser.invalid">
+            CONFIRM ORDER
+            <svg style="margin-left: 10px" width="20" height="20" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" />
+            </svg>
+        </button>
+    </form>
+
+    <div class="order-summary">
+        <h3>Your Collection</h3>
+        <div class="order-items">
+            <div *ngFor="let item of cart" class="order-item">
+                <div>{{ item.name.toUpperCase() }} × {{ item.amount }}</div>
+                <div>{{ item.price * item.amount | currency }}</div>
+            </div>
+            <div class="order-item" style="margin-top: 2rem; font-size: 1.3rem">
+                <div>TOTAL</div>
+                <div>{{ getTotal() | currency}}</div>
+            </div>
+        </div>
+    </div>
+</div>

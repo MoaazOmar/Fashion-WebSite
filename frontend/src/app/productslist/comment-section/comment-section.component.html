@@ -1,0 +1,212 @@
+<section class="comments-section">
+  <h2>Comments</h2>
+  <!-- New Comment Form -->
+  <form id="comment-form" (ngSubmit)="onCommentSubmit()" *ngIf="isLoggedIn; else loginPrompt">
+    <div class="form-group">
+      <label for="comment-text">Comment</label>
+      <textarea class="edit-textarea" id="comment-text" rows="4" class="input-field"
+        placeholder="Share your thoughts about this product" [(ngModel)]="newComment.text" name="commentText"
+        required></textarea>
+    </div>
+    <!-- <div class="flex items-center space-x-2 mb-4">
+      <span class="text-sm text-gray-500 dark:text-gray-400">Rating:</span>
+      <div class="flex justify-center items-center my-2">
+        <i *ngFor="let star of [1,2,3,4,5]" (click)="setRating(star)" class="fa-star text-2xl cursor-pointer mx-1"
+          [ngClass]="{
+             'fas text-yellow-500': star <= selectedRating,
+             'far text-gray-300 hover:text-yellow-500': star > selectedRating
+           }">
+        </i>
+      </div>
+    </div> -->
+    <app-star-method (ratingChange)="setRating($event)"></app-star-method>
+    <button type="submit" class="button post-comment-btn">
+      <i class="fas fa-comment"></i>
+      Post Comment
+    </button>
+  </form>
+  <!-- New Login Prompt -->
+  <ng-template #loginPrompt>
+    <div class="login-prompt">
+      <div class="animate-bounce">
+        <svg class="login-illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="currentColor"
+            d="M12 17a2 2 0 0 0 2-2a2 2 0 0 0-2-2a2 2 0 0 0-2 2a2 2 0 0 0 2 2m6-9V8h-1V6a5 5 0 0 0-5-5a5 5 0 0 0-5 5v2H6v12h12V8h-1M9 6a3 3 0 0 1 3-3a3 3 0 0 1 3 3v2H9V6Z" />
+        </svg>
+      </div>
+      <p>Join our community to share your thoughts!
+        <a routerLink="/login" class="login-link">Log in</a> or
+        <a routerLink="/register" class="login-link">Sign up</a>
+      </p>
+    </div>
+  </ng-template>
+
+  <!-- No Comments Message -->
+  <div *ngIf="commentTree.length === 0" class="no-comments">
+    <div class="empty-state">
+      <div class="creature-animation">
+        <svg class="happy-bee" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Floating Shadow -->
+          <ellipse cx="100" cy="180" rx="40" ry="10" fill="#00000020" />
+
+          <!-- Main Body -->
+          <g transform="translate(0, -5)">
+            <!-- Yellow Body -->
+            <path fill="#ffd93d"
+              d="M100 50c33.137 0 60 26.863 60 60 0 33.137-26.863 60-60 60s-60-26.863-60-60c0-33.137 26.863-60 60-60z"
+              style="filter: drop-shadow(0 4px 2px rgba(0,0,0,0.1))" />
+
+            <!-- Black Stripes -->
+            <path fill="#2d2d2d"
+              d="M100 65c-16.568 0-30 13.432-30 30 0 16.568 13.432 30 30 30s30-13.432 30-30c0-16.568-13.432-30-30-30z" />
+            <path fill="#2d2d2d"
+              d="M82 85c0-9.941 8.059-18 18-18s18 8.059 18 18c0 9.941-8.059 18-18 18s-18-8.059-18-18z" />
+
+            <!-- Cute Face -->
+            <g fill="#ffffff">
+              <!-- Eyes -->
+              <circle cx="80" cy="100" r="12" />
+              <circle cx="120" cy="100" r="12" />
+              <!-- Eye Highlights -->
+              <circle cx="85" cy="95" r="3" fill="#2d2d2d" />
+              <circle cx="115" cy="95" r="3" fill="#2d2d2d" />
+            </g>
+
+            <!-- Blushing Cheeks -->
+            <g fill="#ff99aa">
+              <circle cx="65" cy="120" r="8" />
+              <circle cx="135" cy="120" r="8" />
+            </g>
+
+            <!-- Smiling Mouth -->
+            <path fill="none" stroke="#2d2d2d" stroke-width="4" d="M80 130c10 5 20 5 30 0" stroke-linecap="round" />
+          </g>
+
+          <!-- Animated Wings -->
+          <g class="bee-wings">
+            <path fill="url(#wingGradient)" d="M30 50Q50 30 70 50 50 70 30 50zM130 50Q150 30 170 50 150 70 130 50z"
+              style="opacity:0.8" />
+            <path fill="url(#wingGradient)" d="M20 60Q40 40 60 60 40 80 20 60zM140 60Q160 40 180 60 160 80 140 60z"
+              style="opacity:0.6" />
+          </g>
+
+          <!-- Antennae -->
+          <g stroke="#2d2d2d" stroke-width="4" stroke-linecap="round">
+            <path d="M90 45c-10-15-25-15-30 0" class="antenna" />
+            <path d="M110 45c10-15 25-15 30 0" class="antenna" />
+          </g>
+
+          <defs>
+            <linearGradient id="wingGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#a8d8ff;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ddf2ff;stop-opacity:0.8" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="empty-message">
+        <p *ngIf="isLoggedIn">🌸 No buzz yet! Be the first honey-maker! 🍯</p>
+        <p *ngIf="!isLoggedIn">🐝 Bzzzt! <a routerLink="/login" class="login-link">Sign in</a> to join the hive!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comments Container -->
+  <div id="comments-container">
+    <ng-template #commentTemplate let-comment let-level="level">
+      <div class="comment" [ngClass]="{'new-comment': comment.isNew}">
+        <div class="comment-header">
+          <div class="username-container">
+            <div class="avatar" [ngClass]="getUsernameClass(comment.user)">
+              {{ getFirstLetter(comment.user) }}
+            </div>
+            <div class="name">
+              {{ getUsername(comment.user) }}
+            </div>
+            <!-- Display Rating for Top-Level Comments -->
+            <ng-container *ngIf="!comment.parentId">
+              <div class="star-group">
+                <i *ngFor="let star of [1,2,3,4,5]" class="fa-star"
+                  [ngClass]="star <= comment.rating ? 'fas text-yellow-500' : 'far text-gray-300'">
+                </i>
+
+              </div>
+            </ng-container>
+
+          </div>
+
+          <div class="time">{{ comment.date | date:'short' }}</div>
+        </div>
+
+        <p>{{ comment.text }}</p>
+        <div class="comment-actions">
+          <button class="reaction-btn" (click)="likeComment(comment)"
+            [ngClass]="{'active': comment.userReaction === 'like'}">
+            <i class="fas fa-thumbs-up"></i>
+            <span>{{ comment.likes || 0 }}</span>
+          </button>
+          <button class="reaction-btn" (click)="dislikeComment(comment)"
+            [ngClass]="{'active': comment.userReaction === 'dislike'}">
+            <i class="fas fa-thumbs-down"></i>
+            <span>{{ comment.dislikes || 0 }}</span>
+          </button>
+          <button class="reaction-btn" (click)="loveComment(comment)"
+            [ngClass]="{'active': comment.userReaction === 'love'}">
+            <i class="fas fa-heart"></i>
+            <span>{{ comment.loves || 0 }}</span>
+          </button>
+          <!-- Reply Button -->
+          <button class="button reply-btn" (click)="toggleReplyForm(comment)" [disabled]="!isLoggedIn">
+
+            <i class="fas fa-reply"></i>
+            Reply
+
+          </button>
+          <!-- Edit Button -->
+          <button class="button edit-btn" *ngIf="canEditOrDelete(comment)" (click)="enableEdit(comment)">
+            <i class="fas fa-edit"></i>
+            Edit
+          </button>
+          <!-- Delete Button -->
+
+          <button class="button delete-btn" *ngIf="canEditOrDelete(comment)" (click)="deleteComment(comment)">
+            <i class="fas fa-trash"></i>
+            Delete
+          </button>
+        </div>
+        <div class="edit-form" *ngIf="comment.isEditing">
+          <input class="input-field" type="text" [(ngModel)]="comment.editText" name="editText" />
+          <div class="button-group">
+            <button class="button save-edit-btn" (click)="submitEdit(comment)">
+              <i class="fas fa-save"></i>
+              Save
+            </button>
+            <button class="button cancel-btn" (click)="cancelEdit(comment)">
+              <i class="fas fa-times"></i>
+              Cancel
+            </button>
+          </div>
+        </div>
+        <div class="reply-form" [ngClass]="{'hidden': !comment.showReplyForm}">
+          <input class="input-field" type="text" [(ngModel)]="comment.replyText" placeholder="Write a reply..."
+            name="replyText" />
+          <button class='button post-reply-btn' (click)="sendReply(comment)">Post</button>
+        </div>
+        <div class="replies-scroll-container" *ngIf="comment.replies && comment.replies.length">
+          <div class="replies-wrapper">
+            <div class="reply-thread" *ngFor="let reply of comment.replies">
+              <ng-container [ngTemplateOutlet]="commentTemplate"
+                [ngTemplateOutletContext]="{ $implicit: reply, level: level + 1 }">
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+
+    <div *ngFor="let comment of commentTree">
+      <ng-container [ngTemplateOutlet]="commentTemplate" [ngTemplateOutletContext]="{ $implicit: comment }">
+      </ng-container>
+    </div>
+  </div>
+</section>

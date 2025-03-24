@@ -1,0 +1,232 @@
+.orders-container {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.fashion-title {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #2d3436;
+  margin-bottom: 3rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.orders-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.order-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #eee;
+}
+
+.order-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-meta {
+  flex: 1;
+}
+
+.order-id {
+  font-weight: 600;
+  color: #e74c3c;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.order-date {
+  color: #636e72;
+  font-size: 0.9rem;
+}
+
+.order-status {
+  padding: 0.5rem 1.2rem;
+  border-radius: 24px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.order-status.pending {
+  background: #fff3e0;
+  color: #ef6c00;
+}
+
+.order-status.shipped {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.order-status.cancelled {
+  background: #ffebee;
+  color: #c62828;
+}
+
+.order-total {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #2d3436;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s;
+  z-index: 100000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-bottom: 1px solid #eee;
+
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-weight: 500;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.detail-row {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.items-list {
+  margin: 2rem 0;
+}
+
+.fashion-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: #fbfcfd;
+  border-radius: 8px;
+}
+
+.item-image {
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  border-radius: 4px;
+  
+}
+.item-image img{
+  width: 80px;
+  height: 80px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  color: #636e72;
+}
+
+.download-btn {
+  background: #2d3436;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.download-btn:hover {
+  background: #e74c3c;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .order-status {
+    align-self: flex-start;
+  }
+  
+  .order-total {
+    text-align: left;
+  }
+  
+  .modal-content {
+    width: 95%;
+  }
+}

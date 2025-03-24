@@ -1,0 +1,249 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  z-index: 1000000;
+}
+
+:host(.active) {
+  display: block;
+}
+
+:host::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; /* Fade transition for overlay */
+  z-index: -1;
+}
+
+:host(.active)::before {
+  opacity: 1;
+}
+
+.sidebar-content {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 20rem;
+  max-width: 90%;
+  background-color: #ffffff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  transform: translateX(100%);
+  transition: transform 0.4s ease-in-out, opacity 0.3s ease-in-out; /* Slide and fade */
+  padding: 1rem;
+  overflow-y: auto;
+  opacity: 0; /* Start hidden for fade effect */
+}
+
+:host(.active) .sidebar-content {
+  transform: translateX(0);
+  opacity: 1; /* Fully visible when active */
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #6b7280;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #374151;
+}
+
+/* Color Options */
+.color-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.color-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  border: 1px solid #d1d5db;
+}
+
+/* Category Options */
+.category-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Gender Options */
+.gender-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gender-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Custom Dropdown for Items Per Page */
+.dropdown-container {
+  position: relative;
+  width: 100%;
+}
+
+.dropdown-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(135deg, #3b82f6, #1e40af);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-header:hover {
+  transform: scale(1.02);
+}
+
+.dropdown-header .arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid white;
+  transition: transform 0.3s ease;
+}
+
+.dropdown-header .arrow.open {
+  transform: rotate(180deg);
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #eff6ff;
+  color: #3b82f6;
+}
+
+.dropdown-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-list::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 3px;
+}
+
+.dropdown-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Reset Button */
+.reset-section {
+  text-align: right;
+}
+
+.reset-btn {
+  padding: 0.5rem 1rem;
+  background-color: #ef4444; /* Red for reset */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+  background-color: #dc2626; /* Darker red on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar-content {
+    width: 90vw;
+  }
+
+  .dropdown-header {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .dropdown-item {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .reset-btn {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}

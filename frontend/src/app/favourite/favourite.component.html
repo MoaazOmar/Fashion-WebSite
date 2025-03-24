@@ -1,0 +1,106 @@
+<main class="container">
+  <div class="flex justify-between items-center">
+    <h2>My Favorites</h2>
+    <div class="flex">
+      <select [(ngModel)]="sortBy">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="priceAsc">Price: Low to High</option>
+        <option value="priceDesc">Price: High to Low</option>
+      </select>
+      <select [(ngModel)]="filterBy">
+        <option value="all">All Categories</option>
+        <option value="clothing">Clothing</option>
+        <option value="shoes">Shoes</option>
+        <option value="accessories">Accessories</option>
+      </select>
+    </div>
+  </div>
+
+  <p id="favoritesCount">You have <span>{{favorites.length}}</span> favorite items</p>
+
+  <div id="emptyState" [class.hidden]="favorites.length > 0">
+    <svg class="w-20 h-20" style="color: var(--gray-400); margin-bottom: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+    </svg>
+    <h3 style="font-size: 1.25rem; font-weight: 500; margin-bottom: 0.5rem;">No favorites yet</h3>
+    <p style="color: var(--gray-500); margin-bottom: 1.5rem; max-width: 28rem;">Browse our collections and click the heart icon to add items to your favorites.</p>
+    <a href="#" style="background-color: var(--primary-color); color: white; padding: 0.75rem 1.5rem; border-radius: 0.375rem; text-decoration: none; font-weight: 500;">Browse Products</a>
+  </div>
+
+  <div id="favoritesGrid" class="grid" [class.hidden]="favorites.length === 0">
+    <ng-container *ngIf="getFilteredFavorites().length > 0; else noResults">
+      <div class="card" *ngFor="let item of getFilteredFavorites()">
+        <div class="image-container">
+          <img [src]="item.image" [alt]="item.name">
+          <button (click)="removeFromFavorites(item.id)" class="remove-favorite">
+            <svg style="width: 1.25rem; height: 1.25rem; color: #ef4444;" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="card-content">
+          <h3>{{item.name}}</h3>
+          <p class="category">{{item.category | titlecase}}</p>
+          <div class="price-row">
+            <span class="price">${{item.price | number:'1.2-2'}}</span>
+            <button class="add-to-cart">Add to Cart</button>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noResults>
+      <div class="holder" style="grid-column: 1 / -1; text-align: center; padding: 4rem 0;border-radius: 0.5rem;">
+        <svg class="crying-creature" width="150" height="150" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Body -->
+          <circle cx="50" cy="50" r="40" fill="#FFD700" stroke="#FFA500" stroke-width="2"/>
+          
+          <!-- Sad Eyes -->
+          <g transform="translate(0, 5)">
+            <!-- Left Eye -->
+            <ellipse cx="35" cy="40" rx="6" ry="8" fill="#ffffff"/>
+            <circle cx="35" cy="43" r="3" fill="#374151">
+              <animate attributeName="cy" values="43;45;43" dur="1s" repeatCount="indefinite"/>
+            </circle>
+            
+            <!-- Right Eye -->
+            <ellipse cx="65" cy="40" rx="6" ry="8" fill="#ffffff"/>
+            <circle cx="65" cy="43" r="3" fill="#374151">
+              <animate attributeName="cy" values="43;45;43" dur="1s" repeatCount="indefinite"/>
+            </circle>
+          </g>
+          
+          <!-- Eyebrows -->
+          <path d="M30 33 Q35 28 40 33" stroke="#374151" stroke-width="2" fill="none"/>
+          <path d="M60 33 Q65 28 70 33" stroke="#374151" stroke-width="2" fill="none"/>
+          
+          <!-- Sad Mouth -->
+          <path d="M35 60 Q50 50 65 60" stroke="#374151" stroke-width="3" fill="none" stroke-linecap="round">
+            <animate attributeName="d" values="M35 60 Q50 50 65 60; M35 62 Q50 52 65 62; M35 60 Q50 50 65 60" dur="1s" repeatCount="indefinite"/>
+          </path>
+          
+          <!-- Tears -->
+          <g transform="translate(0, 5)">
+            <!-- Left Tear -->
+            <path d="M34 50 Q35 55 36 50 Q37 55 38 50" stroke="#3B82F6" stroke-width="1.5" fill="none">
+              <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+            <!-- Right Tear -->
+            <path d="M64 50 Q65 55 66 50 Q67 55 68 50" stroke="#3B82F6" stroke-width="1.5" fill="none">
+              <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+            </path>
+          </g>
+          
+          <!-- Cheek Blush -->
+          <circle cx="30" cy="55" r="4" fill="#FFB6C1" opacity="0.6"/>
+          <circle cx="70" cy="55" r="4" fill="#FFB6C1" opacity="0.6"/>
+        </svg> 
+      <h3 class="no-resultH3">No favorites yet!</h3>
+        <p class="no-resultP">This little creature is sad because your favorites list is empty. Browse our collections and click the heart icon to add items!</p>
+        <a routerLink="/shopping" class="browse-btn">Browse Products</a>
+      </div>
+    </ng-template>
+  </div>
+  <router-outlet></router-outlet>
+
+</main>

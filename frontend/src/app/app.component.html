@@ -1,0 +1,9 @@
+<app-header *ngIf="!isAdminRoute"></app-header>
+<app-notification></app-notification>
+<app-notification-cart></app-notification-cart>
+<div id="app-root">
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  <app-footer *ngIf="!isAdminRoute"></app-footer>
+</div>

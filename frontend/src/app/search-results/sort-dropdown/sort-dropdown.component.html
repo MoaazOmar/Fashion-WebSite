@@ -1,0 +1,23 @@
+<div class="sort-container">
+    <button (click)="toggleDropdown()" class="action-button">
+      <i class="fas fa-sort"></i>
+      <span class="button-text">Sort</span>
+    </button>
+    <div class="sort-dropdown" [class.active]="isOpen">
+      <button class="sort-option" (click)="selectSort('')">
+        <i class="fas fa-home sort-icon"></i> Default
+      </button>
+      <button class="sort-option" (click)="selectSort('newest')">
+        <i class="fas fa-calendar-alt sort-icon newest-icon"></i> Newest Arrivals
+      </button>
+      <button class="sort-option" (click)="selectSort('price_asc')">
+        <i class="fas fa-sort-amount-down-alt sort-icon price-low-icon"></i> Price: Low to High
+      </button>
+      <button class="sort-option" (click)="selectSort('price_desc')">
+        <i class="fas fa-sort-amount-up sort-icon price-high-icon"></i> Price: High to Low
+      </button>
+      <button class="sort-option" (click)="selectSort('oldest')">
+        <i class="fas fa-hourglass sort-icon oldest-icon"></i> Oldest First
+      </button>
+    </div>
+  </div>

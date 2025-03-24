@@ -1,0 +1,20 @@
+<div class="notification-container">
+    <div
+      class="notification {{ notification.type }}"
+      *ngFor="let notification of (notifications$ | async)"
+    >
+      <div class="notification-icon">
+        <div class="heart-container">
+          <div class="heart" [ngClass]="getHeartAnimation(notification.type)">
+            <div class="eye left"><div class="pupil"></div></div>
+            <div class="eye right"><div class="pupil"></div></div>
+            <div class="mouth" [ngClass]="getMouthStyle(notification.type)"></div>
+          </div>
+        </div>
+      </div>
+      <div class="notification-content">
+        <span class="message">{{ notification.message }}</span>
+      </div>
+    </div>
+  </div>
+  

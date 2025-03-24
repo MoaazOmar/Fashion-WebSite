@@ -1,0 +1,440 @@
+/* Base Styles */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  /* background: url('assets/jeff.png') no-repeat center center; */
+  background-size: cover;
+}
+
+#app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 100px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  transition: 0.5s;
+  z-index: 1100;
+}
+
+.sci {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.sci li {
+  list-style: none;
+}
+
+.sci li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 1.3em;
+  transition: 0.6s;
+}
+
+.sci li .share {
+  padding: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sci li .share:hover {
+  background-color: #ffffff;
+}
+
+.sci li a:hover {
+  color: var(--primary);
+}
+
+.footer-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-nav li {
+  list-style: none;
+}
+
+.footer-nav li a {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.8em;
+  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 1px;
+  transition: 0.3s;
+}
+
+.footer-nav li a:hover {
+  color: var(--primary);
+}
+
+.ask-us {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.ask-us p {
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 0.8em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.chat {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat:hover {
+  background-color: #ffffff;
+  color: var(--primary);
+}
+
+/* Signup Form Styles */
+.signup-form {
+  position: relative;
+  overflow: visible;
+  max-width: 480px;
+  background: rgba(8, 18, 34, 0.9);
+  border: 1px solid rgba(46, 213, 255, 0.3);
+  box-shadow: 0 0 40px rgba(46, 213, 255, 0.2);
+  border-radius: 8px;
+  padding: 2rem;
+  margin: 2rem auto;
+  backdrop-filter: blur(10px);
+}
+
+.signup-form::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(49deg, 
+    transparent 45%,
+    rgba(46, 213, 255, 0.3) 20%,
+    transparent 55%
+  );
+  z-index: -1;
+  background-size: 200% 100%;
+  animation: laserScan 4s infinite linear;
+}
+
+.input-group {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.input-group:hover .laser-grid {
+  opacity: 0.5;
+}
+
+.laser-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(90deg, rgba(46,213,255,0.1) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(46,213,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.error {
+  color: #ff3860;
+  font-size: 0.9em;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: rgba(255,56,96,0.1);
+  border-left: 3px solid #ff3860;
+  animation: errorPulse 0.5s ease;
+}
+
+.success-message {
+  color: #2ecc71;
+  padding: 1rem;
+  background: rgba(46,204,113,0.1);
+  border: 1px solid #2ecc71;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.success-message::before {
+  content: '✓';
+  margin-right: 0.5rem;
+  animation: successBounce 0.5s ease;
+}
+
+.login-link {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.login-link a {
+  color: #2ed5ff;
+  text-decoration: none;
+  position: relative;
+}
+
+.login-link a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #2ed5ff;
+  transition: width 0.3s ease;
+}
+
+.login-link a:hover::after {
+  width: 100%;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(45deg, #2ed5ff, #2980b9);
+  border: none;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+button[type="submit"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255,255,255,0.2),
+    transparent
+  );
+  animation: btnLaser 1.5s infinite;
+}
+
+button[type="submit"]:focus {
+  outline: 2px solid #2ed5ff;
+}
+
+/* Animations */
+@keyframes laserScan {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes errorPulse {
+  0% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes successBounce {
+  0% { transform: translateY(-5px); }
+  50% { transform: translateY(5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes btnLaser {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Particle Background */
+.signup-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 50% 50%, 
+      rgba(46,213,255,0.1) 0%, 
+      rgba(8,18,34,0.95) 70%),
+    url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="48" y="0" width="4" height="100" fill="%232ed5ff"/><rect x="0" y="48" width="100" height="4" fill="%232ed5ff"/></svg>');
+  animation: bgMove 20s linear infinite;
+  z-index: -1;
+}
+
+@keyframes bgMove {
+  0% { background-position: 0 0; }
+  100% { background-position: 100% 100%; }
+}
+
+.riot-style-form {
+  background: rgba(20, 20, 30, 0.9);
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 0 30px rgba(231, 76, 60, 0.2);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.holographic-btn {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  color: white;
+}
+
+/* Updated Input & Label Styles */
+.input-group {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.input-group label {
+  position: absolute;
+  left: 1.2rem;
+  top: 1.2rem; /* Matches input's padding-top */
+  color: rgba(255, 255, 255, 0.6);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+  top: -0.8rem; /* Moves label above the input */
+  left: 1rem;
+  font-size: 0.8em;
+  color: #2ed5ff;
+  transform: translateY(0);
+  animation: labelFloat 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes labelFloat {
+  0% { transform: translateY(-50%) scale(1); opacity: 0.5; }
+  100% { transform: translateY(0) scale(0.9); opacity: 1; }
+}
+
+/* Dynamic Input Background */
+.input-group input:focus {
+  background: linear-gradient(
+      45deg,
+      rgba(46,213,255,0.1),
+      rgba(46,213,255,0.05)
+    ),
+    rgba(255,255,255,0.05);
+  box-shadow: 
+    inset 3px 3px 6px rgba(0,0,0,0.2),
+    inset -3px -3px 6px rgba(255,255,255,0.1),
+    0 0 10px rgba(46,213,255,0.2);
+  animation: inputGlow 2s infinite alternate;
+}
+
+@keyframes inputGlow {
+  0% { box-shadow: 
+         inset 3px 3px 6px rgba(0,0,0,0.2),
+         inset -3px -3px 6px rgba(255,255,255,0.1),
+         0 0 10px rgba(46,213,255,0.2); }
+  100% { box-shadow: 
+         inset 3px 3px 6px rgba(0,0,0,0.2),
+         inset -3px -3px 6px rgba(255,255,255,0.1),
+         0 0 20px rgba(46,213,255,0.4); }
+}
+
+/* Enhanced Error Messages */
+.error small {
+  display: block;
+  padding: 0.8rem;
+  background: rgba(255,56,96,0.15);
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.error small::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: #ff3860;
+  animation: errorLine 1.5s infinite;
+}
+
+@keyframes errorLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Dynamic Background Effect */
+@keyframes backgroundFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.input-group input {
+  background-size: 200% 200%;
+  background-image: linear-gradient(
+    45deg,
+    rgba(46,213,255,0.05),
+    rgba(8,18,34,0.1),
+    rgba(46,213,255,0.05)
+  );
+  transition: background-position 0.6s ease;
+}
+
+.input-group input:focus {
+  background-position: 100% 100%;
+}
+
+li {
+  list-style: none;
+}

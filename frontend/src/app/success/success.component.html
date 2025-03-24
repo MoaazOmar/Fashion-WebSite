@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<div class="success-container">
+  <div class="particle-background"></div>
+  
+  <div class="content">
+    <div class="success-card" @floatAnimation>
+      <div class="icon-container">
+        <div class="check-icon" @checkmarkDraw></div>
+      </div>
+      <h1 class="success-title">Order Confirmed!</h1>
+      <p class="success-text">Your fashion selection is being prepared with care</p>
+      
+      <div class="order-details">
+        <p>Estimated delivery: 3-5 business days</p>
+        <p>You'll receive tracking information shortly</p>
+      </div>
+
+      <div class="social-container">
+        <button class="social-btn instagram" (click)="shareOnInstagram()">
+          <i class="fab fa-instagram"></i> Share
+        </button>
+        <button class="social-btn explore" (click)="continueShopping()">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="glow-effect"></div>
+</div>

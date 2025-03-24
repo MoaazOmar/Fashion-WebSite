@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<div class="table-container" *ngIf="cartItems.length > 0; else emptyCart">
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Number</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Amount</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems; let i = index">
+        <td> <img [src]="item.image" alt="Product Image" class="cart-product-image"></td>
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.price }}</td>
+        <td><input type="number" #quantityInput [value]="item.amount"></td>
+        <td>{{ item.price * item.amount }}</td>
+        <td>
+          <button (click)="onDeleteItem(item._id)">Remove</button>
+          <button (click)="onUpdateItem(item._id, quantityInput.value)">Update</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<input type="button" class="clear-all-btn" *ngIf="cartItems.length > 0" value="🗑️ Clear All" (click)="clearCart()">
+
+<!-- Proceed to Checkout button -->
+<a routerLink="/checkout" class="btn-primary" (click)="preserveCart()">Proceed to Checkout &#x25B7;</a>
+<!-- Empty Cart Message -->
+<ng-template #emptyCart>
+  <div class="empty-cart-container">
+    <div class="empty-cart-content">
+      <img src="noproduct.png" alt="Empty Cart" class="empty-cart-image">
+      <h2 class="empty-cart-title">Your Fashion Cart is Empty</h2>
+      <p class="empty-cart-message">Looks like you haven't added any stylish items yet!</p>
+      <a routerLink="/" class="continue-shopping-btn">Continue Shopping</a>
+    </div>
+  </div>
+</ng-template>
