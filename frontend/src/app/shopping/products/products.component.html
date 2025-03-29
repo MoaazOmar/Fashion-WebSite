@@ -9,12 +9,10 @@
         <i class="fas fa-chevron-down dropdown-icon"></i>
       </div>
       <div class="options-container" id="options-container-for-Category" *ngIf="isDropdownOpen">
-        <!-- All Categories option -->
         <div class="option" (click)="selectCategory('')" [class.selected]="selectedCategory === ''">
           <span class="category-name">All Categories</span>
           <span class="category-count">{{DisplayingfullProductsNumber}}</span>
         </div>
-        <!-- Other categories -->
         <div class="option" *ngFor="let category of uniqueCategories" (click)="selectCategory(category.name)"
           [class.selected]="selectedCategory === category.name">
           <span class="category-name">{{ category.name }}</span>
@@ -67,24 +65,77 @@
   </div>
 </div>
 
+<!-- Loading State with Ghost and Circle -->
+<div class="loading-container" *ngIf="isLoading">
+  <div class="loading-wrapper">
+    <div class="loading-content">
+      <!-- Ghost Animation -->
+      <div class="ghost-container">
+        <div class="ghost-body">
+          <div class="ghost-tail"></div>
+          <div class="ghost-eye-left animate-blink"></div>
+          <div class="ghost-eye-right animate-blink"></div>
+          <div class="ghost-mouth"></div>
+        </div>
+        <svg class="ghost-path-svg" viewBox="0 0 100 30">
+          <path class="ghost-path" d="M0,15 C20,5 40,25 60,15 C80,5 100,25 100,15" fill="none" stroke="#ccc" stroke-width="2" />
+        </svg>
+      </div>
+      <!-- Loading Circle -->
+      <div class="loading-circle"></div>
+      <p class="loading-text">Fetching products...</p>
+    </div>
+  </div>
+</div>
+
 <!-- Product Container with a single loop -->
-<div class="product-container" [@listAnimation]="allProducts.length">
+<div class="product-container" [@listAnimation]="allProducts.length" *ngIf="!isLoading">
   <div *ngFor="let product of allProducts" class="product-item" [class.visible]="product.visible">
-    <img [src]="product.image" alt="Product Image" [routerLink]="['/products', product._id]"/>
+    <img [src]="product.image[0]" alt="Product Image" [routerLink]="['/products', product._id]"/>
     <div class="product-info">
       <h4>{{ product.name }}</h4>
       <p>
-        <span *ngIf="product.price" class="cross">{{ product.price }}</span>
         <span class="price">{{ product.price }}</span>
       </p>
+      <div class="color-options">
+        <div 
+          *ngFor="let color of product.colors"
+          [style.backgroundColor]="color.toLowerCase()"
+          [class.selected]="product.selectedColor === color"
+          (click)="pickColor(product, color)"
+          title="{{color}}"
+        ></div>
+      </div>
     </div>
     <form (submit)="addToCart(product)">
-      <input type="number" [(ngModel)]="product.amount" name="amount" class="form-control mb-2" placeholder="Quantity"
-        min="1">
+      <input type="number" [(ngModel)]="product.amount" name="amount" class="form-control mb-2" placeholder="Quantity" min="1">
       <button type="submit" class="btn btn-primary">
-        <i type="submit" class="fa-solid fa-cart-plus"></i>
+        <i class="fa-solid fa-cart-plus"></i>
       </button>
     </form>
+  </div>
+</div>
+
+<!-- No Results with Ghost and Reset Button -->
+<div class="no-results-container" *ngIf="!isLoading && allProducts.length === 0">
+  <div class="no-results-wrapper">
+    <div class="no-results-content">
+      <div class="ghost-container">
+        <div class="ghost-body">
+          <div class="ghost-tail"></div>
+          <div class="ghost-eye-left animate-blink"></div>
+          <div class="ghost-eye-right animate-blink"></div>
+          <div class="ghost-mouth"></div>
+        </div>
+        <svg class="ghost-path-svg" viewBox="0 0 100 30">
+          <path class="ghost-path" d="M0,15 C20,5 40,25 60,15 C80,5 100,25 100,15" fill="none" stroke="#ccc" stroke-width="2" />
+        </svg>
+      </div>
+      <h1 class="no-results-title">Whoops!</h1>
+      <p class="no-results-text">No results matching your criteria.</p>
+      <p class="no-results-subtext">Try different or less specific keywords & reset your filters</p>
+      <button (click)="resetFilters()" class="reset-btn">Reset criteria</button>
+    </div>
   </div>
 </div>
 
@@ -95,10 +146,7 @@
       <img src="https://th.bing.com/th/id/R.b0fe0ec70022874db919640c6847dab5?rik=GnxyELASbLc4xw&riu=http%3a%2f%2fwww.clipartbest.com%2fcliparts%2f4i9%2fpXj%2f4i9pXjxAT.png&ehk=IChqDnthjyfajB3VWJYfHXPh1aYUzZqFO270ExJAclk%3d&risl=&pid=ImgRaw&r=0" alt="Previous"> prev
     </button>
     <ul>
-      <li *ngFor="let page of totalPages"
-          class="link"
-          [class.active]="currentPage === page"
-          (click)="activeLink(page)">
+      <li *ngFor="let page of totalPages" class="link" [class.active]="currentPage === page" (click)="activeLink(page)">
         {{ page }}
       </li>
     </ul>
@@ -107,11 +155,9 @@
     </button>
   </div>
 </div>
-
-
 <div>
   <label for="productsPerPage">Products per page:</label>
   <select id="productsPerPage" [(ngModel)]="productsPerPage" (change)="updateProductsPerPage()">
-    <option *ngFor="let option of [4, 8, 10, 20]" [value]="option">{{ option }}</option>
+    <option *ngFor="let option of [5, 8, 10, 20]" [value]="option">{{ option }}</option>
   </select>
 </div>

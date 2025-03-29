@@ -10,7 +10,7 @@
         <nav class="nav">
           <ul class="nav-list">
             <li>
-              <a routerLink="/admin" routerLinkActive="active" class="sidebar-item">
+              <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="sidebar-item">
                 <i class="fas fa-home sidebar-icon"></i>
                 <span>Dashboard</span>
               </a>
@@ -36,11 +36,15 @@
           </ul>
         </nav>
         <div class="admin-info">
-          <div class="admin-avatar">AJ</div>
+          <div class="admin-avatar">{{adminInitial}}</div>
           <div class="admin-details">
-            <p class="admin-name">Admin Jones</p>
+            <p class="admin-name">{{adminName}}</p>
             <p class="admin-role">Fashion Director</p>
           </div>
+          <button class="logout-btn" (click)="logout()">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        
         </div>
       </div>
     </aside>

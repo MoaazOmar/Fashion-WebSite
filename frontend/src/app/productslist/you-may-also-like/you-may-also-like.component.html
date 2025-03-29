@@ -16,7 +16,7 @@
       <div class="slider-slide" *ngFor="let product of products">
         <div class="product-card">
           <div style="position: relative;">
-            <img [src]="product.image + '?t=' + currentIndex" class="product-image" [alt]="product.name">            <div class="product-actions">
+            <img [src]="product.image[0] + '?t=' + currentIndex" class="product-image" [alt]="product.name">            <div class="product-actions">
               <button class="action-btn favorite-btn" [ngClass]="{'active': product.isFavorite}"
                 (click)="toggleFavorite(product)">
                 <i class="{{product.isFavorite ? 'fas' : 'far'}} fa-heart"></i>

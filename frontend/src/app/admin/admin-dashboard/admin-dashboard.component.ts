@@ -45,7 +45,7 @@ export class AdminDashboardComponent implements OnInit {
     this.dashboardService.getRecentOrders().subscribe({
       next: (orders) => {
         console.log('Recent Orders Response:', orders);
-        this.recentOrders = orders;
+        this.recentOrders = orders.slice(0, 5);
       },
       error: (err) => {
         console.error('Error fetching recent orders:', err);
@@ -62,6 +62,8 @@ export class AdminDashboardComponent implements OnInit {
       next: (products) => {
         console.log('Top Selling Products Response:', products);
         this.topProducts = products;
+        console.log('Assigned topProducts:', this.topProducts);
+        
       },
       error: (err) => {
         console.error('Error fetching top selling products:', err);

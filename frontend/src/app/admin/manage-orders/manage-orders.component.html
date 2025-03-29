@@ -1,0 +1,113 @@
+<div id="manage-orders" class="route-content">
+    <div class="header-container">
+      <h1 class="page-title">Manage Orders</h1>
+      <div class="controls-container">
+        <div class="filter-container">
+          <select class="filter-select" [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+            <option value="">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+          <select class="filter-select" [(ngModel)]="selectedTime" (change)="onFilterChange()">
+            <option value="">All Time</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+            <option value="year">This Year</option>
+          </select>
+        </div>
+        <div class="search-container">
+          <input type="text" placeholder="Search orders..." class="search-input" [(ngModel)]="searchQuery"
+            (input)="onSearch()">
+          <i class="fas fa-search search-icon"></i>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-container">
+      <div class="table-wrapper">
+        <table class="order-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Address</th>
+              <th>Date</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Products</th>
+              <th>Update Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of paginatedOrders">
+              <td>{{ order._id | beautifyOrderId   }}</td>
+              <td>
+                <div class="customer-info">
+                  <div class="customer-avatar">
+                    {{ order.customerName | slice:0:2 | uppercase }}
+                  </div>
+                  <div class="customer-name">{{ order.customerName }}</div>
+                </div>
+              </td>
+              <td>{{ order.address }}</td>
+              <td>{{ order.timestamp | date:'MMM d, yyyy' }}</td>
+              <td>{{ order.totalPrice | currency }}</td>
+              <td>
+                <span class="status {{ order.status | lowercase }}">{{ order.status }}</span>
+              </td>
+              <td>
+                <ul>
+                  <li *ngFor="let item of order.items">
+                    {{ item.name }} ({{ item.amount }} x {{ item.price | currency }})
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <select #statusSelect class="status-select"
+                        (change)="updateOrderStatus(order, statusSelect.value)">
+                  <option value="Pending" [selected]="order.status === 'Pending'">Pending</option>
+                  <option value="Processing" [selected]="order.status === 'Processing'">Processing</option>
+                  <option value="Shipped" [selected]="order.status === 'Shipped'">Shipped</option>
+                  <option value="Delivered" [selected]="order.status === 'Delivered'">Delivered</option>
+                  <option value="Cancelled" [selected]="order.status === 'Cancelled'">Cancelled</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="table-footer">
+        <div class="pagination-info">
+          <p>
+            Showing <span class="highlight">{{ (currentPage - 1) * itemsPerPage + 1 }}</span> to
+            <span class="highlight">
+              {{ currentPage * itemsPerPage > filteredOrders.length ? filteredOrders.length : currentPage * itemsPerPage }}
+            </span>
+            of <span class="highlight">{{ filteredOrders.length }}</span> results
+          </p>
+        </div>
+        <div class="pagination">
+            <button class="pagination-btn" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+              <i class="fas fa-chevron-left"></i>
+            </button>
+          
+            <button *ngFor="let page of getPaginationRange()"
+                    class="pagination-btn"
+                    [class.active]="currentPage === page"
+                    (click)="changePage(page)"
+                    [disabled]="page === -1">
+              {{ page === -1 ? '...' : page }}
+            </button>
+          
+            <button class="pagination-btn" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  

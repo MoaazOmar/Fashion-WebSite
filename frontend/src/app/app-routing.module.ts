@@ -18,32 +18,36 @@ import { AboutComponent } from './about/about.component';
 import { accessGuard } from './guards/access.guard';
 import { AddProductComponent } from './admin/add-product/add-product.component';
 import { ManageProductsComponent } from './admin/manage-products/manage-products.component';
-
+import { ManageOrdersComponent } from './admin/manage-orders/manage-orders.component';
+import { AdminGuard } from './guards/admin.guard';
+import { NonAdminGuard } from './guards/nonadmin--skip-tests.guard';
+import { NotfoundComponent } from './notfound/notfound.component';
 const routes: Routes = [
-  { path: '', component: HomeComponent }, // Default route
-  { path: 'search-results/:query', component: SearchResultsComponent },
-  { path: 'shopping', component: ShoppingComponent },
-  { path: 'shopping-products', component: ProductsComponent },
+  { path: '', component: HomeComponent, canActivate: [NonAdminGuard] },
+  { path: 'search-results/:query', component: SearchResultsComponent, canActivate: [NonAdminGuard] },
+  { path: 'shopping', component: ShoppingComponent, canActivate: [NonAdminGuard] },
+  { path: 'shopping-products', component: ProductsComponent, canActivate: [NonAdminGuard]},
   { path: 'login', component: LoginComponent, canActivate: [accessGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [accessGuard] },
-  { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: 'orders', component: OrdersComponent },
-  { path: 'success', component: SuccessComponent },
-  { path: 'products/:id', component: ProductslistComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'love', component: FavouriteComponent },
+  { path: 'cart', component: CartComponent, canActivate: [NonAdminGuard]},
+  { path: 'checkout', component: CheckoutComponent, canActivate: [NonAdminGuard]},
+  { path: 'orders', component: OrdersComponent, canActivate: [NonAdminGuard] },
+  { path: 'success', component: SuccessComponent, canActivate: [NonAdminGuard] },
+  { path: 'products/:id', component: ProductslistComponent, canActivate: [NonAdminGuard] },
+  { path: 'about', component: AboutComponent, canActivate: [NonAdminGuard] },
+  { path: 'love', component: FavouriteComponent, canActivate: [NonAdminGuard] },
   {
     path: 'admin',
-    component: NavbarAdminComponent, // Navbar as a layout component
+    component: NavbarAdminComponent,
+    canActivate: [AdminGuard],
     children: [
-      { path: '', component: AdminDashboardComponent }, // Default admin route
-      // Add more admin routes here, e.g.:
+      { path: '', component: AdminDashboardComponent },
       { path: 'add-product', component: AddProductComponent },
       { path: 'manage-products', component: ManageProductsComponent },
-      // { path: 'manage-orders', component: ManageOrdersComponent },
+      { path: 'manage-orders', component: ManageOrdersComponent },
     ]
-  }
+  },
+  { path: '**', component: NotfoundComponent }
 ];
 
 @NgModule({

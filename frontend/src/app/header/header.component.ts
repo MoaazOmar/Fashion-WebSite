@@ -131,17 +131,23 @@ export class HeaderComponent implements OnInit {
   headerScrolled() {
     const selectHeader = this.el.nativeElement.querySelector('#header');
     const backtoTop = this.el.nativeElement.querySelector('.back-to-top');
-    if (selectHeader) {
+    if (selectHeader && backtoTop) {  // Added backtoTop check
       if (window.scrollY > 100) {
         this.renderer.addClass(selectHeader, 'header-scrolled');
-        if (backtoTop) this.renderer.addClass(backtoTop, 'active');
+        this.renderer.addClass(backtoTop, 'active');
       } else {
         this.renderer.removeClass(selectHeader, 'header-scrolled');
-        if (backtoTop) this.renderer.removeClass(backtoTop, 'active');
+        this.renderer.removeClass(backtoTop, 'active');
       }
     }
   }
-
+  
+    scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
   // function fro responsive 
   toggleMenu(): void {
     this.isMenuOpen = !this.isMenuOpen;

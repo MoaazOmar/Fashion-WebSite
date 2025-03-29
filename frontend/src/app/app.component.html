@@ -2,6 +2,9 @@
 <app-notification></app-notification>
 <app-notification-cart></app-notification-cart>
 <div id="app-root">
+  <div class="overlay" *ngIf="loading$ | async"></div>
+  <app-loading *ngIf="loading$ | async"></app-loading>
+
   <main>
     <router-outlet></router-outlet>
   </main>

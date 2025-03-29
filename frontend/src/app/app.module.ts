@@ -11,7 +11,7 @@ import { ProductHomeComponent } from './home/product-home/product-home.component
 import { SignupletterComponent } from './home/signupletter/signupletter.component';
 import { ContactComponent } from './home/contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'; // Updated import
 import { FormsModule } from '@angular/forms';
 import { SearchinputComponent } from './header/searchinput/searchinput.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
@@ -52,7 +52,15 @@ import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard
 import { NavbarAdminComponent } from './admin/navbar-admin/navbar-admin.component';
 import { AddProductComponent } from './admin/add-product/add-product.component';
 import { ManageProductsComponent } from './admin/manage-products/manage-products.component';
-
+import { ManageOrdersComponent } from './admin/manage-orders/manage-orders.component';
+import { BeautifyOrderIdPipe } from './pipes/beautify-order-id.pipe';
+import { WinterSectionComponent } from './shopping/winter-section/winter-section.component';
+import { SummerSectionComponent } from './shopping/summer-section/summer-section.component';
+import { LoadingComponent } from './loading/loading.component';
+import { LoadingInterceptor } from './interceptors/loading.interceptor';
+import { LoadingService } from './services/loading.service';
+import { SliderFashionComponent } from './shopping/slider-fashion/slider-fashion.component';
+import { NotfoundComponent } from './notfound/notfound.component'; 
 const config: SocketIoConfig = { 
   url: 'http://localhost:3000', 
   options: { 
@@ -106,6 +114,13 @@ const config: SocketIoConfig = {
     NavbarAdminComponent,
     AddProductComponent,
     ManageProductsComponent,
+    ManageOrdersComponent,
+    BeautifyOrderIdPipe,
+    WinterSectionComponent,
+    SummerSectionComponent,
+    LoadingComponent,
+    SliderFashionComponent,
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -118,9 +133,15 @@ const config: SocketIoConfig = {
     SocketIoModule.forRoot(config),
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    LoadingService, // Add LoadingService to providers
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    } // Add LoadingInterceptor to HTTP_INTERCEPTORS
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA], // Add this line
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

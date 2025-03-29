@@ -1,19 +1,32 @@
 <!-- login.component.html -->
-<form (ngSubmit)="loginUser()">  <!-- Changed -->
+<form (ngSubmit)="loginUser()" [class.shake]="shakeForm">
   <div class="container">
     <div class="login-form">
       <h2>Login</h2>
       <div class="input-group">
-        <input type="text" name="username" [(ngModel)]="credentials.username" required> <!-- Added ngModel -->
+        <input 
+          type="text" 
+          name="username" 
+          [(ngModel)]="credentials.username" 
+          required
+          placeholder="Username"
+        >
         <label>Username</label>
       </div>
       <div class="input-group">
-        <input [type]="passwordFieldType" name="password" [(ngModel)]="credentials.password" required> <!-- Added ngModel -->
+        <input 
+          [type]="passwordFieldType" 
+          name="password" 
+          [(ngModel)]="credentials.password" 
+          required
+          placeholder="Password"
+        >
         <div class="password-toggle" (click)="togglePassword()">
           <div class="eye-icon" [class.visible]="showPassword"></div>
         </div>
       </div>
-      <button class="btn" type="submit">Login</button> <!-- Removed click handler -->
+      <div class="error-message" *ngIf="errorMessage">{{errorMessage}}</div>
+      <button class="btn" type="submit">Login</button>
       <div class="signup-form">
         Don't have an account? <a class="link-signup" routerLink="/signup">Signup</a>
       </div>

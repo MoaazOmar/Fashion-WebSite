@@ -35,11 +35,11 @@ fetchCarouselProducts(gender: string) {
     next: (response: any) => {
       this.mostLikedProducts = response.mostLikedProducts.map((product: Product) => ({
         ...product,
-        image: `http://localhost:3000/images/${product.image}`
+        image: product.image.map(img => `http://localhost:3000/images/${img}`),
       }));
       this.mostRecentProducts = response.mostRecentProducts.map((product:Product)=> ({
         ...product,
-        image: `http://localhost:3000/images/${product.image}`
+        image: product.image.map(img => `http://localhost:3000/images/${img}`),
       }))
     },
     error: (err) => {

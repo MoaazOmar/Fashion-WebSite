@@ -10,6 +10,7 @@
     justify-content: space-between;
     align-items: center;
     overflow: hidden;
+    top: -80px;
 }
 
 /* Make the Shade for the images */
@@ -267,4 +268,117 @@
     opacity: 0.5;
     pointer-events: none;
   }
-  
+  @media(max-width:600px){
+    header{
+        padding: 30px 20px; 
+    }
+    header.header-scrolled{
+        padding: 15px 20px;
+        background:rgba(0, 0, 0, 0.8) ;
+        backdrop-filter: blur(20px);
+
+    }
+    .nav{
+        display: none;
+    }
+    .util{
+        display: none;
+    }
+    .menu{
+        display: block;
+    }
+    #banner{
+        padding: 0 20px;
+    }
+    .women{
+        height: 40%;
+        width: 100%;
+        clip-path: polygon(0% 0% , 100% 0 , 100% 75% , 50% 100% , 0 75%);
+    }
+    .men{
+        top: 30%;
+        left: 0;
+        height: 40%;
+        width: 100%;
+        clip-path: polygon(100% 0 , 100% 100% , 50% 75% , 0% 100% , 0 0 , 50% 15% );
+    }
+    .special{
+        top:60%;
+        left: 0;
+        height: 40%;
+        width: 100%;
+        clip-path: polygon(50% 0 , 100% 25% , 100% 100% , 0% 100% , 0% 25%);
+
+    }
+
+    #banner.left .women,
+    #banner.middle .men,
+    #banner.right .special{
+        height: 100%;
+    }
+    #banner.right .special{
+        top: 0;
+    }
+    #banner.middle .men{
+        top: 0;
+    }
+    #banner.left .men, 
+    #banner.left .special{
+        top: 120%;
+    }
+    #banner.right .men, 
+    #banner.right .women{
+        top: -120%;
+    }
+    #banner.middle .women{
+        top: -120%;
+    }
+    #banner.middle .special{
+        top: 120%;
+    }
+    .switch-btn{
+        font-size: 4em;
+        margin-top:0 ;
+    }
+    #banner.left .women img {
+        height: 50%;
+        width: 100% !important;
+    }
+    #banner.middle .men img , 
+    #banner.right  .special img{
+        left:0;
+        top: 50%;
+        height: 50%;
+        width: 100% !important;
+    }
+    #banner .content h1 {
+        font-size: 2.5em;
+        font-weight: 400;
+    }
+    .women .content{
+        left: 20px;
+        top: 56%;
+        font-size: 0.8em;
+    }
+
+    .men .content , 
+    .special .content {
+        left: 20px; 
+        top: 10%;
+        font-size: 0.8em;
+    }
+    .reset{
+        left: 20px;
+        bottom: 20px;
+    }
+    .reset ion-icon{
+        font-size: 2em;
+    }
+    /* call-up section */
+    section.call-up{
+        margin-top: 18px;
+        padding: 0 20px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+    }}

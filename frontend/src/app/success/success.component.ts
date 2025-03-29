@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-success',
@@ -23,18 +24,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 export class SuccessComponent {
+  constructor(private router:Router){}
   @HostListener('window:resize')
   onResize() {
-    // Handle responsive adjustments if needed
   }
 
   shareOnInstagram() {
-    // Add social sharing logic
     console.log('Sharing to Instagram...');
   }
 
   continueShopping() {
     // Add navigation logic
-    console.log('Continuing shopping...');
+    this.router.navigate(['/shopping'])
   }
 }

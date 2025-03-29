@@ -4,8 +4,9 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../../interfaces/product.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ShoppinglistService } from '../../services/shoppinglist.service';
-import { trigger, state, style, transition, animate } from '@angular/animations'
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { CartItem } from '../../../interfaces/cart.model';
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -27,10 +28,10 @@ export class ProductsComponent implements OnInit {
   allProducts: Product[] = [];
   currentPage = 1;
   totalPages: number[] = [];
-  productsPerPage = 4;
+  productsPerPage = 5;
   searchTerm = '';
   selectedSort = 'newest';
-  selectedColor = '';
+  selectedColor = ''; // For filter
   colors: string[] = [];
   uniqueCategories: Set[] = [];
   selectedCategory: string = '';
@@ -38,27 +39,26 @@ export class ProductsComponent implements OnInit {
   uniqueColors: Set[] = [];
   isDropdownOpen: boolean = false;
   isColorDropdownOpen: boolean = false;
+  isLoading: boolean = false; // Added loading state
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private productService: ShoppinglistService,
-    private _CartService:CartService
-  ) { }
+    private _CartService: CartService
+  ) {}
 
   ngOnInit(): void {
-    // Subscribe to URL query parameters for dynamic filtering, sorting, and pagination
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['page'] || 1;
-      this.productsPerPage = +params['limit'] || 4;
+      this.productsPerPage = +params['limit'] || 5;
       this.selectedSort = params['sort'] || 'newest';
       this.searchTerm = params['search'] || '';
       this.selectedColor = params['color'] || '';
       this.selectedCategory = params['category'] || '';
       this.loadCombinedProducts(params['gender']);
     });
-    
-    // Close dropdown when clicking outside
+
     document.addEventListener('click', (event) => {
       const optionContainer = document.querySelector('#options-container-for-Category');
       if (optionContainer && !optionContainer.contains(event.target as Node)) {
@@ -119,10 +119,14 @@ export class ProductsComponent implements OnInit {
     this.loadCombinedProducts(this.route.snapshot.queryParams['gender']);
   }
 
-  selectColor(color: string) {
+  selectColor(color: string) { // For filter
     this.selectedColor = color.toLowerCase();
-    console.log('Selected Color:', this.selectedColor);
+    console.log('Selected Filter Color:', this.selectedColor);
     this.onColorChange();
+  }
+
+  pickColor(product: Product, color: string) { // For product card, renamed from selectColor
+    product.selectedColor = color;
   }
 
   onCategoryChange(): void {
@@ -140,7 +144,6 @@ export class ProductsComponent implements OnInit {
     const color = this.uniqueColors.find(c => c.name.toLowerCase() === this.selectedColor);
     return color ? `${color.name} (${color.count})` : `All Colors (${this.DisplayingfullProductsNumber})`;
   }
-  // pagination method
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages.length) {
@@ -149,24 +152,25 @@ export class ProductsComponent implements OnInit {
       this.loadCombinedProducts(this.route.snapshot.queryParams['gender']);
     }
   }
+
   activeLink(page: number): void {
     if (this.currentPage !== page) {
-      this.goToPage(page); // reusing your existing page change logic
+      this.goToPage(page);
     }
   }
-  
+
   backBtn(): void {
     if (this.currentPage > 1) {
       this.goToPage(this.currentPage - 1);
     }
   }
-  
+
   nextBtn(): void {
     if (this.currentPage < this.totalPages.length) {
       this.goToPage(this.currentPage + 1);
     }
   }
-  // displaying number of products per page option 
+
   updateProductsPerPage(): void {
     this.currentPage = 1;
     this.updateUrlParams();
@@ -189,20 +193,18 @@ export class ProductsComponent implements OnInit {
     return category ? `${category.name} (${category.count})` : `All Categories (${this.DisplayingfullProductsNumber})`;
   }
 
-  // Load products and set the initial 'visible' state to false. Then, animate visibility.
   private loadCombinedProducts(gender?: string): void {
-    // Stagger the fade-out of existing products
+    this.isLoading = true; // Start loading
     this.allProducts.forEach((product, index) => {
       setTimeout(() => {
-        product.visible = false; // Trigger fade-out for each product with delay
-      }, index * 80); // 80ms stagger between each product's fade-out
+        product.visible = false;
+      }, index * 80);
     });
-  
-    // Calculate total fade-out duration (stagger + transition time)
+
     const staggerDelay = 80;
-    const transitionDuration = 500; // Should match CSS transition duration
+    const transitionDuration = 500;
     const totalFadeOutTime = (this.allProducts.length * staggerDelay) + transitionDuration;
-  
+
     setTimeout(() => {
       const params = {
         gender: gender || 'all',
@@ -213,15 +215,18 @@ export class ProductsComponent implements OnInit {
         color: this.selectedColor,
         category: this.selectedCategory
       };
-  
+
       this.productService.getCombinedProducts(params).subscribe({
         next: (response: any) => {
+          console.log('Response of the products within carousel:', response); // Debug log
           this.allProducts = response.products.map((product: Product) => ({
             ...product,
-            image: `http://localhost:3000/images/${product.image}`,
-            visible: false // Start invisible
+            image: product.image.map(img => `http://localhost:3000/images/${img}`),
+            amount: 1,
+            selectedColor: product.colors[0], // Default to first color, like ProductHome
+            visible: false
           }));
-  
+
           this.totalPages = Array.from({ length: response.totalPages }, (_, i) => i + 1);
           this.currentPage = response.currentPage;
           this.uniqueCategories = response.categoriesWithCounts;
@@ -229,39 +234,52 @@ export class ProductsComponent implements OnInit {
             return total + (category?.count || 0);
           }, 0);
           this.uniqueColors = response.colorsWithCounts;
-  
-          // Staggered fade-in with increased delay
+
           setTimeout(() => {
             this.allProducts.forEach((product, index) => {
               setTimeout(() => {
-                product.visible = true; // Trigger fade-in with delay
-              }, index * 150); // 150ms stagger between appearances
+                product.visible = true;
+              }, index * 150);
             });
-          }, 300); // Initial delay before starting fade-in
-        },
-        error: (err) => console.error('Error loading products:', err)
-      });
-    }, totalFadeOutTime); // Wait for all fade-outs to complete
-  }
-    addToCart(product: Product) {
-      const cartItem: CartItem = {
-        amount: product.amount || 1, 
-        name: product.name,
-        price: product.price,
-        image: product.image[0],
-        productID: product._id 
-      };
-      
-      this._CartService.addToCart(cartItem).subscribe({
-        next: (response) => {
-          console.log('Product added to cart:', response);
+            this.isLoading = false; // Stop loading after animation
+          }, 300);
         },
         error: (err) => {
-          console.error('Error adding product to cart:', err);
+          console.error('Error loading products:', err);
+          this.isLoading = false; // Stop loading on error
         }
       });
-    }
-    
-  
+    }, totalFadeOutTime);
+  }
 
+  addToCart(product: Product) {
+    const cartItem: CartItem = {
+      amount: product.amount || 1,
+      name: product.name,
+      price: product.price,
+      image: product.image[0],
+      productID: product._id,
+      color: product.selectedColor || product.colors[0] // Use selectedColor like ProductHome
+    };
+
+    this._CartService.addToCart(cartItem).subscribe({
+      next: (response) => {
+        console.log('Product added to cart:', response);
+      },
+      error: (err) => {
+        console.error('Error adding product to cart:', err);
+      }
+    });
+  }
+
+  // Added reset method
+  resetFilters(): void {
+    this.searchTerm = '';
+    this.selectedSort = 'newest';
+    this.selectedColor = '';
+    this.selectedCategory = '';
+    this.currentPage = 1;
+    this.updateUrlParams();
+    this.loadCombinedProducts(this.route.snapshot.queryParams['gender']);
+  }
 }

@@ -1,21 +1,55 @@
-import { Component, OnInit, OnDestroy, Renderer2, } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../interfaces/product.model';
 import { ShoppinglistService } from '../services/shoppinglist.service';
-import {Set} from '../../interfaces/distinctAndCount.model'
+import { CartService } from '../services/cart.service'; // Added for cart functionality
+import { Set } from '../../interfaces/distinctAndCount.model';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+
 @Component({
   selector: 'app-shopping',
   templateUrl: './shopping.component.html',
-  styleUrls: ['./shopping.component.css']
+  styleUrls: ['./shopping.component.css'],
+  animations: [
+    trigger('slideAnimation', [
+      state('inactive', style({
+        opacity: 0,
+        transform: 'scale(1.1)'
+      })),
+      state('active', style({
+        opacity: 1,
+        transform: 'scale(1)'
+      })),
+      state('previous', style({
+        opacity: 0,
+        transform: 'scale(0.9)'
+      })),
+      transition('inactive => active', [
+        animate('1.2s cubic-bezier(0.42, 0, 0.58, 1)')
+      ]),
+      transition('active => previous', [
+        animate('1.2s cubic-bezier(0.42, 0, 0.58, 1)')
+      ]),
+      transition('previous => inactive', [
+        animate('0s')
+      ]),
+      transition('active => inactive', [
+        animate('1.2s cubic-bezier(0.42, 0, 0.58, 1)')
+      ])
+    ])
+  ]
 })
 export class ShoppingComponent implements OnInit, OnDestroy {
-  intervalTime = 8000; // 8 seconds
-  countdownTime = this.intervalTime / 1000; // Convert to seconds
-  currentTime = this.countdownTime;
-  interval: any;
-  countdownInterval: any;
+  @ViewChild('carousel', { static: false }) carousel!: ElementRef;
+  @ViewChild('progressBar', { static: false }) progressBar!: ElementRef;
 
-  // Products And Carousel Products
+  intervalTime = 8000; // 8 seconds
+  currentSlideIndex = 0;
+  previousSlideIndex = -1;
+  interval: any;
+  progressInterval: any;
+
+  // Products
   carouselProducts: Product[] = [];
   allProducts: Product[] = [];
   currentPage = 1;
@@ -27,28 +61,29 @@ export class ShoppingComponent implements OnInit, OnDestroy {
   colors: string[] = [];
   uniqueCategories: Set[] = [];
   selectedCategory: string = '';
-  DisplayingfullProductsNumber:number = 0;
+  DisplayingfullProductsNumber: number = 0;
   uniqueColors: Set[] = [];
+
   constructor(
     private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private productService: ShoppinglistService,
+    private cartService: CartService // Added CartService for adding items to cart
   ) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['page'] || 1;
-      this.productsPerPage = +params['limit'] || 4;   
+      this.productsPerPage = +params['limit'] || 4;
       this.selectedSort = params['sort'] || 'newest';
       this.searchTerm = params['search'] || '';
       this.selectedColor = params['color'] || '';
-      this.selectedCategory = params['category'] || '';      
+      this.selectedCategory = params['category'] || '';
       this.loadCombinedProducts(params['gender']);
     });
-    this.startAutoSlide(); // Start the auto-slide interval
-    this.resetCountdown(); // Initialize the countdown timer
-    this.setupEventListeners(); // Set up event listeners for next/prev buttons
+    this.startAutoSlide();
+    this.setupTouchEvents();
   }
 
   private loadCombinedProducts(gender?: string): void {
@@ -64,121 +99,159 @@ export class ShoppingComponent implements OnInit, OnDestroy {
 
     this.productService.getCombinedProducts(params).subscribe({
       next: (response: any) => {
-        console.log('Response:', response); 
         this.carouselProducts = response.carouselProducts.map((product: Product) => ({
           ...product,
-          image: `http://localhost:3000/images/${product.image}`
+          image: product.image.map(img => `http://localhost:3000/images/${img}`),
+          description: product.description || 'Discover this stylish item from our collection.',
+          comments: product.comments || [] // Ensure comments are included
         }));
+        
         this.allProducts = response.products.map((product: Product) => ({
           ...product,
-          image: `http://localhost:3000/images/${product.image}`
+          image: product.image.map(img => `http://localhost:3000/images/${img}`),
         }));
+        console.log('carouselProducts recieved',this.carouselProducts )
         this.totalPages = Array.from({ length: response.totalPages }, (_, i) => i + 1);
         this.currentPage = response.currentPage;
-        this.uniqueCategories = response.categoriesWithCounts
+        this.uniqueCategories = response.categoriesWithCounts;
         this.DisplayingfullProductsNumber = this.uniqueCategories.reduce((total, category) => {
           return total + (category?.count || 0);
         }, 0);
-        this.uniqueColors  = response.colorsWithCounts
-    
+        this.uniqueColors = response.colorsWithCounts;
       },
       error: (err) => console.error('Error loading products:', err)
     });
   }
 
-  // Carousel Code 
-
   ngOnDestroy(): void {
-    // Clear intervals to avoid memory leaks
     clearInterval(this.interval);
-    clearInterval(this.countdownInterval);
+    clearInterval(this.progressInterval);
   }
 
-  resetCountdown(): void {
-    const countdownDom = document.querySelector('.countdown') as HTMLElement;
-    const progressCircle = document.querySelector('.counter circle') as SVGCircleElement;
+  goToSlide(index: number): void {
+    if (index === this.currentSlideIndex) return;
 
-    // Reset the countdown time
-    this.currentTime = this.countdownTime;
-    countdownDom.textContent = this.currentTime.toString();
+    this.previousSlideIndex = this.currentSlideIndex;
+    this.currentSlideIndex = index;
 
-    // Reset the progress circle animation
-    this.renderer.setStyle(progressCircle, 'transition', 'none');
-    this.renderer.setStyle(progressCircle, 'strokeDashoffset', '0');
-
-    // Clear the existing countdown interval
-    clearInterval(this.countdownInterval);
-
-    // Start a new countdown interval
-    this.countdownInterval = setInterval(() => {
-      this.currentTime--;
-      countdownDom.textContent = this.currentTime.toString();
-
-      // Stop the countdown when it reaches 0
-      if (this.currentTime <= 0) {
-        clearInterval(this.countdownInterval);
-      }
-    }, 1000);
-
-    // Restart the progress circle animation after a short delay
-    setTimeout(() => {
-      this.renderer.setStyle(progressCircle, 'transition', `stroke-dashoffset ${this.intervalTime}ms linear`);
-      this.renderer.setStyle(progressCircle, 'strokeDashoffset', '126');
-    }, 50);
-  }
-
-  showSlider(type: 'next' | 'prev'): void {
-    const listItemDom = document.querySelector('.carousel .list') as HTMLElement;
-    const thumbnailDom = document.querySelector('.carousel .thumnail') as HTMLElement;
-    const itemSlider = document.querySelectorAll('.carousel .list .item');
-    const imgThumbnail = document.querySelectorAll('.carousel .thumnail .item');
-    const carouselDom = document.querySelector('.carousel') as HTMLElement;
-
-    if (type === 'next') {
-      // Move the first item to the end of the list
-      listItemDom.appendChild(itemSlider[0]);
-      thumbnailDom.appendChild(imgThumbnail[0]);
-      carouselDom.classList.add('next');
-      carouselDom.classList.remove('prev');
-    } else {
-      // Move the last item to the beginning of the list
-      const positionLastItem = itemSlider.length - 1;
-      listItemDom.prepend(itemSlider[positionLastItem]);
-      thumbnailDom.prepend(imgThumbnail[positionLastItem]);
-      carouselDom.classList.add('prev');
-      carouselDom.classList.remove('next');
+    if (this.currentSlideIndex >= this.carouselProducts.length) {
+      this.currentSlideIndex = 0;
+    } else if (this.currentSlideIndex < 0) {
+      this.currentSlideIndex = this.carouselProducts.length - 1;
     }
 
-    // Remove the transition classes after the animation is complete
     setTimeout(() => {
-      carouselDom.classList.remove('next', 'prev');
-    }, 1000);
+      this.previousSlideIndex = -1; // Reset previous after transition
+    }, 1200); // Matches 1.2s animation duration
 
-    // Reset the countdown and auto-slide interval
-    this.resetCountdown();
-    this.resetAutoSlideInterval();
+    this.resetProgressBar();
+  }
+
+  nextSlide(): void {
+    this.goToSlide(this.currentSlideIndex + 1);
+  }
+
+  prevSlide(): void {
+    this.goToSlide(this.currentSlideIndex - 1);
   }
 
   startAutoSlide(): void {
-    // Start the auto-slide interval
     this.interval = setInterval(() => {
-      this.showSlider('next');
+      this.nextSlide();
     }, this.intervalTime);
+    this.startProgressBar();
   }
 
-  resetAutoSlideInterval(): void {
-    // Clear the existing auto-slide interval
+  startProgressBar(): void {
+    const progressBarEl = this.progressBar.nativeElement;
+    this.renderer.setStyle(progressBarEl, 'width', '0%');
+    clearInterval(this.progressInterval);
+
+    let width = 0;
+    const increment = 100 / (this.intervalTime / 20);
+
+    this.progressInterval = setInterval(() => {
+      if (width >= 100) {
+        width = 0;
+      } else {
+        width += increment;
+        this.renderer.setStyle(progressBarEl, 'width', `${width}%`);
+      }
+    }, 20);
+  }
+
+  resetProgressBar(): void {
+    clearInterval(this.progressInterval);
+    this.renderer.setStyle(this.progressBar.nativeElement, 'width', '0%');
+    this.startProgressBar();
     clearInterval(this.interval);
-    // Start a new auto-slide interval
     this.startAutoSlide();
   }
 
-  setupEventListeners(): void {
-    const nextBtn = document.getElementById('next');
-    const prevBtn = document.getElementById('prev');
+  setupTouchEvents(): void {
+    let touchStartX = 0;
+    let touchEndX = 0;
 
-    // Add event listeners for next and prev buttons
-    nextBtn?.addEventListener('click', () => this.showSlider('next'));
-    prevBtn?.addEventListener('click', () => this.showSlider('prev'));
+    const carouselEl = this.carousel.nativeElement;
+
+    this.renderer.listen(carouselEl, 'touchstart', (e: TouchEvent) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+
+    this.renderer.listen(carouselEl, 'touchend', (e: TouchEvent) => {
+      touchEndX = e.changedTouches[0].screenX;
+      this.handleSwipe(touchStartX, touchEndX);
+    });
+  }
+
+  handleSwipe(startX: number, endX: number): void {
+    const swipeThreshold = 50;
+    if (endX < startX - swipeThreshold) {
+      this.nextSlide();
+    }
+    if (endX > startX + swipeThreshold) {
+      this.prevSlide();
+    }
+  }
+
+  // Cart Functionality
+  addToCart(product: Product): void {
+    const cartItem = {
+      productID: product._id,
+      name: product.name,
+      price: product.price,
+      amount: 1, // Default quantity
+      image: product.image[0],
+      color: product.colors?.[0] || '', // Default to first color
+      userID: 'currentUserId' // Replace with actual user ID from auth service if available
+    };
+
+    this.cartService.addToCart(cartItem).subscribe({
+      next: () => console.log(`${product.name} added to cart`),
+      error: (err) => console.error('Error adding to cart:', err)
+    });
+  }
+
+  // Rating/Comments Functionality (Preserved from productslist.component.ts)
+  getAverageRating(product: Product): number {
+    const ratedComments = product.comments.filter(comment => comment.rating !== null);
+    if (ratedComments.length === 0) return 0;
+    const totalRating = ratedComments.reduce((sum, comment) => sum + (comment.rating || 0), 0);
+    return totalRating / ratedComments.length;
+  }
+
+  getTotalRatedComments(product: Product): number {
+    return product.comments.filter(comment => comment.rating !== null).length;
+  }
+
+  getStarClass(product: Product, i: number): string {
+    const average = this.getAverageRating(product);
+    if (i <= average) {
+      return 'fas fa-star text-yellow-400';
+    } else if (i - 0.5 <= average) {
+      return 'fas fa-star-half-alt text-yellow-400';
+    } else {
+      return 'far fa-star text-yellow-400';
+    }
   }
 }

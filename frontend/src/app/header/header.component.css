@@ -23,7 +23,7 @@ header.header-scrolled{
 .logo {
     position: relative;
     font-size: 30px;
-    color: #fff;
+    color: #5A5A5A ;
     letter-spacing: 2px;
     font-weight: 800;
     text-decoration: none;
@@ -42,15 +42,16 @@ header.header-scrolled{
 }
 
 .nav li a {
-    color: white;
+    color: #5A5A5A;
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.7s ease-out;
-    font-weight: 300;
+    font-weight: 700;
     font-size: 1em;
     letter-spacing: 1px;
     padding: 10px;
+    
 }
 
 .nav li a:hover {
@@ -70,11 +71,11 @@ header.header-scrolled{
 
 .util li a {
     text-decoration: none;
-    color: #fff;
+    color: #5A5A5A ;
     transition: all 0.7s ease-out;
 }
 .util li i{
-    color: white; 
+    color: #5A5A5A ; 
     font-size: 21px; 
     cursor: pointer;
     transition: all 0.7s ease-out;
@@ -98,7 +99,7 @@ header.header-scrolled{
     height: 16px;
     border-radius: 50%;
     background: var(--primary);
-    color: #ffffff;
+    color: #5A5A5A;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -135,7 +136,7 @@ header.header-scrolled{
     flex: 1;
     border: none;
     background: transparent;
-    color: #fff;
+    color:#5A5A5A ;
     font-size: 1em;
     padding: 15px 25px;
     outline: none;
@@ -147,7 +148,7 @@ header.header-scrolled{
 }
 
 .close-search {
-    color: #fff;
+    color:#5A5A5A ;
     margin-right: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -256,7 +257,7 @@ header:has(.search-container.active) .util {
   font-size: large;
   background: linear-gradient(135deg, #ff6a00, #ee0979);
   cursor: pointer;
-  color: white;
+  color:#5A5A5A ;
   display: grid;
   place-items: center;
   /* Centers the content inside the profile seller */
@@ -344,7 +345,7 @@ header:has(.search-container.active) .util {
   top: 63px;
   right: 35px;
   border-radius: 15px;
-  color: white;
+  color:#5A5A5A ;
   box-shadow: 0 4px 8px rgba(96, 2, 0, 0.3),
   0 6px 20px rgba(104, 66, 0, 0.19),
   0 6px 20px rgba(0, 0, 0, 0.19);
@@ -369,6 +370,7 @@ header:has(.search-container.active) .util {
 .signout{
   margin-top: 40px;
 }
+
 /* Responsive */
 @media (max-width: 1300px) {
   header.header-scrolled .profile-description {
@@ -573,3 +575,63 @@ header:has(.search-container.active) .util {
 
 }
 
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: var(--primary); /* Replace with your hex color */
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  z-index: 1200; /* Higher than 1100 as requested */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  background-color: var(--primary); /* Darker shade for hover */
+  transform: translateY(-3px);
+}
+
+.back-to-top i {
+  font-size: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .back-to-top {
+    width: 40px;
+    height: 40px;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .back-to-top i {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-to-top {
+    width: 35px;
+    height: 35px;
+    bottom: 15px;
+    right: 15px;
+  }
+  
+  .back-to-top i {
+    font-size: 14px;
+  }
+}

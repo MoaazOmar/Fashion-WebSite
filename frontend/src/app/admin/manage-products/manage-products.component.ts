@@ -14,9 +14,16 @@ export class ManageProductsComponent implements OnInit {
   showModal: boolean = false;
   selectedProduct: Product | null = null;
   newImages: File[] = [];
+  searchQuery: string = '';
   imagesToDelete: string[] = [];
-  selectedFiles: File[] = [] // Add this to store actual files
-  // Predefined options for sizes, colors, and genders
+  selectedFiles: File[] = []; // Store actual files
+  // For Searching 
+  searchTerm: string = '';
+  filteredProducts: Product[] = [];   // List after search filtering
+  // Pagination variables
+  currentPage: number = 1;
+  itemsPerPage: number = 6;
+
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   colors = [
     { name: 'black', class: 'black' },
@@ -41,12 +48,11 @@ export class ManageProductsComponent implements OnInit {
   genders = ['Male', 'Female', 'Special', 'all'];
 
   constructor(private adminService: AdminService, private fb: FormBuilder) {
-    // Initialize the edit form with validators
     this.editForm = this.fb.group({
       name: ['', Validators.required],
       category: ['', Validators.required],
       price: ['', Validators.required],
-      quantity: [0, Validators.min(0)],
+      stock: [0, Validators.min(0)], // Changed from quantity to stock
       description: [''],
       season: [''],
       sizes: [[]],
@@ -55,32 +61,28 @@ export class ManageProductsComponent implements OnInit {
     });
   }
 
-  // Lifecycle hook to fetch products on initialization
   ngOnInit() {
     this.fetchProducts();
   }
 
-  // Fetch all products and map image URLs
   fetchProducts() {
-    this.adminService.getAllProducts().subscribe(
-      (products) => {
-        this.products = products.map(product => ({
-          ...product,
-          image: product.image.map(img => `http://localhost:3000/images/${img}`)
-        }));
-      }
-    );
+    this.adminService.getAllProducts().subscribe((products) => {
+      this.products = products.map(product => ({
+        ...product,
+        image: product.image.map(img => `http://localhost:3000/images/${img}`)
+      }));
+      // Initialize filteredProducts to include all products initially.
+      this.filteredProducts = [...this.products];
+    });
   }
-
-  // Open the edit modal and populate the form
+  
   openEditModal(product: Product) {
     this.selectedProduct = product;
-
     this.editForm.patchValue({
       name: product.name,
       category: product.category,
       price: product.price,
-      quantity: product.quantity,
+      stock: product.stock, // Changed from quantity to stock
       description: product.description || '',
       season: product.season || '',
       sizes: product.sizes || [],
@@ -91,7 +93,6 @@ export class ManageProductsComponent implements OnInit {
     this.showModal = true;
   }
 
-  // Close the modal and reset state
   closeModal() {
     this.showModal = false;
     this.selectedProduct = null;
@@ -99,7 +100,6 @@ export class ManageProductsComponent implements OnInit {
     this.editForm.reset();
   }
 
-  // Handle file input changes for new images
   onFileChange(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files) {
@@ -107,7 +107,6 @@ export class ManageProductsComponent implements OnInit {
     }
   }
 
-  // Toggle size selection
   toggleSize(size: string) {
     const sizes = this.editForm.get('sizes')?.value || [];
     const index = sizes.indexOf(size);
@@ -119,7 +118,6 @@ export class ManageProductsComponent implements OnInit {
     this.editForm.patchValue({ sizes });
   }
 
-  // Toggle color selection
   toggleColor(color: string) {
     const colors = this.editForm.get('colors')?.value || [];
     const index = colors.indexOf(color);
@@ -131,7 +129,6 @@ export class ManageProductsComponent implements OnInit {
     this.editForm.patchValue({ colors });
   }
 
-  // Toggle gender selection
   toggleGender(gender: string) {
     const genders = this.editForm.get('gender')?.value || [];
     const index = genders.indexOf(gender);
@@ -143,7 +140,6 @@ export class ManageProductsComponent implements OnInit {
     this.editForm.patchValue({ gender: genders });
   }
 
-  // Update the product with form data
   updateProduct() {
     if (this.editForm.invalid || !this.selectedProduct) return;
 
@@ -157,7 +153,6 @@ export class ManageProductsComponent implements OnInit {
       }
     });
     this.newImages.forEach(file => formData.append('image', file));
-    // Add images to delete
     if (this.imagesToDelete.length > 0) {
       formData.append('imagesToDelete', JSON.stringify(this.imagesToDelete));
     }
@@ -173,19 +168,111 @@ export class ManageProductsComponent implements OnInit {
       }
     );
   }
-  removeImage(imagePath: string) {
-    // Remove from display
-    this.selectedProduct!.image = this.selectedProduct!.image.filter(img => img !== imagePath);
 
-    // Extract filename from URL and add to deletion list
-    const filename = imagePath.split('/').pop() ?? '';    
+  removeImage(imagePath: string) {
+    this.selectedProduct!.image = this.selectedProduct!.image.filter(img => img !== imagePath);
+    const filename = imagePath.split('/').pop() ?? '';
     this.imagesToDelete.push(filename);
   }
 
-  // Determine product status based on quantity
-  getStatus(quantity: number): string {
-    if (quantity === 0) return 'out-of-stock';
-    if (quantity < 30) return 'low-stock';
+  getStatus(stock: number): string { // Changed from quantity to stock
+    if (stock === 0) return 'out-of-stock';
+    if (stock < 30) return 'low-stock'; // Adjust threshold if needed
     return 'active';
   }
+  // SearchTerm Method
+  onSearch(query: string) {
+    this.searchTerm = query;
+    this.currentPage = 1; // Reset page when new search is performed
+
+    if (query) {
+      this.filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(query.toLowerCase()) ||
+        product.category.toLowerCase().includes(query.toLowerCase())
+      );
+    } else {
+      this.filteredProducts = [...this.products];
+    }
+  }
+    // Returns the products to display on the current page.
+    get paginatedProducts(): Product[] {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      return this.filteredProducts.slice(startIndex, startIndex + this.itemsPerPage);
+    }
+  
+    // Total number of pages
+    get totalPages(): number {
+      return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+    }
+  
+    // Pagination controls
+    setPage(page: number) {
+      if (page >= 1 && page <= this.totalPages) {
+        this.currentPage = page;
+      }
+    }
+    // Returns an array containing numbers and string ellipsis as needed.
+getPaginationRange(): (number | string)[] {
+  const total = this.totalPages;
+  const current = this.currentPage;
+  const maxVisible = 7; // maximum number of page buttons to show including first and last
+
+  const range: (number | string)[] = [];
+  
+  // If total pages is less than or equal to maxVisible, show all pages.
+  if (total <= maxVisible) {
+    for (let i = 1; i <= total; i++) {
+      range.push(i);
+    }
+    return range;
+  }
+  
+  // Always display the first page.
+  range.push(1);
+
+  // Calculate left and right bounds for the middle section.
+  let left = current - 2;
+  let right = current + 2;
+
+  // Adjust when current page is near the beginning.
+  if (current <= 4) {
+    left = 2;
+    right = 5;
+  }
+  
+  // Adjust when current page is near the end.
+  if (current >= total - 3) {
+    left = total - 4;
+    right = total - 1;
+  }
+  
+  // Add ellipsis if there is a gap between first page and left bound.
+  if (left > 2) {
+    range.push('...');
+  }
+  
+  // Add middle pages.
+  for (let i = left; i <= right; i++) {
+    range.push(i);
+  }
+  
+  // Add ellipsis if there is a gap between right bound and the last page.
+  if (right < total - 1) {
+    range.push('...');
+  }
+  
+  // Always display the last page.
+  range.push(total);
+  
+  return range;
+}
+
+// Helper method to handle page clicks.
+// Only numeric values should trigger the setPage() function.
+handlePageClick(page: number | string): void {
+  if (typeof page === 'number') {
+    this.setPage(page);
+  }
+}
+
 }

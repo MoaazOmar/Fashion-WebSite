@@ -1,0 +1,8 @@
+<div class="trust-slider">
+    <div class="slider-track">
+      <!-- Original Items -->
+      <div class="slider-item" *ngFor="let brand of brands; let i = index" [attr.aria-hidden]="i >= brands.length / 2">
+        <img [src]="brand.logoUrl" [alt]="brand.name">
+      </div>
+    </div>
+  </div>

@@ -273,14 +273,15 @@ button:first-child {
 /* Responsive Design */
 @media (max-width: 768px) {
   .clear-all-btn {
-    right: 50%;
-    transform: translateX(50%);
-    bottom: 15px;
+    position: fixed;
+    /* right: 50%; */
+    bottom: 0;
     width: 90%;
-    max-width: 280px;
+    /* max-width: 280px; */
     justify-content: center;
     padding: 14px 20px;
     font-size: 0.9rem;
+    z-index: 20000;
   }
   
 }
@@ -300,3 +301,13 @@ button:first-child {
   }
 }
 
+.img-funny {
+  width: 100vw;
+  height: 180px;
+  background: url('/funny and vibrant shopping fashion package.png');
+  background-size: contain;
+  background-repeat: repeat;
+  background-position: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ThemeService } from '../../services/theme.service'; 
+import { AuthService } from '../../services/auth.service'; 
 @Component({
   selector: 'app-navbar-admin',
   templateUrl: './navbar-admin.component.html',
@@ -9,8 +10,11 @@ import { ThemeService } from '../../services/theme.service';
 export class NavbarAdminComponent implements OnInit {
   currentPage: string = 'Dashboard';
   isDarkMode: boolean = false;
-
-  constructor(private router: Router, private themeService: ThemeService) {}
+  adminInitial: string = '';
+  adminName:string ='';
+  constructor(private router: Router, private themeService: ThemeService , 
+              private authService: AuthService
+  ) {}
 
   ngOnInit() {
     // Subscribe to dark mode changes
@@ -24,6 +28,17 @@ export class NavbarAdminComponent implements OnInit {
         this.updateBreadcrumb(event.urlAfterRedirects);
       }
     });
+
+        // Get current user's initial (assuming property 'username')
+        this.authService.currentUser.subscribe(user => {
+          if (user && user.username) {
+            this.adminInitial = user.username.charAt(0).toUpperCase();
+            this.adminName  = user.username
+          } else {
+            this.adminInitial = 'A'; // Fallback if not available
+          }
+        });
+    
   }
 
   updateBreadcrumb(url: string) {
@@ -49,4 +64,8 @@ export class NavbarAdminComponent implements OnInit {
   toggleDarkMode() {
     this.themeService.toggleDarkMode();
   }
+  logout() {
+    this.authService.logout();
+  }
+
 }

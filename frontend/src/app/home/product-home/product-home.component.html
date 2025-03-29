@@ -1,5 +1,6 @@
+<!-- product-home.component.html -->
 <form class="filter-form">
-  <ul id="products-filter">
+  <ul id="products-filter" style="color:#101820;">
     <li [class.active]="selectedCategory === ''" (click)="selectedCategory = ''">All</li>
     <li [class.active]="selectedCategory === 'Female'" (click)="selectedCategory = 'Female'">Women</li>
     <li [class.active]="selectedCategory === 'Male'" (click)="selectedCategory = 'Male'">Men</li>
@@ -8,28 +9,43 @@
   </ul>
   <button type="button" (click)="applyFilter($event)">Filter</button>
 </form>
-<!-- Product Container -->
 
 <div class="product-container">
   <div *ngFor="let product of products; let i = index" class="product-item">
-    <!-- <span *ngIf="isHot(i)" class="hot">NEW<i class="fa fa-certificate" aria-hidden="true"></i></span> -->
-    <img [src]="product.image" alt="Product Image" class="product-image" [routerLink]="['/products', product._id]"/>
-    <div class="image-overlay"></div>
-    <button class="quick-view" [routerLink]="['/products', product._id]">
-      <i class="fa-regular fa-eye"></i> Quick View
-    </button>    
-    <div class="product-info">
-      <h4>{{ product.name }}</h4>
-      <p>
-        <span *ngIf="product.price" class="cross">{{ product.price }}</span>
+    <img [src]="product.image[0]" alt="Product Image" class="product-image" [routerLink]="['/products', product._id]"/>
+    <div class="product-details">
+      <h4 class="product-name">{{ product.name }}</h4>
+      <p class="product-price">
         <span class="price">{{ product.price }}</span>
       </p>
+      <div class="color-options">
+        <div 
+          *ngFor="let color of product.colors"
+          [style.backgroundColor]="color"
+          [class.selected]="product.selectedColor === color"
+          (click)="selectColor(product, color)"
+          title="{{color}}"
+        ></div>
+      </div>
+      <form (ngSubmit)="addToCart(product)" class="cart-form">
+        <input type="number" 
+               [(ngModel)]="product.amount" 
+               name="amount" 
+               class="form-control" 
+               placeholder="Quantity" 
+               min="1">
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-cart-plus"></i>
+        </button>
+      </form>
     </div>
-    <form (ngSubmit)="addToCart(product)">
-      <input type="number" [(ngModel)]="product.amount" name="amount" class="form-control mb-2" placeholder="Quantity"
-        min="1">
-      <button type="submit" class="btn btn-primary"><i class="fa-solid fa-cart-plus"></i></button>
-    </form>
+  </div>
+</div>
+
+<div class="loading" *ngIf="isLoading">
+  <h2>Loading...</h2>
+  <div class="wrapper">
+    <span></span>
   </div>
 </div>
 

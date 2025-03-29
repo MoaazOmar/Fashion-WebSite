@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SingleProductService } from '../services/single-product.service';
 import { Product } from '../../interfaces/product.model';
 import { AuthService } from '../services/auth.service';
-import { AddFavoriteService } from '../services/addFavourites.porducts.service'; // Updated import
+import { AddFavoriteService } from '../services/addFavourites.porducts.service';
+import { CartService } from '../services/cart.service'; // Added CartService import
 
 @Component({
   selector: 'app-productslist',
@@ -33,8 +34,9 @@ export class ProductslistComponent implements OnInit {
     private route: ActivatedRoute,
     private _productServices: SingleProductService,
     private authService: AuthService,
-    private addFavoriteService: AddFavoriteService,// Replaced FavoriteProductsService
-    private cdr:ChangeDetectorRef 
+    private addFavoriteService: AddFavoriteService,
+    private cartService: CartService, // Added CartService
+    private cdr: ChangeDetectorRef 
   ) { }
 
   ngOnInit(): void {
@@ -45,13 +47,11 @@ export class ProductslistComponent implements OnInit {
       this.loadProduct();
     });
     
-    
     this.authService.currentUser.subscribe(user => {
       this.currentUserId = user?.id || null;
       console.log('Set currentUserId:', this.currentUserId);
     });
   
-    // Subscribe to love$ for real-time favorite updates
     this.addFavoriteService.love$.subscribe(() => {
       const favorites = this.addFavoriteService.getLove();
       if (this.product) {
@@ -66,8 +66,8 @@ export class ProductslistComponent implements OnInit {
       next: (response) => {
         this.product = {
           ...response.product,
-          image: [`http://localhost:3000/images/${response.product.image}`]
-
+          image: response.product.image.map((img: string) => `http://localhost:3000/images/${img}`),
+          selectedColor: response.product.colors?.[0] || '' // Set default color
         };
         this.productLikeCount = this.product.likes;
         this.productDislikeCount = this.product.dislikes;
@@ -79,7 +79,6 @@ export class ProductslistComponent implements OnInit {
           this.productLiked = this.product.likedBy.includes(this.currentUserId);
           this.productDisliked = this.product.dislikedBy.includes(this.currentUserId);
         }
-        // Set initial favorite status
         this.isFavorite = this.addFavoriteService.getLove().some(fav => fav._id === this.product._id);
         this.cdr.detectChanges();
       },
@@ -99,18 +98,21 @@ export class ProductslistComponent implements OnInit {
 
   toggleFavorite(product: Product): void {
     const username = this.authService.currentUserValue?.username || 'guest';
-    this.addFavoriteService.addLove(product); // Toggles favorite status
+    this.addFavoriteService.addLove(product);
     this.isFavorite = this.addFavoriteService.getLove().some(fav => fav._id === product._id);
     console.log(`${product.name} favorite status toggled. Now favorited? ${this.isFavorite}`);
   }
 
   onDotClick(index: number): void {
     const container = this.carouselContainer.nativeElement;
-    const imageWidth = container.offsetWidth;
-    container.scrollLeft = index * imageWidth;
+    const slideWidth = container.offsetWidth;
+    container.scrollTo({
+      left: slideWidth * index,
+      behavior: 'smooth'
+    });
     this.activeDotIndex = index;
   }
-
+  
   onProductLikeDblClick(): void {
     this._productServices.toggleLikeProduct(this.product._id).subscribe({
       next: (response) => {
@@ -139,6 +141,35 @@ export class ProductslistComponent implements OnInit {
         console.log(this.productLiked, this.productDisliked, this.productLikeCount, this.productDislikeCount);
       },
       error: (error) => console.error("Error toggling dislike:", error)
+    });
+  }
+
+  // Added method to handle color selection
+  selectColor(color: string): void {
+    this.product.selectedColor = color;
+    console.log('Selected color:', this.product.selectedColor);
+  }
+
+  // Added method to add product to cart
+  addToCart(): void {
+    if (!this.product.stock) {
+      console.log('Cannot add to cart: Out of stock');
+      return;
+    }
+
+    const cartItem = {
+      productID: this.product._id,
+      name: this.product.name,
+      price: this.product.price,
+      amount: this.quantity,
+      image: this.product.image[0],
+      color: this.product.selectedColor || this.product.colors[0],
+      userID: this.currentUserId || undefined
+    };
+
+    this.cartService.addToCart(cartItem).subscribe({
+      next: () => console.log('Product added to cart'),
+      error: (err) => console.error('Error adding to cart:', err)
     });
   }
 
@@ -178,6 +209,4 @@ export class ProductslistComponent implements OnInit {
   openReviewForm(): void {
     console.log('Open review form');
   }
-
-  
 }

@@ -1,83 +1,97 @@
 <!-- Main content area -->
 <div class="content-area">
-    <!-- Header section with title and actions -->
-    <div class="header-container">
-      <h1 class="title">Manage Products</h1>
-      <div class="header-actions">
-        <div class="search-wrapper">
-          <input type="text" placeholder="Search products..." class="search-input" />
-          <i class="fas fa-search search-icon"></i>
-        </div>
-        <a routerLink="/admin/add-product" class="add-new-btn">
-          <i class="fas fa-plus mr-2"></i> Add New
-        </a>
+  <!-- Header section with title and actions -->
+  <div class="header-container">
+    <h1 class="title">Manage Products</h1>
+    <div class="header-actions">
+      <div class="search-wrapper">
+        <input type="text" placeholder="Search products..." class="search-input" [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearch($event)">
+        <i class="fas fa-search search-icon"></i>
       </div>
+      <a routerLink="/admin/add-product" class="add-new-btn">
+        <i class="fas fa-plus mr-2"></i> Add New
+      </a>
     </div>
-  
-    <!-- Table container for product list -->
-    <div class="table-container">
-      <div class="overflow-x-auto">
-        <table class="min-w-full">
-          <thead>
-            <tr>
-              <th>Product</th>
-              <th>Category</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Status</th>
-              <th class="text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let product of products">
-              <td>
-                <div class="flex items-center">
-                  <div class="table-icon">
-                    <i class="fas fa-tshirt text-primary-500"></i>
-                  </div>
-                  <div class="text-sm font-medium">{{ product.name }}</div>
+  </div>
+
+  <!-- Table container for product list -->
+  <div class="table-container">
+    <div class="overflow-x-auto">
+      <table class="min-w-full">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th> <!-- Changed from "Stock" to match backend -->
+            <th>Status</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of paginatedProducts">
+            <td>
+              <div class="flex items-center">
+                <div class="table-icon">
+                  <i class="fas fa-tshirt text-primary-500"></i>
                 </div>
-              </td>
-              <td>{{ product.category }}</td>
-              <td>${{ product.price.toFixed(2) }}</td>
-              <td>{{ product.quantity }}</td>
-              <td>
-                <span class="status" [ngClass]="getStatus(product.quantity)">
-                  {{ getStatus(product.quantity) === 'active' ? 'Active' : getStatus(product.quantity) === 'low-stock' ? 'Low Stock' : 'Out of Stock' }}
-                </span>
-              </td>
-              <td class="text-right">
-                <div class="action-buttons">
-                  <button class="action-btn edit" (click)="openEditModal(product)">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="action-btn delete">
-                    <i class="fas fa-trash-alt"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Table footer with pagination -->
-      <div class="table-footer">
-        <div class="pagination-info">
-          <p>Showing <span class="font-medium">1</span> to <span class="font-medium">5</span> of <span class="font-medium">{{ products.length }}</span> results</p>
-        </div>
-        <div class="pagination">
-          <button class="pagination-btn"><i class="fas fa-chevron-left"></i></button>
-          <button class="pagination-btn active">1</button>
-          <button class="pagination-btn">2</button>
-          <button class="pagination-btn">3</button>
-          <span class="pagination-ellipsis">...</span>
-          <button class="pagination-btn">5</button>
-          <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
-        </div>
-      </div>
+                <div class="text-sm font-medium">{{ product.name }}</div>
+              </div>
+            </td>
+            <td>{{ product.category }}</td>
+            <td>${{ product.price.toFixed(2) }}</td>
+            <td>{{ product.stock }}</td> <!-- Changed from quantity -->
+            <td>
+              <span class="status" [ngClass]="getStatus(product.stock)"> <!-- Changed from quantity -->
+                {{ getStatus(product.stock) === 'active' ? 'Active' : getStatus(product.stock) === 'low-stock' ? 'Low
+                Stock' : 'Out of Stock' }}
+              </span>
+            </td>
+            <td class="text-right">
+              <div class="action-buttons">
+                <button class="action-btn edit" (click)="openEditModal(product)">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="action-btn delete">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  
+
+    <!-- Table footer with pagination -->
+    <div class="table-footer">
+  <div class="pagination-info">
+    <p>
+      Showing <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
+      to <span class="font-medium">
+        {{ currentPage * itemsPerPage < filteredProducts.length ? currentPage * itemsPerPage : filteredProducts.length }}
+      </span>
+      of <span class="font-medium">{{ filteredProducts.length }}</span> results
+    </p>
+  </div>
+  <div class="pagination">
+    <button class="pagination-btn" (click)="setPage(currentPage - 1)" [disabled]="currentPage === 1">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
+    <button *ngFor="let page of getPaginationRange()"
+            class="pagination-btn"
+            [class.active]="currentPage === page"
+            (click)="handlePageClick(page)">
+      {{ page === '...' ? '...' : page }}
+    </button>
+
+    <button class="pagination-btn" (click)="setPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
     <!-- Edit product modal -->
     <div class="modal-overlay" *ngIf="showModal" (click)="closeModal()">
       <div class="modal-content" (click)="$event.stopPropagation()">
@@ -99,10 +113,10 @@
             <label for="price">Price ($) *</label>
             <input type="number" id="price" formControlName="price" step="0.01" required />
           </div>
-          <!-- Quantity input -->
+          <!-- Stock input -->
           <div class="form-group">
-            <label for="quantity">Stock Quantity</label>
-            <input type="number" id="quantity" formControlName="quantity" min="0" />
+            <label for="stock">Stock Quantity</label> <!-- Changed from "Quantity" -->
+            <input type="number" id="stock" formControlName="stock" min="0" /> <!-- Changed from quantity -->
           </div>
           <!-- Description textarea -->
           <div class="form-group">
@@ -118,7 +132,8 @@
           <div class="form-group">
             <label>Sizes</label>
             <div class="size-selection">
-              <div *ngFor="let size of sizes" class="size-box" [class.selected]="editForm.value.sizes.includes(size)" (click)="toggleSize(size)">
+              <div *ngFor="let size of sizes" class="size-box" [class.selected]="editForm.value.sizes.includes(size)"
+                (click)="toggleSize(size)">
                 {{ size }}
               </div>
             </div>
@@ -127,14 +142,16 @@
           <div class="form-group">
             <label>Colors</label>
             <div class="color-selection">
-              <div *ngFor="let color of colors" class="color-box" [class]="color.class" [class.selected]="editForm.value.colors.includes(color.name)" (click)="toggleColor(color.name)"></div>
+              <div *ngFor="let color of colors" class="color-box" [class]="color.class"
+                [class.selected]="editForm.value.colors.includes(color.name)" (click)="toggleColor(color.name)"></div>
             </div>
           </div>
           <!-- Gender selection -->
           <div class="form-group">
             <label>Gender</label>
             <div class="gender-selection">
-              <div *ngFor="let gender of genders" class="gender-box" [class.selected]="editForm.value.gender.includes(gender)" (click)="toggleGender(gender)">
+              <div *ngFor="let gender of genders" class="gender-box"
+                [class.selected]="editForm.value.gender.includes(gender)" (click)="toggleGender(gender)">
                 {{ gender }}
               </div>
             </div>
@@ -146,15 +163,10 @@
             <div class="current-images" *ngIf="selectedProduct?.image?.length">
               <p>Current Images:</p>
               <div class="image-preview" *ngFor="let img of selectedProduct!.image">
-                <img [src]="img" alt="Product Image" width="50" />
-                <button 
-                  type="button" 
-                  class="remove-image-btn" 
-                  (click)="removeImage(img)"
-                >
-                ×
-                </button>
-              </div>            </div>
+                <img [src]="img" alt="Product Image" width="100%" height="100%" />
+                <button type="button" class="remove-image-btn" (click)="removeImage(img)">×</button>
+              </div>
+            </div>
           </div>
           <!-- Form actions -->
           <div class="modal-actions">

@@ -65,13 +65,17 @@
   
   /* Individual product styling */
   .product-item {
-      position: relative;
-      height: 470px;
-      background-color: #ffffff;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
-      overflow: hidden;
-      transition: all 0.5s ease-out;
-  }
+    position: relative;
+    height: 520px;
+    background-color: #ffffff;
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 60px; 
+
+}
   .product-item.hidden {
       transform: scale(0);
       opacity: 0;
@@ -103,76 +107,7 @@
   .product-item:hover img {
       transform: scale(1.1);
   }
-  .image-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .product-item:hover .image-overlay {
-    opacity: 1;
-  }
-  
-  .quick-view {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 12px 24px;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--primary);
-    border: 2px solid var(--primary);
-    border-radius: 30px;
-    font-weight: 600;
-    cursor: pointer;
-    opacity: 0;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 2;
-    width: fit-content;
-    height: 24px;
-    animation: showup 0.3s  ease-out 1 ;
-  }
-  
-  .product-item:hover .quick-view {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.05);
-  }
-  
-  .quick-view:hover {
-    background: var(--primary);
-    color: white;
-  }
-  @keyframes showup {
-    from {
-        transform: translate(-50%, -50%) translateY(-90px);
-    }
-    to {
-        transform: translate(-50%, -50%) translateY(0);
-    }
-}
-  .product-info {
-      padding: 15px;
-      color: black;
-  }
-  
-  .product-info h4 {
-      font-size: 1em;
-      text-transform: uppercase;
-      font-weight: 400;
-  }
-  
-  .product-info p {
-      font-weight: 200;
-      color: #000;
-  }
+
   
   .product-rating {
       display: flex;
@@ -188,13 +123,24 @@
       color: var(--primary);
   }
   
-  .product-info .cross {
-      text-decoration: line-through;
+  .product-info {
+    text-align: center;
+    padding: 10px;
   }
   
   .product-info .price {
       color: var(--primary);
       font-weight: 500;
+      padding: 10px;
+      flex-grow: 1;
+  }
+  .product-name {
+    margin: 10px 0;
+  }
+  .product-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   
   .product-item .hot {
@@ -209,6 +155,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 470px;
   }
   
   .product-item .hot .fa-certificate {
@@ -405,3 +352,67 @@ input[type="number"]::-webkit-outer-spin-button {
     bottom: 20px;
     opacity: 1;
   }
+  .color-options {
+    display: flex;
+    gap: 8px;
+    padding: 0 10px;
+    margin: 5px 0;
+  }
+  
+  .color-options div {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .color-options div.selected {
+    border-color: white;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  }
+  .color-options div:hover {
+    transform: scale(1.1);
+  }
+  
+  .color-options div.selected {
+    border-color: var(--primary);
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  }
+  
+  .cart-form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+  
+  .cart-form .form-control {
+    flex: 2;
+    padding: 10px;
+    font-size: 16px;
+    max-width: 100px;
+  }
+  
+  .cart-form button {
+    padding: 10px 20px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .form-control {
+    width: 70px;
+    padding: 5px;
+  }
+  
+  

@@ -11,9 +11,9 @@ import { CartItem } from '../../../interfaces/cart.model';
   styleUrls: ['./product-home.component.css'],
 })
 export class ProductHomeComponent implements OnInit {
-  products: (Product & { amount?: number })[] = []; // Extend Product with optional amount
+  products: Product[] = []; // Extend Product with optional amount
   selectedCategory: string = '';
-  limit: number = 3;
+  limit: number = 5;
   skip: number = 0;
   isLoading: boolean = false;
 
@@ -25,6 +25,7 @@ export class ProductHomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.loadProducts(); 
     this.route.queryParams.subscribe(params => {
       const gender = params['gender'] || '';
       if (gender !== this.selectedCategory) {
@@ -37,8 +38,8 @@ export class ProductHomeComponent implements OnInit {
   loadProducts(category: string = this.selectedCategory, reset: boolean = false) {
     this.isLoading = true;
     if (reset) {
-      this.products = [];
-      this.skip = 0;
+        this.products = [];
+        this.skip = 0;
     }
 
     this.productsService.getProducts(category, this.limit, this.skip).subscribe({
@@ -48,8 +49,9 @@ export class ProductHomeComponent implements OnInit {
             ...this.products,
             ...response.map((product) => ({
               ...product,
-              image: product.image.map(img => `http://localhost:3000/uploads/${img}`), // Adjust for array
-              amount: 1, // Default amount for ordering
+              image: product.image.map(img => `http://localhost:3000/images/${img}`),
+              amount: 1,
+              selectedColor: product.colors?.[0] || '' // Default to first color
             })),
           ];
         }
@@ -62,8 +64,11 @@ export class ProductHomeComponent implements OnInit {
       },
     });
   }
+selectColor(product: Product, color: string) {
+    product.selectedColor = color;
+  }
 
-  selectCategory(category: string) {
+selectCategory(category: string) {
     this.selectedCategory = category === 'all' ? '' : category;
     this.loadProducts(this.selectedCategory, true);
   }
@@ -95,11 +100,13 @@ export class ProductHomeComponent implements OnInit {
       price: product.price,
       image: product.image[0], // Use first image
       amount: product.amount || 1,
-    };
+      color: product.selectedColor || product.colors[0]
+};
 
     this.cartService.addToCart(cartItem).subscribe({
       next: (response) => {
         console.log('Product added to cart:', response);
+        product.amount = 1;
       },
       error: (err) => {
         console.error('Error adding to cart:', err);

@@ -12,7 +12,6 @@ body.dark {
     background-color: #0d1a26;
     color: #e2e8f0;
 }
-
 /* Header */
 .header {
     display: flex;
@@ -563,4 +562,9 @@ body.dark .upload-icon {
 
 :host-context(body.dark) .color-checkbox:checked + .color-box::after {
     background: #4a48c6;
+}
+.size-checkbox,
+.color-checkbox,
+.gender-checkbox {
+  pointer-events: none;
 }

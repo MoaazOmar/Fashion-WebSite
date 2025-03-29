@@ -230,3 +230,26 @@
     width: 95%;
   }
 }
+.start-shopping-btn {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.start-shopping-btn:hover {
+  background: #2d3436;
+  transform: translateY(-2px);
+}
+
+.no-orders {
+  text-align: center;
+  padding: 2rem;
+}

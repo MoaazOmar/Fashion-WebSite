@@ -40,4 +40,18 @@ export class AdminService {
   updateProduct(productId: string, formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/productList/update`, formData, { withCredentials: true });
   }
+
+  // New method to update the status of an order
+  updateOrderStatus(orderId: string, newStatus: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/orders/update`, { orderId, status: newStatus }, { withCredentials: true });
+  }
+
+  // New method to update product stock
+  updateProductStock(productID: string, amount: number): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/productList/updateStock`,
+      { productID, amount },
+      { withCredentials: true }
+    );
+  }
 }

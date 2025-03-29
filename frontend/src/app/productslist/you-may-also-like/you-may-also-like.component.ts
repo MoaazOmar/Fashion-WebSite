@@ -5,6 +5,7 @@ import { Product } from '../../../interfaces/product.model';
 import { AuthService } from '../../services/auth.service';
 import { AddFavoriteService } from '../../services/addFavourites.porducts.service'; // Updated import
 import { ChangeDetectorRef } from '@angular/core';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-you-may-also-like',
@@ -26,7 +27,8 @@ export class YouMayAlsoLikeComponent implements AfterViewInit, OnInit {
     private router: Router,
     private authService: AuthService,
     private addFavoriteService: AddFavoriteService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private cartService: CartService,
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class YouMayAlsoLikeComponent implements AfterViewInit, OnInit {
           console.log('Related products response:', response);
           this.products = response.relatedProducts.map((product: Product) => ({
             ...product,
-            image: `http://localhost:3000/images/${product.image}`,
+            image: product.image.map(img => `http://localhost:3000/images/${img}`),
             isFavorite: this.addFavoriteService.getLove().some(fav => fav._id === product._id), // Fixed line
             showMenu: false
           }));
@@ -147,12 +149,27 @@ loadProduct(): void {
   }
 
   addToCart(product: any) {
-    console.log('Add to cart:', product.name);
-    product.showMenu = false;
+    const cartItem = {
+      productID: product._id,
+      amount: 1, // Default to 1, adjust as needed
+      price: product.price,
+      name: product.name,
+      image: product.image[0],
+      color:product.color[0]
+    };
+    this.cartService.addToCart(cartItem).subscribe({
+      next: () => {
+        console.log('Added to cart:', product.name);
+        product.showMenu = false; // Close the menu after adding
+      },
+      error: (err) => console.error('Error adding to cart:', err)
+    });
   }
+
 
   shareProduct(product: any) {
     console.log('Share:', product.name);
     product.showMenu = false;
   }
+  
 }

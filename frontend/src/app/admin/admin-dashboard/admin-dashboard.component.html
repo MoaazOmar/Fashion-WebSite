@@ -142,7 +142,10 @@
         'high-heels': product.name.toLowerCase().includes('high heel') || product.name.toLowerCase().includes('heel'),
         'dresses': product.name.toLowerCase().includes('dress'),
         'footwear': product.name.toLowerCase().includes('footwear') || product.name.toLowerCase().includes('shoe') || product.name.toLowerCase().includes('boot'),
-        'pants': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans')
+        'pants': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans'),
+        'suit':product.name.toLowerCase().includes('suit'),
+        'sweat':product.name.toLowerCase().includes('Sweat') ||product.name.toLowerCase().includes('hodd')
+        
       }">
         <i class="fas" [ngClass]="{
           'fa-tshirt': product.name.toLowerCase().includes('t-shirt') || product.name.toLowerCase().includes('top'),
@@ -151,7 +154,9 @@
           'fa-hat-cowboy': product.name.toLowerCase().includes('hat'),
           'fa-glasses': product.name.toLowerCase().includes('sunglasses'),
           'fa-person-dress': product.name.toLowerCase().includes('dress'),
-          'fa-person': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans')
+          'fa-person': product.name.toLowerCase().includes('pant') || product.name.toLowerCase().includes('trouser') || product.name.toLowerCase().includes('jeans'),
+          'fa-user-tie':product.name.toLowerCase().includes('suit'),
+          'fa-hoodie':product.name.toLowerCase().includes('Sweat') || product.name.toLowerCase().includes('hodd')
         }"></i>
       </div>
       <div class="product-details">

@@ -10,7 +10,7 @@
     
     <!-- Desktop Navigation (visible on large screens) -->
     <ul class="nav nav-desktop">
-      <li><a routerLink="/about"><i class="fa-solid fa-house"></i></a></li>
+      <li><a routerLink="/"><i class="fa-solid fa-house"></i></a></li>
       <li><a routerLink="/about">About</a></li>
       <li><a routerLink="/shopping">Shopping</a></li>
       <li><a routerLink="/contact">Contact</a></li>
@@ -82,5 +82,6 @@
   <app-searchinput [isClicked]="isClicked" [query]="searchQuery"></app-searchinput>
 </div>
 
-<!-- Admin-specific content -->
-<!-- <app-navbar-admin *ngIf="userRole === 'admin'"></app-navbar-admin> -->
+<div class="back-to-top" (click)="scrollToTop()">
+  <i class="fa-solid fa-arrow-up"></i>
+</div>

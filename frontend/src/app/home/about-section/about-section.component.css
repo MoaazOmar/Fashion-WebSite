@@ -1,13 +1,14 @@
-.about{
+.about {
     padding: 100px 10px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
     width: 100%;
-}
-.about .left, 
-.about .right {
+  }
+  
+  .about .left,
+  .about .right {
     width: 50%;
     height: 100%;
     display: flex;
@@ -15,16 +16,20 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-}
-.promotion , .discovery{
+  }
+  
+  .promotion,
+  .discovery {
     position: relative;
     width: 100%;
     height: 70vh;
     justify-content: start;
     align-items: end;
     padding: 50px;
-}
-.style , .collection {
+  }
+  
+  .style,
+  .collection {
     position: relative;
     width: 100%;
     height: 50vh;
@@ -32,11 +37,13 @@
     justify-content: start;
     align-items: end;
     padding: 50px;
-}
-.about-box{
+  }
+  
+  .about-box {
     overflow: hidden;
-}
-.about-box img {
+  }
+  
+  .about-box img {
     position: absolute;
     top: 0;
     left: 0;
@@ -48,18 +55,19 @@
     object-fit: cover;
     object-position: center;
     transition: all ease-out 0.7s;
-
-}
-.about-box img:hover {
+  }
+  
+  .about-box img:hover {
     transform: scale(1.1) rotate(3deg);
     filter: brightness(80%);
-}
-.about-box {
+  }
+  
+  .about-box {
     position: relative;
     overflow: hidden;
-}
-
-.about-box img {
+  }
+  
+  .about-box img {
     position: absolute;
     top: 0;
     left: 0;
@@ -71,66 +79,143 @@
     object-fit: cover;
     object-position: center;
     transition: transform 0.7s ease-out, filter 0.7s ease-out, box-shadow 0.7s ease-out;
-}
-
-.about-box:hover img {
+  }
+  
+  .about-box:hover img {
     transform: scale(1.1) rotate(3deg);
     filter: brightness(80%);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
-}
-
-.description {
+  }
+  
+  .description {
     position: absolute;
     bottom: 20px;
     left: 20px;
     text-align: left;
     color: #ffffff;
-    background: rgba(0, 0, 0, 0.5); /* Adds a semi-transparent background */
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 10px;
-    backdrop-filter: blur(10px); /* Blurs the background behind the text */
-}
-
-.description h4 {
+    backdrop-filter: blur(10px);
+  }
+  
+  .description h4 {
     font-size: 1.5em;
     margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 20px;
     position: relative;
-}
-.description h4:after{
+  }
+  
+  .description h4:after {
     position: absolute;
     content: '';
-    background:var(--primary);
+    background: var(--primary);
     bottom: -10px;
     left: 0;
     width: 20%;
     height: 3px;
     transition: all ease-out 0.8s;
-}
-.about-box:hover .description h4::after {
+  }
+  
+  .about-box:hover .description h4::after {
     width: 70%;
-}
-
-.description p {
+  }
+  
+  .description p {
     font-size: 1em;
     margin-bottom: 10px;
-}
-.description a{
+  }
+  
+  .description a {
     text-decoration: none;
-    color: white;
+    color: #5A5A5A;
     padding: 5.5px 7px;
-    background-color: #0007;
+    background-color: #F5FAFF;
     font-weight: 300;
-    
-}
-.description a i {
+  }
+  
+  .description a i {
     position: relative;
     top: 2px;
     left: 1px;
-}
-.description a:hover{
-    background:var(--primary);
+  }
+  
+  .description a:hover {
+    background: var(--primary);
     transform: scale(2);
-}
+  }
+  
+  /* Responsive Adjustments Only */
+  @media (max-width: 768px) {
+    .about {
+      padding: 60px 5px 0; /* Reduced padding */
+      flex-wrap: wrap; /* Allow left and right to stack */
+    }
+  
+    .about .left,
+    .about .right {
+      width: 100%; /* Full width on smaller screens */
+    }
+  
+    .promotion,
+    .discovery {
+      height: 50vh; /* Reduced height */
+      padding: 30px; /* Reduced padding */
+    }
+  
+    .style,
+    .collection {
+      height: 40vh; /* Reduced height */
+      padding: 30px; /* Reduced padding */
+    }
+  
+    .description {
+      padding: 15px; /* Slightly reduced padding */
+    }
+  
+    .description h4 {
+      font-size: 1.3em; /* Slightly smaller text */
+    }
+  
+    .description p {
+      font-size: 0.9em; /* Slightly smaller text */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .about {
+      padding: 40px 5px 0; /* Further reduced padding */
+    }
+  
+    .promotion,
+    .discovery {
+      height: 40vh; /* Further reduced height */
+      padding: 20px; /* Further reduced padding */
+    }
+  
+    .style,
+    .collection {
+      height: 30vh; /* Further reduced height */
+      padding: 20px; /* Further reduced padding */
+    }
+  
+    .description {
+      bottom: 15px;
+      left: 15px;
+      padding: 10px;
+    }
+  
+    .description h4 {
+      font-size: 1.1em; /* Smaller text */
+    }
+  
+    .description p {
+      font-size: 0.85em; /* Smaller text */
+    }
+  
+    .description a {
+      padding: 4px 6px; /* Slightly smaller padding */
+    }
+  }

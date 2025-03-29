@@ -1,7 +1,10 @@
 
 <!--*******************************Female**********************************************-->
-
+<div class="offer-header">
+  <h2>What We Offer</h2>
+</div>
 <div class="banner" [class.active]="bannerActive" *ngIf="dynamicGender === 'Female'">
+
     <!-- Banner Sections -->
     <div class="banner-section one" [class.active]="selectedSection === 'one'" (click)="selectSection('one')">
       <img src="girl-1.png" alt="">
@@ -42,6 +45,7 @@
   
     <!-- Banner Content -->
     <div class="banner-content" *ngIf="bannerActive">
+      
       <div class="item" [class.active]="activeItem === 'banner-content-one'">
         <div class="cancel-display" (click)="closeBanner()">
           <i class="fa-solid fa-circle-xmark"></i>

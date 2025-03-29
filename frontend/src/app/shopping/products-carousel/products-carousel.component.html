@@ -5,7 +5,7 @@
     <div class="image fade" 
          *ngFor="let product of mostLikedProducts; let i = index"
          [class.active]="i === currentLikedIndex">
-      <img [src]="product.image" [alt]="product.name">
+      <img [src]="product.image[0]" [alt]="product.name">
     </div>
 
     <i class="arrow left" (click)="prevLiked()"><i class="fa-solid fa-chevron-left"></i></i>
@@ -18,14 +18,15 @@
             (click)="goToLiked(i)"></span>
     </div>
   </div>
+  <app-summer-section></app-summer-section>
 
   <!-- Most Recent Carousel -->
   <div class="container">
-    <h2 class="carousel-label">Most Recent Products</h2>
+    <h2 class="carousel-label">Recent Products</h2>
     <div class="image fade" 
          *ngFor="let product of mostRecentProducts; let i = index"
          [class.active]="i === currentRecentIndex">
-      <img [src]="product.image" [alt]="product.name">
+      <img [src]="product.image[0]" [alt]="product.name">
     </div>
 
     <i class="arrow left" (click)="prevRecent()"><i class="fa-solid fa-chevron-left"></i></i>
@@ -38,4 +39,6 @@
             (click)="goToRecent(i)"></span>
     </div>
   </div>
+  <app-winter-section></app-winter-section>
+
 </div>

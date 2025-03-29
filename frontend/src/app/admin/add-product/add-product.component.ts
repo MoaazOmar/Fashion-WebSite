@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ThemeService } from '../../services/theme.service';
-import { AdminService } from '../../services/admin.service'; // Import AdminService
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-add-product',
@@ -11,7 +11,7 @@ import { AdminService } from '../../services/admin.service'; // Import AdminServ
 export class AddProductComponent implements OnInit {
   productForm: FormGroup;
   imagePreviews: string[] = [];
-  selectedFiles: File[] = []; // Add this to store actual files
+  selectedFiles: File[] = [];
 
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   colors = [
@@ -47,7 +47,7 @@ export class AddProductComponent implements OnInit {
       category: ['', Validators.required],
       brand: [''],
       price: ['', Validators.required],
-      quantity: [0],
+      stock: [0, Validators.min(0)], // Changed from quantity to stock
       season: [''],
       gender: [[]],
       description: [''],
@@ -67,37 +67,21 @@ export class AddProductComponent implements OnInit {
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      // Convert FileList to an array
       const newFiles = Array.from(input.files);
-      
-      // Append new files to the existing selectedFiles array
       this.selectedFiles = [...this.selectedFiles, ...newFiles];
-      console.log('Updated Selected Files:', this.selectedFiles);
-      
-      // Generate previews for new files only
       newFiles.forEach(file => {
         const reader = new FileReader();
-        console.log(`Reading file: ${file.name}`);
-        reader.onload = () => {
-          console.log(`Finished reading ${file.name}:`, reader.result);
-          this.imagePreviews.push(reader.result as string);
-          console.log('Current imagePreviews:', this.imagePreviews);
-        };
-        reader.onerror = (error) => {
-          console.error(`Error reading ${file.name}:`, error);
-        };
+        reader.onload = () => this.imagePreviews.push(reader.result as string);
         reader.readAsDataURL(file);
       });
-    } else {
-      console.warn('No files selected.');
     }
   }
-      removeImage(index: number): void {
-    // Remove the preview
+
+  removeImage(index: number): void {
     this.imagePreviews.splice(index, 1);
-    // Also remove the corresponding file from selectedFiles
     this.selectedFiles.splice(index, 1);
   }
+
   updateSizes(event: Event, size: string): void {
     const sizes = this.productForm.get('sizes')?.value || [];
     const checkbox = event.target as HTMLInputElement;
@@ -136,9 +120,7 @@ export class AddProductComponent implements OnInit {
 
   onSubmit(): void {
     if (this.productForm.valid) {
-      console.log('Submitting form:', this.productForm.value);
       const formData = new FormData();
-  
       Object.keys(this.productForm.value).forEach(key => {
         if (key === 'sizes' || key === 'colors' || key === 'gender') {
           formData.append(key, JSON.stringify(this.productForm.value[key]));
@@ -146,10 +128,8 @@ export class AddProductComponent implements OnInit {
           formData.append(key, this.productForm.value[key]);
         }
       });
-  
-      // Append each file from the selected files array
       this.selectedFiles.forEach(file => formData.append('image', file));
-  
+
       this.adminService.addProduct(formData).subscribe({
         next: (response) => {
           console.log('Product added successfully', response);
@@ -160,13 +140,14 @@ export class AddProductComponent implements OnInit {
       });
     }
   }
-    resetForm(): void {
+
+  resetForm(): void {
     this.productForm.reset({
       name: '',
       category: '',
       brand: '',
       price: '',
-      quantity: 0,
+      stock: 0, // Changed from quantity to stock
       season: '',
       gender: [],
       description: '',

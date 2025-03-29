@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="table-container" *ngIf="cartItems.length > 0; else emptyCart">
+<!-- <img class="img-funny" src="funny and vibrant shopping fashion package.png"> -->
+ <div class="img-funny"></div>
   <table>
     <thead>
       <tr>
@@ -9,6 +11,7 @@
         <th>Price</th>
         <th>Amount</th>
         <th>Total</th>
+        <th>color</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -20,6 +23,7 @@
         <td>{{ item.price }}</td>
         <td><input type="number" #quantityInput [value]="item.amount"></td>
         <td>{{ item.price * item.amount }}</td>
+        <td>{{item.color}}</td>
         <td>
           <button (click)="onDeleteItem(item._id)">Remove</button>
           <button (click)="onUpdateItem(item._id, quantityInput.value)">Update</button>

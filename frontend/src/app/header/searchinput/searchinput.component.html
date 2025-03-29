@@ -9,7 +9,7 @@
   </div>
   
   <ul *ngIf="suggestions.length && !loading">
-    <li *ngFor="let suggestion of suggestions">
+    <li *ngFor="let suggestion of suggestions" [routerLink]="['/products', suggestion._id]">
       <img [src]="suggestion.image[0]" alt="Product Image" width="50">
       <span>{{ suggestion.name }}</span>
     </li>

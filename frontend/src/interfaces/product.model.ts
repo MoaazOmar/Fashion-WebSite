@@ -43,12 +43,13 @@ export interface ProductComment {
 }
 
 export interface Product {
-  color: any;
+  // color: any;
   descriptionDetailed: any;
   _id: string;
   name: string;
   image: string[]; // Array of image paths
   colors: string[]; // Array of colors
+  selectedColor?: string;
   price: number;
   description: string;
   category: string;
@@ -59,7 +60,7 @@ export interface Product {
   dislikes: number;
   dislikedBy: string[];
   sizes: string[];
-  stock: boolean;
+  stock: number;  
   quantity: number;
   amount:number;
   comments: Comment[];
@@ -73,7 +74,8 @@ export interface Product {
   trendDirection?: 'up' | 'down';
   totalUnitsSold?: number;
   dateAdded?: Date;
-  
+  createdAt: Date;
+  brand:String;
 }
 
 

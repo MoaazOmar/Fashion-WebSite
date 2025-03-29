@@ -356,6 +356,27 @@
     color: #FF6B81;
 }
 
+
+.top-products .product-icon.suit {
+  background-color: #f8e1ff;
+  color: #918858;
+}
+
+:host-context(body.dark) .top-products .product-icon.suit {
+  background-color: #482d38;
+  color: #918858;
+}
+
+.top-products .product-icon.sweat {
+  background-color: #ffe1e1;
+  color: #5f9158;
+}
+
+:host-context(body.dark) .top-products .product-icon.sweat {
+  background-color: #482d2d;
+  color: #5f9158;
+}
+
 :host-context(body.dark) .top-products .product-icon.sneakers {
     background-color: #2d3748;
     color: #FF6B81;

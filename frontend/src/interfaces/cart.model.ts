@@ -8,5 +8,5 @@ export interface CartItem {
   userID?: string;
   image: string;
   timestamp?: number;
-
+  color: string; 
 }

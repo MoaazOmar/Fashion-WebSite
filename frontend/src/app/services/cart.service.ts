@@ -22,7 +22,7 @@ export class CartService {
   // Add a product to the cart
   addToCart(cartItem: CartItem): Observable<any> {
     const currentItems = this.currentCartItems.getValue();
-    const existingCartItem = currentItems.find(item => item.productID === cartItem.productID);
+    const existingCartItem = currentItems.find(item => item.productID === cartItem.productID && item.color === cartItem.color);
     
     if (existingCartItem) {
       const newAmount = existingCartItem.amount + cartItem.amount;

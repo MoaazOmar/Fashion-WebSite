@@ -1,0 +1,70 @@
+<div class="body">
+    <div class="summer-collection">
+        <div class="collection-header">
+            <h2 class="collection-subtitle">Exclusive</h2>
+            <h1 class="collection-title">Summer Collection</h1>
+        </div>
+
+        <div class="swiper-container">
+            <div class="swiper" #swiperRef>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" *ngFor="let product of summerCollection; let i = index">
+                        <div class="product-tag" *ngIf="product.brand">{{ product.brand }}</div>
+                        <div class="product-image">
+                            <div class="shine-effect" [style.animationDelay]="i * 0.7 + 's'"></div>
+                            <img [src]="product.image[0]" [alt]="product.name" />
+                        </div>
+                        <div class="product-info">
+                            <div class="product-category">{{ product.category }}</div>
+                            <h3 class="product-name">{{ product.name }}</h3>
+                            <div class="product-price">${{ product.price }}</div>
+                            <div class="product-details">
+                                {{ product.description }}
+                                <div class="color-options" *ngIf="product.colors?.length">
+                                    <div class="color-option" *ngFor="let color of product.colors"
+                                        [style.backgroundColor]="color"></div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart" (click)="addToCart($event)">Add to Cart</button>
+                        </div>
+                        <button class="quick-view-btn" (click)="toggleDetails($event)"
+                            [innerHTML]="getZoomIcon()"></button>
+                    </div>
+                </div>
+                <div class="swiper-pagination" style="  .swiper-pagination-bullet {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 1;
+            transition: all 0.3s ease;
+          }
+          
+          .swiper-pagination-bullet-active {
+            background: var(--highlight) !important;
+            width: 30px;
+            border-radius: 5px;
+          }
+        "></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+        <canvas #summerEffect id="summer-effect"></canvas>
+
+        <button class="theme-toggle" (click)="toggleTheme()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+        </button>
+    </div>
+</div>

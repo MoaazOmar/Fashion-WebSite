@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from '../services/order.service';
 import { jsPDF } from 'jspdf';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -8,12 +10,24 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-  orders: any[] = []; // Store the fetched orders
+  orders: any[] = [];
+  selectedOrder: any = null;
+  isLoggedIn: boolean = false; // Track login status
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private authService: AuthService, // Inject AuthService
+    private router: Router // Inject Router
+  ) {}
 
   ngOnInit(): void {
-    this.fetchOrders();
+    // Subscribe to currentUser to update login status dynamically
+    this.authService.currentUser.subscribe(user => {
+      this.isLoggedIn = this.authService.isLoggedIn();
+      if (this.isLoggedIn) {
+        this.fetchOrders();
+      }
+    });
   }
 
   fetchOrders() {
@@ -31,11 +45,15 @@ export class OrdersComponent implements OnInit {
         console.error('Error fetching orders:', err);
       }
     });
-      }
+  }
 
-  // Add this property to your component class
-selectedOrder: any = null;
+  navigateToShopping() {
+    this.router.navigate(['/shopping']);
+  }
 
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 downloadPDF(order: any) {
   const doc = new jsPDF();
 

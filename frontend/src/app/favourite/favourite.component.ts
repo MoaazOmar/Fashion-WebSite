@@ -6,8 +6,10 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'; // Import map operator
 import { Product } from '../../interfaces/product.model';
+import { CartService } from '../services/cart.service';
 
 interface FavoriteItem {
+  color: any;
   id: string;
   name: string;
   image: string;
@@ -31,6 +33,7 @@ export class FavouriteComponent implements OnInit {
     private addFavoriteService: AddFavoriteService,
     private productService: SingleProductService,
     private authService: AuthService,
+    private cartService: CartService,
     private cdr: ChangeDetectorRef
   ) { }
 
@@ -38,7 +41,7 @@ export class FavouriteComponent implements OnInit {
     this.favoriteItems$ = this.addFavoriteService.love$.pipe(
       map(() => this.addFavoriteService.getLove())
     );
-
+  
     this.favoriteItems$.subscribe(products => {
       this.favorites = products.map(product => ({
         id: product._id,
@@ -46,20 +49,41 @@ export class FavouriteComponent implements OnInit {
         image: product.image && product.image.length > 0 ? product.image[0] : 'default-image.jpg',
         price: product.price,
         category: product.category,
-        dateAdded: product.dateAdded ? new Date(product.dateAdded) : new Date() // Fallback to current date
+        dateAdded: product.dateAdded ? new Date(product.dateAdded) : new Date(),
+        color: product.selectedColor || (product.colors && product.colors[0]) || 'default' // Add this
       }));
       this.cdr.detectChanges();
     });
-
+  
     this.favorites = this.addFavoriteService.getLove().map(product => ({
       id: product._id,
       name: product.name,
       image: product.image && product.image.length > 0 ? product.image[0] : 'default-image.jpg',
       price: product.price,
       category: product.category,
-      dateAdded: product.dateAdded ? new Date(product.dateAdded) : new Date()
+      dateAdded: product.dateAdded ? new Date(product.dateAdded) : new Date(),
+      color: product.selectedColor || (product.colors && product.colors[0]) || 'default' // Add this
     }));
   }
+  
+  addToCartAndRemove(item: FavoriteItem): void {
+    const cartItem = {
+      productID: item.id,
+      amount: 1, // Default to 1, adjust as needed
+      price: item.price,
+      name: item.name,
+      image: item.image,
+      color:item.color,
+    };
+    this.cartService.addToCart(cartItem).subscribe({
+      next: () => {
+        console.log('Added to cart:', item.name);
+        this.removeFromFavorites(item.id); // Remove from favorites after adding to cart
+      },
+      error: (err) => console.error('Error adding to cart:', err)
+    });
+  }
+
 
   removeFromFavorites(id: string): void {
     this.addFavoriteService.removeLoveProduct(id);

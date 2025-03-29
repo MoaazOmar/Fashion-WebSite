@@ -1,6 +1,10 @@
-.big-container{
+.big-container {
     display: flex;
-    flex-wrap: nowrap;
+    flex-direction: column; /* Changed from flex-wrap: nowrap */
+    width: 100%;
+    max-width: 1200px; /* Optional: set a max-width for better control */
+    margin: 0 auto;
+    
 }
 .carousel-label {
     position: absolute;
@@ -18,7 +22,7 @@
 /* Container styling */
 .container {
     position: relative;
-    width: calc(50% - 18px);
+    width: calc(60% - 18px);
     height: 70vh; 
     margin: 40px auto;
     padding: 20px 0;

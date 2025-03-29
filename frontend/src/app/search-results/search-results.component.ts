@@ -167,7 +167,7 @@ export class SearchResultsComponent implements OnInit {
           console.log('Fetch response:', response); // Debug
           this.results = response.suggestions.map((product) => ({
             ...product,
-            image: [`http://localhost:3000/images/${product.image}`]
+            image: product.image.map(img => `http://localhost:3000/images/${img}`)
           }));
           this.totalSearchProducts = response.totalCount;
           this.FilteringColors = response.colorsWithCounts;

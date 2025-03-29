@@ -45,8 +45,30 @@
 body {
     padding-top: 80px; /* Adjust based on navbar height */
     min-height: 100vh;
-    background-color: #ff4e4e; /* Dark background */
+    background-color:#F0F8FF; /* Dark background */
     overflow-x: hidden;
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+
+.swiper-pagination-bullet-active {
+    background:  #a5d8ff !important;
+    width: 30px;
+    border-radius: 5px;
+    animation: bounce 0.5s;
+
+}
+@keyframes bounce {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.4); }
+    100% { transform: scale(1.2); }
+  }
+  
+  

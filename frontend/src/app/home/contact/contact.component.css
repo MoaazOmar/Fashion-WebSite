@@ -1,99 +1,170 @@
-#contact{
-    position: relative;
-    padding: 100px 0 0 ;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-#contact .map{
-    width: 100%;
+#contact {
+  position: relative;
+  padding: 100px 0 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.contact .info-wrap{
-    margin-top: 80px;
-    width: 80%;
-    color: #ffffff;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
-    padding: 30px;
-    display: flex;
-    justify-content: space-between;
+#contact .map {
+  width: 100%;
 }
+
+.contact .info-wrap {
+  margin-top: 80px;
+  width: 80%;
+  color: #2A2A2A;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  display: flex;
+  justify-content: space-between;
+}
+
 .contact .info {
-    background-color: #151515;
+  background-color: #222831;
 }
-.contact .info .fa{
-    color: #ffffff;
-    float: left;
-    width: 40px;
-    height: 40px;
-    padding: 10px;
-    background: var(--primary);
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    transition: 0.3s;
-    font-weight: 900;
+
+.contact .info .fa {
+  color: #FFFFFF;
+  float: left;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background: #00ADB5;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+  transition: 0.3s;
+  font-weight: 900;
 }
 
 .contact .info h4 {
-    padding: 0 0 0 80px;
-    font-size: 1.2em;
-    font-weight: 500;
-    margin-bottom: 5px;
-}
-.contact .info p {
-    padding: 0 0 0 80px;
-    font-size: 1em;
-    font-weight: 300;
+  padding: 0 0 0 80px;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #EEEEEE;
 }
 
-  
+.contact .info p {
+  padding: 0 0 0 80px;
+  font-size: 1em;
+  font-weight: 300;
+  color: #B8B8B8;
+}
+
+.contact-form {
+  width: 100%;
+  margin: 20px auto;
+  background: #393E46;
+  padding: 30px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #00ADB5;
+  border-radius: 5px;
+  background: #222831;
+  color: #EEEEEE;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  background: #1A1A1D;
+  border-color: #00FFF0;
+  color: white;
+}
+
+.text-center {
+  text-align: center;
+}
+
+button[type="submit"] {
+  background: #00ADB5;
+  color: #FFFFFF;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background: #007D85;
+  color: #EEEEEE;
+}
+
+/* Responsive Adjustments Only */
+@media (max-width: 768px) {
+  #contact {
+    padding: 60px 0 0; /* Reduced padding for smaller screens */
+  }
+
+  .contact .info-wrap {
+    width: 90%; /* Slightly wider on smaller screens */
+    flex-wrap: wrap; /* Allow info boxes to wrap */
+    margin-top: 40px; /* Reduced margin */
+    padding: 20px; /* Reduced padding */
+  }
+
+  .contact .info {
+    flex: 1 1 100%; /* Stack info items */
+    margin-bottom: 20px; /* Add spacing between stacked items */
+  }
+
+  .contact .info h4,
+  .contact .info p {
+    padding-left: 60px; /* Slightly reduced padding */
+  }
+
   .contact-form {
-    width: 100%;
-    margin: 20px auto;
-    background: #000000;
-    padding: 30px;
-    box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
+    padding: 20px; /* Reduced padding */
   }
-  
-  .form-group {
-    margin-bottom: 15px;
+}
+
+@media (max-width: 480px) {
+  #contact {
+    padding: 40px 0 0; /* Further reduced padding */
   }
-  
+
+  .contact .info-wrap {
+    width: 95%; /* Almost full width */
+    padding: 15px;
+  }
+
+  .contact .info .fa {
+    width: 35px; /* Smaller icon */
+    height: 35px;
+    padding: 8px;
+  }
+
+  .contact .info h4,
+  .contact .info p {
+    padding-left: 50px; /* Adjusted padding */
+    font-size: 0.9em; /* Slightly smaller text */
+  }
+
+  .contact-form {
+    padding: 15px;
+  }
+
   .form-group input,
   .form-group textarea {
-    width: 100%;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    background: #1f1d1d;
-    transition: all 0.3s ease;
+    padding: 12px; /* Slightly reduced padding */
   }
-  
-  .form-group input:focus,
-  .form-group textarea:focus {
-    background: #0e0d0d;
-    border-color: #333;
-    color: white;
-  }
-  
-  .text-center {
-    text-align: center;
-  }
-  
+
   button[type="submit"] {
-    background: #333;
-    color: #fff;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    padding: 12px 25px; /* Slightly smaller button */
   }
-  
-  button[type="submit"]:hover {
-    background: var(--primary)
-  }
+}
