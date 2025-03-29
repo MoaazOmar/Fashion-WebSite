@@ -12,4 +12,6 @@ router.get('/productList', adminGuard, adminController.getProductList);
 router.post('/productList/update', adminGuard, adminController.updateProduct);
 router.get('/dashboard-stats', adminGuard, adminController.getDashboardStats);
 router.get('/top-selling-products', adminGuard, adminController.getTopSellingProducts);
+router.post('/productList/updateStock', adminGuard, adminController.updateProductStock);
+
 module.exports = router;

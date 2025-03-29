@@ -91,14 +91,21 @@
         },
         sizes: [String],
 
-            stock: {
-            type: Boolean, // Add stock field
-            default: true
-        },
-        quantity: {
+        stock: {
             type: Number,
-            default: 0 // Add quantity field
-          },        
+            required: true,
+            default: 0,
+            min: 0, // Prevent negative numbers
+            validate: {
+              validator: Number.isInteger, // Force integer values
+              message: 'Stock must be an integer number'
+            }
+          },
+          brand:String,
+        // quantity: {
+        //     type: Number,
+        //     default: 0 // Add quantity field
+        //   },        
         comments: [commentSchema],
         ratings: [{
             user: {
@@ -357,17 +364,13 @@
 
     const getDistinctColorsWithCounts = async (filterQuery) => {
         try {
-            const colors = await Product.aggregate([{
-                    $match: filterQuery
-                },
+            const colors = await Product.aggregate([
+                { $match: filterQuery }, // Apply the filter query (e.g., gender, category)
+                { $unwind: "$colors" }, // Unwind the colors array
                 {
                     $group: {
-                        _id: {
-                            $toLower: "$color"
-                        },
-                        count: {
-                            $sum: 1
-                        }
+                        _id: { $toLower: "$colors" }, // Group by each color, case-insensitive
+                        count: { $sum: 1 }
                     }
                 },
                 {
@@ -383,8 +386,7 @@
             console.error('Error fetching colors:', error);
             throw error;
         }
-    };
-    const pushTheCommentToProduct = async (productId, userId, commentText, parentId = null, rating = null) => {
+    };    const pushTheCommentToProduct = async (productId, userId, commentText, parentId = null, rating = null) => {
         try {
             await connectDB();
             const newComment = {
@@ -655,7 +657,44 @@
           throw error;
         }
       };
-              
+      const getWinterProductsData = async (gender) => {
+        try {
+            const filter = { season: 'Winter' };
+            if (gender && gender !== 'all') {
+                filter.gender = gender;
+            }
+            await connectDB()
+            const products = await Product.find(filter)
+                .sort({ _id: 1 })
+                .limit(10);
+            return products;
+        } catch (error) {
+            console.error('Error fetching winter products:', error)
+            throw new Error(error.message); // Proper error construction
+        } finally {
+            await disconnectDB()
+        }
+    }
+    const getSummerAndSpringProductsData = async (gender) =>{
+        try{
+            await connectDB()
+            const filter = { season: { $in: ['Summer', 'Spring'] } };
+            if(gender && gender !== 'all') {
+                filter.gender = gender;
+            }
+            const products = await Product.find(filter).sort({_id: -1}).limit(15)
+            return products
+        }
+        catch(error){
+            console.error('Error fetching Summer products:', error)
+            throw new Error(error.message); // Proper error construction
+
+        }finally {
+            await disconnectDB()
+        }
+    }
+
+
     module.exports = {
         Product,
         getAllProducts,
@@ -680,6 +719,7 @@
         toggleLoveComment,
         getRelatedProducts,
         toggleLikeProduct,
-        toggleDislikeProduct
-
+        toggleDislikeProduct,
+        getWinterProductsData,
+        getSummerAndSpringProductsData
     };
